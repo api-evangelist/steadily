@@ -1,0 +1,190 @@
+openapi: 3.1.0
+info:
+  title: Partner Account Lender API
+  description: '
+
+    Get instant insurance quote estimates and manage referrals through our Partner API.
+
+    To request an API key contact partnerships-team@steadily.com
+
+    '
+  version: 1.0-cc63f79
+  x-logo:
+    url: https://app.staging.steadily.com/static/images/steadily-logo.svg
+    altText: Steadily
+    href: /redoc
+tags:
+- name: Lender
+  description: '
+
+    Policy information and change requests for third-party lender integrations
+
+    '
+paths:
+  /v1/lender/policy/fuzzy_search:
+    get:
+      tags:
+      - Lender
+      summary: Fuzzy policy search by voice input
+      operationId: lender_fuzzy_policy_search
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+      parameters:
+      - name: policy_number
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Policy Number
+      - name: address
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Address
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LenderPolicySearchResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    LenderPolicyResult:
+      properties:
+        policy_id:
+          type: string
+          title: Policy Id
+        policy_number:
+          type: string
+          title: Policy Number
+        policy_status:
+          type: string
+          title: Policy Status
+          nullable: true
+        effective_date:
+          type: string
+          title: Effective Date
+          nullable: true
+        expiration_date:
+          type: string
+          title: Expiration Date
+          nullable: true
+        properties:
+          items:
+            $ref: '#/components/schemas/LenderPropertyAddress'
+          type: array
+          title: Properties
+        insured_name:
+          type: string
+          title: Insured Name
+          nullable: true
+        is_pending_cancellation:
+          type: boolean
+          title: Is Pending Cancellation
+          nullable: true
+        is_retail_policy:
+          type: boolean
+          title: Is Retail Policy
+          default: false
+        carrier_name:
+          type: string
+          title: Carrier Name
+          nullable: true
+        billing_company_friendly_name:
+          type: string
+          title: Billing Company Friendly Name
+          nullable: true
+        billing_company_phone:
+          type: string
+          title: Billing Company Phone
+          nullable: true
+        steadily_transfer_allowed:
+          type: boolean
+          title: Steadily Transfer Allowed
+          nullable: true
+      type: object
+      required:
+      - policy_id
+      - policy_number
+      - properties
+      title: LenderPolicyResult
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LenderPropertyAddress:
+      properties:
+        full_address:
+          type: string
+          title: Full Address
+          nullable: true
+        state:
+          type: string
+          title: State
+      type: object
+      required:
+      - state
+      title: LenderPropertyAddress
+    LenderPolicySearchResponse:
+      properties:
+        policies:
+          items:
+            $ref: '#/components/schemas/LenderPolicyResult'
+          type: array
+          title: Policies
+      type: object
+      required:
+      - policies
+      title: LenderPolicySearchResponse
+  securitySchemes:
+    APIKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-ApiKey
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-ApiKey
+    SecretKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-SecretKey
+    SecretKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-SecretKey

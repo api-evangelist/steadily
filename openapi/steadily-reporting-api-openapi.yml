@@ -1,0 +1,1154 @@
+openapi: 3.1.0
+info:
+  title: Partner Account Reporting API
+  description: '
+
+    Get instant insurance quote estimates and manage referrals through our Partner API.
+
+    To request an API key contact partnerships-team@steadily.com
+
+    '
+  version: 1.0-cc63f79
+  x-logo:
+    url: https://app.staging.steadily.com/static/images/steadily-logo.svg
+    altText: Steadily
+    href: /redoc
+tags:
+- name: Reporting
+  description: '
+
+    Reporting on the referrals you''ve sent Steadily and the referral fees you''ve earned.
+
+
+    The lead, account, and policy endpoints follow each referral through its lifetime.
+
+    The summary views provide aggregated monthly referral counts and earnings over a date range.
+
+
+    Note that authorization to the reporting endpoint uses a separate Secret Key - not the API key used for estimates.
+
+    You can provision new secret keys through your [Partner Portal](https://app.steadily.com/partner-portal).
+
+    All reporting is scoped to your referral code.
+
+    '
+paths:
+  /v1/report/lead:
+    get:
+      tags:
+      - Reporting
+      summary: Partner Lead
+      description: 'List the leads you''ve referred, newest first.
+
+
+        Each lead includes the contact, the properties quoted, and the Steadily agent who is assisting that lead.
+
+
+        Lead statuses indicate how that lead performed:
+
+        - New - Newly created leads.
+
+        - Converted - Leads that convert and buy a policy.
+
+        - Unqualified - Leads that ultimately did not convert.
+
+        - Awaiting quote - Leads that are currently being quoted, pending customer decision or underwriting review.
+
+
+        Account-level reporting also provides a contacted status to indicate whether we''ve successfully established contact with that customer.
+
+
+        Results are paginated; follow next_url for the next page.'
+      operationId: partner_lead
+      security:
+      - SecretKeyQuery: []
+      - SecretKeyHeader: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 5
+          title: Limit
+      - name: starting_after_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Starting After Id
+      - name: order_by
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ReportOrderByOptions'
+          default: -created_timestamp
+      - name: created_after
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created After
+      - name: created_before
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created Before
+      - name: updated_after
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated After
+      - name: updated_before
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated Before
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/LeadStatusOptions'
+          - type: 'null'
+          title: Status
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadListPage'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/report/account:
+    get:
+      tags:
+      - Reporting
+      summary: Partner Account
+      description: 'List the accounts you''ve referred to Steadily, newest first.
+
+
+        An account represents the long-term profile for a policyholder. Each account may have many contacts and policies.
+
+        Results are paginated; follow next_url for the next page.'
+      operationId: partner_account
+      security:
+      - SecretKeyQuery: []
+      - SecretKeyHeader: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 5
+          title: Limit
+      - name: starting_after_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Starting After Id
+      - name: order_by
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ReportOrderByOptions'
+          default: -created_timestamp
+      - name: created_after
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created After
+      - name: created_before
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created Before
+      - name: updated_after
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated After
+      - name: updated_before
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated Before
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountListPage'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/report/policy:
+    get:
+      tags:
+      - Reporting
+      summary: Partner Policy
+      description: 'List the policies bound for customers you''ve referred, newest first.
+
+
+        Each policy includes its term, premium, coverages, properties, and documents.
+
+        Note that the level of detail may vary depending on if it''s a Steadily direct policy or a third-party policy bound through Steadily.'
+      operationId: partner_policy
+      security:
+      - SecretKeyQuery: []
+      - SecretKeyHeader: []
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 5
+          title: Limit
+      - name: starting_after_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Starting After Id
+      - name: order_by
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ReportOrderByOptions'
+          default: -created_timestamp
+      - name: created_after
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created After
+      - name: created_before
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created Before
+      - name: updated_after
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated After
+      - name: updated_before
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated Before
+      - name: status
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/PolicyStatusOptions'
+          - type: 'null'
+          title: Status
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyListPage'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/report/summary:
+    get:
+      tags:
+      - Reporting
+      summary: Partner Summary
+      description: 'Your monthly referral activity and earnings summary.
+
+
+        Use start_month and end_month to set the reporting window. Defaults to the earliest activity when omitted.
+
+        Lifetime totals span all time, regardless of the window.'
+      operationId: partner_summary
+      security:
+      - SecretKeyQuery: []
+      - SecretKeyHeader: []
+      parameters:
+      - name: start_month
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            pattern: ^\d{4}-(0[1-9]|1[0-2])$
+          - type: 'null'
+          description: Window start month (inclusive), YYYY-MM
+          title: Start Month
+        description: Window start month (inclusive), YYYY-MM
+      - name: end_month
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            pattern: ^\d{4}-(0[1-9]|1[0-2])$
+          - type: 'null'
+          description: Window end month (inclusive), YYYY-MM
+          title: End Month
+        description: Window end month (inclusive), YYYY-MM
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportSummary'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    LeadRecordType:
+      type: string
+      enum:
+      - landlord
+      - renter
+      - homeowner
+      title: LeadRecordType
+      description: An enumeration.
+    LeadListPage:
+      properties:
+        leads:
+          items:
+            $ref: '#/components/schemas/Lead'
+          type: array
+          title: Leads
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+        next_url:
+          type: string
+          title: Next Url
+      type: object
+      required:
+      - leads
+      - limit
+      title: LeadListPage
+    PolicyStatusOptions:
+      type: string
+      enum:
+      - issued
+      - quoted
+      - cancelled
+      title: PolicyStatusOptions
+    PartnerProfile:
+      properties:
+        account_name:
+          type: string
+          title: Account Name
+          description: Your partner account name
+        referral_code:
+          type: string
+          title: Referral Code
+          description: The referral code these results are scoped to
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL to your partner logo, when configured
+      type: object
+      required:
+      - account_name
+      title: PartnerProfile
+    Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+        account_name:
+          type: string
+          title: Account Name
+        external_record_id:
+          type: string
+          title: External Record Id
+        created_at_timestamp:
+          type: string
+          format: date-time
+          title: Created At Timestamp
+        updated_at_timestamp:
+          type: string
+          format: date-time
+          title: Updated At Timestamp
+        referral_code:
+          type: string
+          title: Referral Code
+        contacts:
+          items:
+            $ref: '#/components/schemas/ralphie__models__report__Contact'
+          type: array
+          title: Contacts
+        agent:
+          $ref: '#/components/schemas/Agent'
+        contacted_status:
+          allOf:
+          - $ref: '#/components/schemas/ContactedStatus'
+          description: Whether one of the account's properties has been successfully contacted
+          default: pending_contact
+      type: object
+      required:
+      - account_id
+      - created_at_timestamp
+      - updated_at_timestamp
+      - contacts
+      title: Account
+    PolicyDocument:
+      properties:
+        document_id:
+          type: string
+          title: Document Id
+        display_name:
+          type: string
+          title: Display Name
+        file_name:
+          type: string
+          title: File Name
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - document_id
+      - display_name
+      - file_name
+      - url
+      title: PolicyDocument
+    LeadStatusOptions:
+      type: string
+      enum:
+      - converted
+      - unqualified
+      - awaiting_quote
+      - new
+      title: LeadStatusOptions
+    PropertyCoverage:
+      properties:
+        name:
+          type: string
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/PropertyCoverageConfig'
+          type: array
+          title: Config
+      type: object
+      required:
+      - name
+      - config
+      title: PropertyCoverage
+    LeadProperty:
+      properties:
+        lead_property_id:
+          type: string
+          title: Lead Property Id
+        replacement_cost_estimate:
+          type: integer
+          title: Replacement Cost Estimate
+        address:
+          $ref: '#/components/schemas/ralphie__models__report__Address'
+        property_details:
+          $ref: '#/components/schemas/ralphie__models__report__PropertyDetails'
+        external_property_id:
+          type: string
+          title: External Property Id
+      type: object
+      required:
+      - lead_property_id
+      - address
+      - property_details
+      title: LeadProperty
+    PolicyLocation:
+      properties:
+        policy_location_id:
+          type: string
+          title: Policy Location Id
+        address:
+          $ref: '#/components/schemas/ralphie__models__report__Address'
+        lead_property_id:
+          type: string
+          title: Lead Property Id
+        external_property_id:
+          type: string
+          title: External Property Id
+        property_coverages:
+          items:
+            $ref: '#/components/schemas/PropertyCoverage'
+          type: array
+          title: Property Coverages
+      type: object
+      required:
+      - policy_location_id
+      - address
+      - property_coverages
+      title: PolicyLocation
+    Policy:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+        created_at_timestamp:
+          type: string
+          format: date-time
+          title: Created At Timestamp
+        updated_at_timestamp:
+          type: string
+          format: date-time
+          title: Updated At Timestamp
+        policy_id:
+          type: string
+          title: Policy Id
+        policy_type:
+          $ref: '#/components/schemas/PolicyType'
+        effective_date:
+          type: string
+          format: date
+          title: Effective Date
+        carrier:
+          type: string
+          title: Carrier
+        public_policy_id:
+          type: string
+          title: Public Policy Id
+        premium_dollars:
+          type: string
+          title: Premium Dollars
+        status:
+          $ref: '#/components/schemas/PolicyStatus'
+        properties:
+          items:
+            $ref: '#/components/schemas/PolicyLocation'
+          type: array
+          title: Properties
+        policy_coverages:
+          items:
+            $ref: '#/components/schemas/PolicyCoverage'
+          type: array
+          title: Policy Coverages
+        policy_documents:
+          items:
+            $ref: '#/components/schemas/PolicyDocument'
+          type: array
+          title: Policy Documents
+        payment_schedule:
+          $ref: '#/components/schemas/PolicyPaymentSchedule'
+      type: object
+      required:
+      - account_id
+      - created_at_timestamp
+      - updated_at_timestamp
+      - policy_id
+      - policy_type
+      - status
+      - properties
+      - policy_coverages
+      - policy_documents
+      title: Policy
+    ralphie__models__report__Contact:
+      properties:
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        suffix:
+          type: string
+          title: Suffix
+          description: Name suffix such as Jr or II
+        date_of_birth:
+          type: string
+          format: date
+          title: Date Of Birth
+        phone_number:
+          type: string
+          title: Phone Number
+        email:
+          type: string
+          format: email
+          title: Email
+        mailing_address:
+          $ref: '#/components/schemas/ralphie__models__report__Address'
+        self_reported_claims:
+          items:
+            $ref: '#/components/schemas/OptionalSelfReportedClaims'
+          type: array
+          title: Self Reported Claims
+      type: object
+      title: Contact
+    ReferralTransaction:
+      properties:
+        transaction_id:
+          type: string
+          title: Transaction Id
+        transaction_at:
+          type: string
+          format: date-time
+          title: Transaction At
+          description: When the transaction was recorded
+        rental_referral_fee:
+          type: string
+          title: Rental Referral Fee
+          description: Per-rental-referral fee override on this transaction, when set, in dollars
+        flip_referral_fee:
+          type: string
+          title: Flip Referral Fee
+          description: Per-flip-referral fee override on this transaction, when set, in dollars
+        transaction_amount:
+          type: string
+          title: Transaction Amount
+          description: Total amount of the transaction, in dollars
+      type: object
+      required:
+      - transaction_id
+      - transaction_at
+      - transaction_amount
+      title: ReferralTransaction
+    ralphie__models__report__Address:
+      properties:
+        address_1:
+          type: string
+          title: Address 1
+        city:
+          type: string
+          title: City
+        state:
+          type: string
+          title: State
+        zip:
+          type: string
+          title: Zip
+      type: object
+      title: Address
+    PolicyPaymentSchedule:
+      type: string
+      enum:
+      - annual
+      - installments
+      - escrow
+      - premium_financed
+      - transaction
+      - advance
+      - advance_and_transactions
+      title: PolicyPaymentSchedule
+      description: An enumeration.
+    AccountListPage:
+      properties:
+        accounts:
+          items:
+            $ref: '#/components/schemas/Account'
+          type: array
+          title: Accounts
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+        next_url:
+          type: string
+          title: Next Url
+      type: object
+      required:
+      - accounts
+      - limit
+      title: AccountListPage
+    PolicyStatus:
+      type: string
+      enum:
+      - issued
+      - quoted
+      - cancelled
+      title: PolicyStatus
+      description: An enumeration.
+    ReportSummary:
+      properties:
+        partner:
+          $ref: '#/components/schemas/PartnerProfile'
+        window_start_month:
+          type: string
+          title: Window Start Month
+          description: First month of the resolved window, YYYY-MM
+        window_end_month:
+          type: string
+          title: Window End Month
+          description: Last month of the resolved window, YYYY-MM
+        lifetime:
+          allOf:
+          - $ref: '#/components/schemas/LifetimeSummary'
+          title: Lifetime
+          description: Cumulative totals across all time, independent of the window
+        monthly:
+          items:
+            $ref: '#/components/schemas/MonthlySummary'
+          type: array
+          title: Monthly
+          description: Per-month breakdown within the window, oldest to newest
+      type: object
+      required:
+      - partner
+      - lifetime
+      - monthly
+      title: ReportSummary
+    Lead:
+      properties:
+        lead_id:
+          type: string
+          title: Lead Id
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        account_id:
+          type: string
+          title: Account Id
+        external_record_id:
+          type: string
+          title: External Record Id
+        created_at_timestamp:
+          type: string
+          format: date-time
+          title: Created At Timestamp
+        updated_at_timestamp:
+          type: string
+          format: date-time
+          title: Updated At Timestamp
+        referral_code:
+          type: string
+          title: Referral Code
+        status:
+          allOf:
+          - $ref: '#/components/schemas/LeadStatus'
+          description: Current status of the referred lead
+        record_type:
+          $ref: '#/components/schemas/LeadRecordType'
+        contact:
+          $ref: '#/components/schemas/ralphie__models__report__Contact'
+        properties:
+          items:
+            $ref: '#/components/schemas/LeadProperty'
+          type: array
+          title: Properties
+        agent:
+          $ref: '#/components/schemas/Agent'
+      type: object
+      required:
+      - lead_id
+      - created_at_timestamp
+      - updated_at_timestamp
+      - status
+      - record_type
+      - contact
+      - properties
+      title: Lead
+    PolicyCoverageConfig:
+      properties:
+        type:
+          type: string
+          title: Type
+        label:
+          type: string
+          title: Label
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - type
+      - label
+      - value
+      title: PolicyCoverageConfig
+    LossReason:
+      type: string
+      enum:
+      - weather
+      - fire
+      - water_appliance
+      - water
+      - theft
+      - earthquake
+      - liability
+      - medical
+      - other
+      title: LossReason
+      description: An enumeration.
+    LeadStatus:
+      type: string
+      enum:
+      - converted
+      - unqualified
+      - awaiting_quote
+      - new
+      title: LeadStatus
+      description: An enumeration.
+    PolicyType:
+      type: string
+      enum:
+      - DP3
+      - DP1
+      title: PolicyType
+      description: An enumeration.
+    Agent:
+      properties:
+        email:
+          type: string
+          title: Email
+      type: object
+      title: Agent
+    OptionalSelfReportedClaims:
+      properties:
+        date_of_loss:
+          type: string
+          format: date
+          title: Date of Loss
+          description: Approximate date of the loss
+        loss_reason:
+          allOf:
+          - $ref: '#/components/schemas/LossReason'
+          title: Loss Reason
+          example: weather
+        loss_amount_dollars:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Loss Amount in Dollars
+        caused_by_catastrophe:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          title: Loss related to Catastrophe
+      type: object
+      title: OptionalSelfReportedClaims
+      description: Details of any self-reported claims
+    ralphie__models__report__PropertyDetails:
+      properties:
+        year_built:
+          type: integer
+          title: Year Built
+        total_sq_feet:
+          type: integer
+          title: Total Sq Feet
+        property_type:
+          type: string
+          title: Property Type
+        construction_type:
+          type: string
+          title: Construction Type
+        roof_type:
+          type: string
+          title: Roof Type
+        heating_sources:
+          items:
+            type: string
+          type: array
+          title: Heating Sources
+        rental_duration:
+          type: string
+          title: Rental Duration
+        renovation_status:
+          type: string
+          title: Renovation Status
+        intermittent_rental:
+          type: string
+          title: Intermittent Rental
+      type: object
+      title: PropertyDetails
+    MonthlySummary:
+      properties:
+        month:
+          type: string
+          title: Month
+          description: Calendar month, YYYY-MM
+          example: 2026-05
+        counts:
+          $ref: '#/components/schemas/ReferralCounts'
+        rental_referral_fee:
+          type: string
+          title: Rental Referral Fee
+          description: Per-rental-referral fee rate applied this month, in dollars
+        flip_referral_fee:
+          type: string
+          title: Flip Referral Fee
+          description: Per-flip-referral fee rate applied this month, in dollars
+        referral_fees:
+          type: string
+          title: Referral Fees
+          description: Referral fees accrued this month, in dollars
+        payments:
+          type: string
+          title: Payments
+          description: Payments issued to you this month, in dollars
+        transaction_count:
+          type: integer
+          title: Transaction Count
+          description: Number of transactions in this month
+        transactions:
+          items:
+            $ref: '#/components/schemas/ReferralTransaction'
+          type: array
+          title: Transactions
+          description: Transactions recorded in this month; empty when there are none
+      type: object
+      required:
+      - month
+      - counts
+      - rental_referral_fee
+      - flip_referral_fee
+      - referral_fees
+      - payments
+      - transaction_count
+      - transactions
+      title: MonthlySummary
+    PolicyCoverage:
+      properties:
+        name:
+          type: string
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/PolicyCoverageConfig'
+          type: array
+          title: Config
+      type: object
+      required:
+      - name
+      - config
+      title: PolicyCoverage
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ReportOrderByOptions:
+      type: string
+      enum:
+      - -created_timestamp
+      - created_timestamp
+      - -updated_timestamp
+      - updated_timestamp
+      title: ReportOrderByOptions
+    PolicyListPage:
+      properties:
+        policies:
+          items:
+            $ref: '#/components/schemas/Policy'
+          type: array
+          title: Policies
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+        next_url:
+          type: string
+          title: Next Url
+      type: object
+      required:
+      - policies
+      - limit
+      title: PolicyListPage
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ContactedStatus:
+      type: string
+      enum:
+      - successful_contact
+      - pending_contact
+      title: ContactedStatus
+      description: An enumeration.
+    PropertyCoverageConfig:
+      properties:
+        type:
+          type: string
+          title: Type
+        label:
+          type: string
+          title: Label
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - type
+      - label
+      - value
+      title: PropertyCoverageConfig
+    ReferralCounts:
+      properties:
+        accounts_referred:
+          type: integer
+          title: Accounts Referred
+        properties_contacted:
+          type: integer
+          title: Properties Contacted
+          description: Properties contacted; equals rental_contacted + flip_contacted
+        rental_contacted:
+          type: integer
+          title: Rental Contacted
+          description: Rental (long-term) properties contacted
+        flip_contacted:
+          type: integer
+          title: Flip Contacted
+          description: Fix-and-flip properties contacted
+      type: object
+      required:
+      - accounts_referred
+      - properties_contacted
+      - rental_contacted
+      - flip_contacted
+      title: ReferralCounts
+    YesNo:
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      title: YesNo
+      description: An enumeration.
+    LifetimeSummary:
+      properties:
+        counts:
+          $ref: '#/components/schemas/ReferralCounts'
+        transaction_count:
+          type: integer
+          title: Transaction Count
+          description: Number of transactions across all time
+        referral_fees:
+          type: string
+          title: Referral Fees
+          description: Referral fees accrued across all time, in dollars
+        payments:
+          type: string
+          title: Payments
+          description: Payments issued to you across all time, in dollars
+        floor_month:
+          type: string
+          title: Floor Month
+          description: Earliest month with activity, YYYY-MM
+      type: object
+      required:
+      - counts
+      - transaction_count
+      - referral_fees
+      - payments
+      title: LifetimeSummary
+  securitySchemes:
+    APIKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-ApiKey
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-ApiKey
+    SecretKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-SecretKey
+    SecretKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-SecretKey

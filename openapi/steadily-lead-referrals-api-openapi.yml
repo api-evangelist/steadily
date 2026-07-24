@@ -1,0 +1,4237 @@
+openapi: 3.1.0
+info:
+  title: Partner Account Lead Referrals API
+  description: '
+
+    Get instant insurance quote estimates and manage referrals through our Partner API.
+
+    To request an API key contact partnerships-team@steadily.com
+
+    '
+  version: 1.0-cc63f79
+  x-logo:
+    url: https://app.staging.steadily.com/static/images/steadily-logo.svg
+    altText: Steadily
+    href: /redoc
+tags:
+- name: Lead Referrals
+  description: '
+
+    Submit and retrieve lead referrals.
+
+
+    Use the refer lead endpoint to submit a lead with full quote details and start the insurance quote process.
+
+    You''ll get back a quote estimate and a start_url for the customer to continue their application.
+
+    You can retrieve the status of the lead through the get endpoint or use our reporting features to manage all referrals.
+
+    '
+paths:
+  /v1/quote/submit:
+    post:
+      tags:
+      - Lead Referrals
+      summary: Refer Lead
+      operationId: refer_lead
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/SubmitRequest'
+              title: Req
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+  /v1/quote/estimate/{entity_id}:
+    get:
+      tags:
+      - Lead Referrals
+      summary: Get Lead
+      operationId: get_lead
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+      parameters:
+      - name: entity_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Entity Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateEntityResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    RoofSurfacingLossValuationOptionValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - loss_valuation_option
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__RoofSurfacingLossValuationOptionValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: RoofSurfacingLossValuationOptionValueRequest
+    ExclusionDescriptionValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - exclusion_description
+          title: Type
+        value:
+          anyOf:
+          - $ref: '#/components/schemas/ralphie__models__coverage_models__ExclusionDescriptionValueRequest__ValueOptions'
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Value
+          nullable: true
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      title: ExclusionDescriptionValueRequest
+    LimitedRenovationCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - limited_renovation
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: LimitedRenovationCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    RenovationStatus:
+      type: string
+      enum:
+      - under_construction
+      - under_renovation
+      - not_under_renovation
+      title: RenovationStatus
+      description: An enumeration.
+    BuildingCondition:
+      type: string
+      enum:
+      - excellent
+      - average
+      - fair
+      title: BuildingCondition
+      description: An enumeration.
+    FireLightningExplosionSmokeExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - fire_lightning_explosion_smoke_exclusion
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/FireLightningExplosionSmokeExclusionValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: FireLightningExplosionSmokeExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    DwellingLossValuationOptionValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - loss_valuation_option
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__DwellingLossValuationOptionValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: DwellingLossValuationOptionValueRequest
+    SubmitPolicyDetails:
+      properties:
+        occupancy:
+          allOf:
+          - $ref: '#/components/schemas/Occupancy'
+          description: Dwelling Occupancy
+          example: rental
+          nullable: true
+      type: object
+      title: SubmitPolicyDetails
+    MineSubsidenceDwellingCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - mine_subsidence_dwelling
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+            - $ref: '#/components/schemas/DeductibleValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: MineSubsidenceDwellingCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    MineSubsidencePrivateStructuresCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - mine_subsidence_private_structures
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: MineSubsidencePrivateStructuresCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    Occupancy:
+      type: string
+      enum:
+      - owner_and_tenant
+      - rental
+      - seasonal
+      - vacant
+      - fix_and_flip
+      - landlord_primary_home
+      title: Occupancy
+      description: An enumeration.
+    HeatingSource:
+      type: string
+      enum:
+      - furnace_electric
+      - furnace_natural_gas
+      - propane_gas
+      - oil
+      - wood_burning_stove_or_fireplace
+      - other
+      title: HeatingSource
+      description: An enumeration.
+    ServiceLineCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - service_line
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+        parent_coverage:
+          type: string
+          title: Parent Coverage
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: ServiceLineCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PersonalPropertyLossValuationOptionValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - loss_valuation_option
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__PersonalPropertyLossValuationOptionValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: PersonalPropertyLossValuationOptionValueRequest
+    CosmeticDamageCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - cosmetic_damage
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/CosmeticDamageValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: CosmeticDamageCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    SubmitPaymentRequest:
+      properties:
+        schedule:
+          $ref: '#/components/schemas/SubmitPaymentScheduleTypes'
+      type: object
+      required:
+      - schedule
+      title: SubmitPaymentRequest
+    CosmeticDamageValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - excluded
+          title: Type
+        value:
+          $ref: '#/components/schemas/YesNo'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: CosmeticDamageValueRequest
+    AllOtherPerilsDeductibleCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - all_other_perils_deductible
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/DeductibleValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: AllOtherPerilsDeductibleCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    LiabilityExclusionAnimalCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - liability_exclusion_animal
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: LiabilityExclusionAnimalCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    SquattersAndEvictionExpenseLimitDeductibleValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - limit_deductible
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__SquattersAndEvictionExpenseLimitDeductibleValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: SquattersAndEvictionExpenseLimitDeductibleValueRequest
+    GeneralLiabilityCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - general_liability
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: GeneralLiabilityCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PropertyManager:
+      properties:
+        type:
+          $ref: '#/components/schemas/PropertyManagerType'
+        is_additional_insured:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Is the property manager an additional insured?
+          example: 'no'
+          nullable: true
+        name:
+          type: string
+          title: Name
+        address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+        is_active_manager:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: 'Does the property manager performs all of the following: Tenant screening checks, at least quarterly inspections, and utilizes risk reduction clauses. Proof of eligibility may be requested. Falsification could result in denial of a claim.'
+          example: 'no'
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - name
+      - address
+      title: PropertyManager
+    LimitValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - limit
+          title: Type
+        value:
+          type: string
+          title: Value
+          description: Integer value
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: LimitValueRequest
+    ralphie__models__coverage_models__DwellingLossValuationOptionValueRequest__ValueOptions:
+      type: string
+      enum:
+      - actual_cash_value
+      - replacement_cost
+      - repair_cost
+      - extended_replacement_cost
+      - functional_replacement_cost
+      title: ValueOptions
+      description: An enumeration.
+    HotTubLiabilityExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - hot_tub_liability_exclusion
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/ExclusionDescriptionValueRequest'
+            - $ref: '#/components/schemas/ExclusionRiskTypeValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: HotTubLiabilityExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ConstructionType:
+      type: string
+      enum:
+      - frame
+      - brick_veneer
+      - brick_or_masonry_or_stone
+      - concrete
+      - log
+      - adobe_or_stucco
+      - asbestos
+      - other
+      - adobe_or_stucco_v2
+      - brick_solid
+      - cedar_siding
+      - cement_fiber_siding
+      - concrete_decorative
+      - concrete_exposed
+      - concrete_stucco
+      - log_v2
+      - metal_siding
+      - pre_engineered_metal
+      - vinyl_siding
+      title: ConstructionType
+      description: An enumeration.
+    ConfirmedPropertyStyle:
+      type: string
+      enum:
+      - barndominium_unit
+      - condominium_unit
+      title: ConfirmedPropertyStyle
+      description: An enumeration.
+    TrampolineOrReboundingDeviceCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - trampoline_or_rebounding_device
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/TrampolineOrReboundingDeviceExcludedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: TrampolineOrReboundingDeviceCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PropertyManagerType:
+      type: string
+      enum:
+      - person
+      - company
+      title: PropertyManagerType
+      description: An enumeration.
+    CalculatedProperty:
+      properties:
+        property_id:
+          type: string
+          title: Property ID used to match requests with results
+          example: 1a5f56
+        address:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+        property_details:
+          $ref: '#/components/schemas/CalculatedPropertyDetails'
+      type: object
+      required:
+      - property_id
+      - address
+      - property_details
+      title: CalculatedProperty
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    FireLightningExplosionSmokeExclusionValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - excluded
+          title: Type
+        value:
+          $ref: '#/components/schemas/YesNo'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: FireLightningExplosionSmokeExclusionValueRequest
+    SubmitPolicyTypeOptions:
+      type: string
+      enum:
+      - DP1
+      - DP2
+      - DP3
+      title: SubmitPolicyTypeOptions
+      description: An enumeration.
+    SubmitPropertyRequest:
+      properties:
+        address:
+          $ref: '#/components/schemas/OptionalPropertyAddress'
+        property_coverages:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CustomCoverageRequest'
+            - $ref: '#/components/schemas/AdditionalLivingCostsAndFairRentalValueCoverageRequest'
+            - $ref: '#/components/schemas/AllOtherPerilsDeductibleCoverageRequest'
+            - $ref: '#/components/schemas/BedBugInfestationCostReimbursementCoverageRequest'
+            - $ref: '#/components/schemas/HOAFinesCoverageRequest'
+            - $ref: '#/components/schemas/DwellingCoverageRequest'
+            - $ref: '#/components/schemas/LimitedHiddenWaterCoverageRequest'
+            - $ref: '#/components/schemas/LimitedRenovationCoverageRequest'
+            - $ref: '#/components/schemas/LimitedTheftCoverageRequest'
+            - $ref: '#/components/schemas/LossAssessmentCoverageRequest'
+            - $ref: '#/components/schemas/MineSubsidenceCoverageRequest'
+            - $ref: '#/components/schemas/MineSubsidenceDwellingCoverageRequest'
+            - $ref: '#/components/schemas/MineSubsidencePrivateStructuresCoverageRequest'
+            - $ref: '#/components/schemas/MineSubsidenceAdditionalLivingCostsAndFairRentalValueCoverageRequest'
+            - $ref: '#/components/schemas/MoldAndFungusDamageSubLimitCoverageRequest'
+            - $ref: '#/components/schemas/OrdinanceOrLawCoverageRequest'
+            - $ref: '#/components/schemas/PersonalInjuryLiabilityCoverageRequest'
+            - $ref: '#/components/schemas/PersonalPropertyCoverageRequest'
+            - $ref: '#/components/schemas/PrivateStructuresCoverageRequest'
+            - $ref: '#/components/schemas/SinkholeLossDwellingCoverageRequest'
+            - $ref: '#/components/schemas/SinkholeLossPersonalPropertyCoverageRequest'
+            - $ref: '#/components/schemas/SolarPanelCoverageRequest'
+            - $ref: '#/components/schemas/EquipmentBreakdownCoverageRequest'
+            - $ref: '#/components/schemas/ServiceLineCoverageRequest'
+            - $ref: '#/components/schemas/SquattersAndEvictionExpenseCoverageRequest'
+            - $ref: '#/components/schemas/TheftCoverageRequest'
+            - $ref: '#/components/schemas/VandalismOrMaliciousMischiefCoverageRequest'
+            - $ref: '#/components/schemas/WaterBackUpAndSumpOverflowOrDischargeCoverageRequest'
+            - $ref: '#/components/schemas/WaterDamageExclusionCoverageRequest'
+            - $ref: '#/components/schemas/WaterDamageLimitationCoverageRequest'
+            - $ref: '#/components/schemas/WaterDamagePerilsCoverageRequest'
+            - $ref: '#/components/schemas/WindAndHailDeductibleCoverageRequest'
+            - $ref: '#/components/schemas/AnnualPremiumIncreaseCoverageRequest'
+            - $ref: '#/components/schemas/GeneralLiabilityCoverageRequest'
+            - $ref: '#/components/schemas/LiabilityExclusionAnimalCoverageRequest'
+            - $ref: '#/components/schemas/RoofSurfacingExclusionCoverageRequest'
+            - $ref: '#/components/schemas/RoofSurfacingCoverageRequest'
+            - $ref: '#/components/schemas/TrampolineOrReboundingDeviceCoverageRequest'
+            - $ref: '#/components/schemas/CosmeticDamageCoverageRequest'
+            - $ref: '#/components/schemas/TerrorismCoverageRequest'
+            - $ref: '#/components/schemas/OffPremisesLiabilityExtensionRequest'
+            - $ref: '#/components/schemas/DogBiteCoverageRequest'
+            - $ref: '#/components/schemas/WindstormOrHailExclusionCoverageRequest'
+            - $ref: '#/components/schemas/HotTubLiabilityExclusionCoverageRequest'
+            - $ref: '#/components/schemas/SwimmingPoolExclusionCoverageRequest'
+            - $ref: '#/components/schemas/PrivateStructuresRoofExclusionCoverageRequest'
+            - $ref: '#/components/schemas/ExtendedReplacementCostCoverageRequest'
+            - $ref: '#/components/schemas/OutdoorApplianceExclusionCoverageRequest'
+            - $ref: '#/components/schemas/FireLightningExplosionSmokeExclusionCoverageRequest'
+            discriminator:
+              propertyName: name
+              mapping:
+                custom_coverage: '#/components/schemas/CustomCoverageRequest'
+                additional_living_costs_and_fair_rental_value: '#/components/schemas/AdditionalLivingCostsAndFairRentalValueCoverageRequest'
+                all_other_perils_deductible: '#/components/schemas/AllOtherPerilsDeductibleCoverageRequest'
+                bed_bug_infestation_cost_reimbursement: '#/components/schemas/BedBugInfestationCostReimbursementCoverageRequest'
+                hoa_fines: '#/components/schemas/HOAFinesCoverageRequest'
+                dwelling: '#/components/schemas/DwellingCoverageRequest'
+                limited_hidden_water: '#/components/schemas/LimitedHiddenWaterCoverageRequest'
+                limited_renovation: '#/components/schemas/LimitedRenovationCoverageRequest'
+                limited_theft: '#/components/schemas/LimitedTheftCoverageRequest'
+                loss_assessment: '#/components/schemas/LossAssessmentCoverageRequest'
+                mine_subsidence: '#/components/schemas/MineSubsidenceCoverageRequest'
+                mine_subsidence_dwelling: '#/components/schemas/MineSubsidenceDwellingCoverageRequest'
+                mine_subsidence_private_structures: '#/components/schemas/MineSubsidencePrivateStructuresCoverageRequest'
+                mine_subsidence_additional_living_costs_and_fair_rental_value: '#/components/schemas/MineSubsidenceAdditionalLivingCostsAndFairRentalValueCoverageRequest'
+                mold_and_fungus_damage_sublimit: '#/components/schemas/MoldAndFungusDamageSubLimitCoverageRequest'
+                ordinance_or_law: '#/components/schemas/OrdinanceOrLawCoverageRequest'
+                personal_injury_liability: '#/components/schemas/PersonalInjuryLiabilityCoverageRequest'
+                personal_property: '#/components/schemas/PersonalPropertyCoverageRequest'
+                private_structures: '#/components/schemas/PrivateStructuresCoverageRequest'
+                sinkhole_loss_dwelling: '#/components/schemas/SinkholeLossDwellingCoverageRequest'
+                sinkhole_loss_personal_property: '#/components/schemas/SinkholeLossPersonalPropertyCoverageRequest'
+                solar_panel: '#/components/schemas/SolarPanelCoverageRequest'
+                equipment_breakdown: '#/components/schemas/EquipmentBreakdownCoverageRequest'
+                service_line: '#/components/schemas/ServiceLineCoverageRequest'
+                squatters_and_eviction_expense: '#/components/schemas/SquattersAndEvictionExpenseCoverageRequest'
+                theft: '#/components/schemas/TheftCoverageRequest'
+                vandalism_or_malicious_mischief: '#/components/schemas/VandalismOrMaliciousMischiefCoverageRequest'
+                water_back_up_and_sump_overflow_or_discharge: '#/components/schemas/WaterBackUpAndSumpOverflowOrDischargeCoverageRequest'
+                water_damage_exclusion: '#/components/schemas/WaterDamageExclusionCoverageRequest'
+                water_damage_limitation: '#/components/schemas/WaterDamageLimitationCoverageRequest'
+                water_damage_perils: '#/components/schemas/WaterDamagePerilsCoverageRequest'
+                wind_and_hail_deductible: '#/components/schemas/WindAndHailDeductibleCoverageRequest'
+                annual_premium_increase: '#/components/schemas/AnnualPremiumIncreaseCoverageRequest'
+                general_liability: '#/components/schemas/GeneralLiabilityCoverageRequest'
+                liability_exclusion_animal: '#/components/schemas/LiabilityExclusionAnimalCoverageRequest'
+                roof_surfacing_exclusion: '#/components/schemas/RoofSurfacingExclusionCoverageRequest'
+                roof_surfacing: '#/components/schemas/RoofSurfacingCoverageRequest'
+                trampoline_or_rebounding_device: '#/components/schemas/TrampolineOrReboundingDeviceCoverageRequest'
+                cosmetic_damage: '#/components/schemas/CosmeticDamageCoverageRequest'
+                terrorism: '#/components/schemas/TerrorismCoverageRequest'
+                offpremises_liability_extension: '#/components/schemas/OffPremisesLiabilityExtensionRequest'
+                dog_bite: '#/components/schemas/DogBiteCoverageRequest'
+                windstorm_or_hail_exclusion: '#/components/schemas/WindstormOrHailExclusionCoverageRequest'
+                hot_tub_liability_exclusion: '#/components/schemas/HotTubLiabilityExclusionCoverageRequest'
+                swimming_pool_exclusion: '#/components/schemas/SwimmingPoolExclusionCoverageRequest'
+                private_structures_roof_exclusion: '#/components/schemas/PrivateStructuresRoofExclusionCoverageRequest'
+                extended_replacement_cost: '#/components/schemas/ExtendedReplacementCostCoverageRequest'
+                outdoor_appliance_exclusion: '#/components/schemas/OutdoorApplianceExclusionCoverageRequest'
+                fire_lightning_explosion_smoke_exclusion: '#/components/schemas/FireLightningExplosionSmokeExclusionCoverageRequest'
+          type: array
+          title: Property Coverages
+        property_manager:
+          $ref: '#/components/schemas/PropertyManager'
+          title: PropertyManager
+          nullable: true
+        property_details:
+          $ref: '#/components/schemas/QuoteSubmitPropertyDetailsRequest'
+          title: QuoteSubmitPropertyDetailsRequest
+          nullable: true
+        additional_insured:
+          items:
+            $ref: '#/components/schemas/AdditionalInsured'
+          type: array
+          title: Additional Insured
+          default: []
+        replacement_cost_estimate:
+          type: string
+          title: Replacement Cost Estimate
+          nullable: true
+        external_property_id:
+          type: string
+          title: External Property Id
+          nullable: true
+      type: object
+      required:
+      - address
+      title: SubmitPropertyRequest
+    AdditionalLivingCostsAndFairRentalValueCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - additional_living_costs_and_fair_rental_value
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: AdditionalLivingCostsAndFairRentalValueCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    TheftCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - theft
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+            - $ref: '#/components/schemas/DeductibleValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: TheftCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    OffPremisesLiabilityExtensionValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - selection_factor
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__OffPremisesLiabilityExtensionValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: OffPremisesLiabilityExtensionValueRequest
+    ExtendedReplacementCostCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - extended_replacement_cost
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/ExtendedReplacementCostSelectionFactorValueRequest'
+          type: array
+          title: Config
+        parent_coverage:
+          type: string
+          title: Parent Coverage
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: ExtendedReplacementCostCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ralphie__models__coverage_models__OffPremisesLiabilityExtensionValueRequest__ValueOptions:
+      type: string
+      enum:
+      - 10%
+      title: ValueOptions
+      description: An enumeration.
+    PropertyEstimate:
+      properties:
+        property_id:
+          type: string
+          title: Property ID used to match requests with results
+          example: 1a5f56
+        start_url:
+          type: string
+          title: Start Url
+          nullable: true
+        error:
+          type: string
+          title: Error
+          nullable: true
+        original_property:
+          $ref: '#/components/schemas/Property'
+        savings:
+          $ref: '#/components/schemas/Savings'
+          title: Savings
+          nullable: true
+        estimate:
+          $ref: '#/components/schemas/Estimate'
+          title: Estimate
+          nullable: true
+        estimate_metadata:
+          $ref: '#/components/schemas/PropertyEstimateMetadata'
+          title: PropertyEstimateMetadata
+          nullable: true
+        calculated_property:
+          $ref: '#/components/schemas/CalculatedProperty'
+          title: CalculatedProperty
+          nullable: true
+        minimum_earned_premium_days:
+          type: integer
+          title: Minimum earned premium expressed in days. Carrier retains the equivalent of this many days of premium even on early cancellation. Currently surfaced for fix_and_flip occupancy on Fortegra MMGA.
+          example: 90
+          nullable: true
+      type: object
+      required:
+      - property_id
+      - original_property
+      title: PropertyEstimate
+    LimitedTheftCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - limited_theft
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: LimitedTheftCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ralphie__models__coverage_models__WaterDamageLimitationSelectionFactorValueRequest__ValueOptions:
+      type: string
+      enum:
+      - 0%
+      - 10%
+      - 25%
+      - 50%
+      - 75%
+      - 100%
+      - '5000'
+      title: ValueOptions
+      description: An enumeration.
+    SubmitRequest:
+      properties:
+        external_record_id:
+          type: string
+          title: External Record Id
+        policy_type:
+          anyOf:
+          - $ref: '#/components/schemas/SubmitPolicyTypeOptions'
+          - type: string
+          title: Policy Type
+          nullable: true
+        primary_insured:
+          $ref: '#/components/schemas/SubmitPolicyholder'
+        additional_named_insured:
+          items:
+            $ref: '#/components/schemas/AdditionalNamedInsured'
+          type: array
+          title: Additional Named Insured
+          nullable: true
+        effective_date:
+          type: string
+          format: date
+          title: Effective Date
+          description: Effective date in YYYY-MM-DD format.
+          example: '2022-01-15'
+          nullable: true
+        properties:
+          items:
+            $ref: '#/components/schemas/SubmitPropertyRequest'
+          type: array
+          minItems: 1
+          title: Properties
+        policy_details:
+          $ref: '#/components/schemas/SubmitPolicyDetails'
+          title: SubmitPolicyDetails
+          nullable: true
+        policy_coverages:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CustomCoverageRequest'
+            - $ref: '#/components/schemas/MedicalPaymentsCoverageRequest'
+            - $ref: '#/components/schemas/PersonalLiabilityCoverageRequest'
+            - $ref: '#/components/schemas/PremisesLiabilityCoverageRequest'
+            discriminator:
+              propertyName: name
+              mapping:
+                custom_coverage: '#/components/schemas/CustomCoverageRequest'
+                medical_payments: '#/components/schemas/MedicalPaymentsCoverageRequest'
+                personal_liability: '#/components/schemas/PersonalLiabilityCoverageRequest'
+                premises_liability: '#/components/schemas/PremisesLiabilityCoverageRequest'
+          type: array
+          title: Policy Coverages
+          nullable: true
+        payment:
+          $ref: '#/components/schemas/SubmitPaymentRequest'
+          title: SubmitPaymentRequest
+          nullable: true
+        metadata:
+          type: string
+          title: Metadata
+          nullable: true
+      type: object
+      required:
+      - external_record_id
+      - primary_insured
+      title: SubmitRequest
+    RoofSurfacingCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - roof_surfacing
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/RoofSurfacingLossValuationOptionValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: RoofSurfacingCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    LimitDeductibleValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - limit_deductible
+          title: Type
+        value:
+          type: string
+          title: Value
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: LimitDeductibleValueRequest
+    TrampolineOrReboundingDeviceExcludedValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - excluded
+          title: Type
+        value:
+          $ref: '#/components/schemas/YesNo'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: TrampolineOrReboundingDeviceExcludedValueRequest
+    PersonalLiabilityLimitValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - limit
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__PersonalLiabilityLimitValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: PersonalLiabilityLimitValueRequest
+    PersonalPropertyCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - personal_property
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+            - $ref: '#/components/schemas/PersonalPropertyLossValuationOptionValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: PersonalPropertyCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    AdditionalNamedInsuredType:
+      type: string
+      enum:
+      - person
+      - company
+      - trust_or_estate
+      title: AdditionalNamedInsuredType
+      description: An enumeration.
+    ralphie__models__coverage_models__PersonalLiabilityLimitValueRequest__ValueOptions:
+      type: string
+      enum:
+      - '25000'
+      - '50000'
+      - '100000'
+      - '200000'
+      - '300000'
+      - '500000'
+      title: ValueOptions
+      description: An enumeration.
+    ralphie__models__coverage_models__LossAssessmentLimitValueRequest__ValueOptions:
+      type: string
+      enum:
+      - '1000'
+      - '5000'
+      - '10000'
+      - '15000'
+      - '20000'
+      - '25000'
+      - '50000'
+      title: ValueOptions
+      description: An enumeration.
+    EquipmentBreakdownCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - equipment_breakdown
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: EquipmentBreakdownCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    WindAndHailDeductibleCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - wind_and_hail_deductible
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/WindAndHailDeductibleDeductibleValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: WindAndHailDeductibleCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    HOAFinesCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - hoa_fines
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: HOAFinesCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    WaterDamageExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - water_damage_exclusion
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: WaterDamageExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    DogBiteCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - dog_bite
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: DogBiteCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    OrdinanceOrLawSelectionFactorValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - selection_factor
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__OrdinanceOrLawSelectionFactorValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: OrdinanceOrLawSelectionFactorValueRequest
+    VandalismOrMaliciousMischiefCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - vandalism_or_malicious_mischief
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/VandalismOrMaliciousMischiefSelectionFactorValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: VandalismOrMaliciousMischiefCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    AdditionalInsured:
+      properties:
+        type:
+          $ref: '#/components/schemas/AdditionalInsuredType'
+        name:
+          type: string
+          title: Name
+        loan_number:
+          type: string
+          title: Loan Number
+          description: Loan contract number. Comma separated values if there are multiple loan numbers.
+          example: JPM98765,12345
+          nullable: true
+        address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email of the additional insured
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - name
+      - address
+      title: AdditionalInsured
+    WindstormOrHailExclusionValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - excluded
+          title: Type
+        value:
+          $ref: '#/components/schemas/YesNo'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: WindstormOrHailExclusionValueRequest
+    SubmitResponse:
+      properties:
+        external_record_id:
+          type: string
+          title: External Record Id
+        policy_type:
+          anyOf:
+          - $ref: '#/components/schemas/SubmitPolicyTypeOptions'
+          - type: string
+          title: Policy Type
+          nullable: true
+        primary_insured:
+          $ref: '#/components/schemas/SubmitPolicyholder'
+        additional_named_insured:
+          items:
+            $ref: '#/components/schemas/AdditionalNamedInsured'
+          type: array
+          title: Additional Named Insured
+          nullable: true
+        effective_date:
+          type: string
+          format: date
+          title: Effective Date
+          description: Effective date in YYYY-MM-DD format.
+          example: '2022-01-15'
+          nullable: true
+        properties:
+          items:
+            $ref: '#/components/schemas/SubmitPropertyRequest'
+          type: array
+          title: Properties
+        policy_details:
+          $ref: '#/components/schemas/SubmitPolicyDetails'
+          title: SubmitPolicyDetails
+          nullable: true
+        policy_coverages:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CustomCoverageRequest'
+            - $ref: '#/components/schemas/MedicalPaymentsCoverageRequest'
+            - $ref: '#/components/schemas/PersonalLiabilityCoverageRequest'
+            - $ref: '#/components/schemas/PremisesLiabilityCoverageRequest'
+            discriminator:
+              propertyName: name
+              mapping:
+                custom_coverage: '#/components/schemas/CustomCoverageRequest'
+                medical_payments: '#/components/schemas/MedicalPaymentsCoverageRequest'
+                personal_liability: '#/components/schemas/PersonalLiabilityCoverageRequest'
+                premises_liability: '#/components/schemas/PremisesLiabilityCoverageRequest'
+          type: array
+          title: Policy Coverages
+          nullable: true
+        payment:
+          $ref: '#/components/schemas/SubmitPaymentRequest'
+          title: SubmitPaymentRequest
+          nullable: true
+        metadata:
+          type: string
+          title: Metadata
+          nullable: true
+      type: object
+      required:
+      - external_record_id
+      - primary_insured
+      title: SubmitResponse
+    MineSubsidenceCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - mine_subsidence
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: MineSubsidenceCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    SolarPanelCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - solar_panel
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: SolarPanelCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    TerrorismCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - terrorism
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: TerrorismCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ralphie__models__quote_estimate__PropertyDetails:
+      properties:
+        size_sqft:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Size of the property in square feet
+          example: 1800
+          nullable: true
+        year_built:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Year the property was built
+          example: 1980
+          nullable: true
+        property_type:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__PropertyType'
+          title: Type of property
+          example: SINGLE_FAMILY
+          nullable: true
+        number_of_units:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of units on the property
+          example: 1
+          nullable: true
+        replacement_value:
+          type: integer
+          minimum: 5000.0
+          title: Current replacement value of the property in USD
+          example: 125000
+          nullable: true
+        stories:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of stories
+          example: 2
+          nullable: true
+        land_value:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total assessed value of the land
+          example: '111065'
+          nullable: true
+        occupancy_type:
+          type: string
+          enum:
+          - fix_and_flip
+          - rental
+          title: Dwelling occupancy type. Defaults to rental when omitted.
+          example: fix_and_flip
+          nullable: true
+        rent:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Current monthly rental value in USD
+          deprecated: true
+          example: 2590
+          nullable: true
+        occupancy:
+          type: integer
+          maximum: 100.0
+          minimum: 0.0
+          title: Percentage of time the property is occupied
+          deprecated: true
+          example: 100
+          nullable: true
+        bedrooms:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of bedrooms
+          deprecated: true
+          example: 3
+          nullable: true
+        bathrooms:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Total number of bathrooms
+          deprecated: true
+          example: 2.5
+          nullable: true
+      type: object
+      title: PropertyDetails
+      description: Details of a property such as the size and type.
+    QuoteSubmitPropertyDetailsRequest:
+      properties:
+        year_built:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Year Built
+          description: Year Originally Built
+          example: '2007'
+          nullable: true
+        stories:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Stories
+          example: '2'
+          nullable: true
+        total_sq_feet:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Total Sq Feet
+          description: Building Size (Total Square Feet)
+          example: '1605'
+          nullable: true
+        property_type:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__mapped_models__PropertyType'
+          example: single_family
+          nullable: true
+        confirmed_property_style:
+          allOf:
+          - $ref: '#/components/schemas/ConfirmedPropertyStyle'
+          example: condominium_unit
+          nullable: true
+        construction_type:
+          allOf:
+          - $ref: '#/components/schemas/ConstructionType'
+          description: Construction type
+          example: frame
+          nullable: true
+        roof_type:
+          allOf:
+          - $ref: '#/components/schemas/RoofType'
+          description: Roof Type
+          example: asphalt_shingles
+          nullable: true
+        heating_sources:
+          items:
+            $ref: '#/components/schemas/HeatingSource'
+          type: array
+          description: Heating Sources
+          example:
+          - furnace_electric
+          nullable: true
+        has_barred_windows_over_50_percent:
+          type: string
+          title: Has Barred Windows Over 50 Percent
+          example: 'Yes'
+          nullable: true
+        days_uninsured:
+          type: integer
+          title: Days Uninsured
+          example: 1
+          nullable: true
+        central_station:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Does the property have a central station theft or fire alarm monitoring service?
+          example: 'no'
+          nullable: true
+        wrought_iron_bars:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Wrought Iron Bars
+          nullable: true
+        rental_duration:
+          allOf:
+          - $ref: '#/components/schemas/RentalDurationOptions'
+          description: How long do you typically rent for?
+          default: long_term
+          example: long_term
+          nullable: true
+        renovation_status:
+          allOf:
+          - $ref: '#/components/schemas/RenovationStatus'
+          description: Under Renovation or Construction?
+          example: not_under_renovation
+          nullable: true
+        pool_trampoline_hot_tub:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Does this property have a swimming pool, trampoline, or hot tub?
+          example: 'no'
+          nullable: true
+        intermittent_rental:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Intermittent Rental
+          nullable: true
+        building_quality:
+          allOf:
+          - $ref: '#/components/schemas/BuildingQuality'
+          example: standard
+          nullable: true
+        building_condition:
+          allOf:
+          - $ref: '#/components/schemas/BuildingCondition'
+          example: excellent
+          nullable: true
+        internal_data:
+          type: object
+          title: Internal Data
+          description: Extra data about the property used internally by Steadily
+          nullable: true
+        builder_name:
+          type: string
+          title: Builder Name
+          description: 'The name of the company that built this property. We currently recognize the following builders:
+
+            * adams homes
+
+            * american homes 4 rent
+
+            * ashton woods homes
+
+            * beazer homes
+
+            * betenbough homes
+
+            * bloomfield homes
+
+            * brookfield residential properties
+
+            * castlerock communities
+
+            * caviness and cates communities
+
+            * cbh homes
+
+            * century communities
+
+            * chesmar homes
+
+            * clayton properties group
+
+            * d.r. horton
+
+            * david weekley homes
+
+            * drb group
+
+            * dream finders homes
+
+            * drees homes
+
+            * dsld homes
+
+            * eastwood homes
+
+            * edge homes
+
+            * epcon communities
+
+            * first texas homes
+
+            * fischer homes
+
+            * gehan homes
+
+            * gl homes
+
+            * great southern homes
+
+            * green brick partners
+
+            * hayden homes
+
+            * highland homes
+
+            * historymaker homes
+
+            * holiday builders
+
+            * hovnanian enterprises
+
+            * ivory homes
+
+            * kb home
+
+            * kolter homes
+
+            * landsea homes
+
+            * legend homes
+
+            * lennar corp.
+
+            * lgi homes
+
+            * long lake
+
+            * m.d.c. holdings
+
+            * m/i homes
+
+            * maronda homes
+
+            * mattamy homes
+
+            * meritage homes
+
+            * minto communities
+
+            * neal communities of southwest florida
+
+            * nvr
+
+            * perry homes
+
+            * pultegroup
+
+            * rausch coleman homes
+
+            * shea homes
+
+            * smith douglas homes
+
+            * stanley martin homes
+
+            * stylecraft builders
+
+            * taylor morrison
+
+            * the challenger group
+
+            * the villages of lake sumter
+
+            * toll brothers
+
+            * tri pointe homes
+
+            * true homes
+
+            * view homes
+
+            * woodside homes'
+          example: Lennar Corp.
+          nullable: true
+        electrical_hvac_plumbing_renovated:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Has the electrical, HVAC, and plumbing been fully renovated within the last 30 years?
+          example: 'no'
+          nullable: true
+        fire_protection_class:
+          type: string
+          title: Fire Protection Class
+          description: Fire Protection Class
+          example: '9'
+          nullable: true
+        address_info_s3_url:
+          type: string
+          title: Address Info S3 Url
+          description: Additional address info stored in S3
+          example: s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I
+          nullable: true
+        wind_coverage_exclusion_zone:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Inidcates if an exposure in a wind excluded policy.
+          example: 'no'
+          nullable: true
+        ca_dic_zone:
+          type: string
+          title: Ca Dic Zone
+          description: Which exclusion zone this DIC (Difference in Condition) property falls in, if any.
+          examples:
+          - ineligible
+          - fire_lightning_explosion_smoke
+          nullable: true
+        foundation_type:
+          type: string
+          title: Foundation Type
+          description: Foundation Type
+          example: concrete_slab
+          nullable: true
+        garages:
+          items:
+            $ref: '#/components/schemas/Garage'
+          type: array
+          title: Garages
+          description: Garages
+          example:
+          - size: '2'
+          nullable: true
+        average_wall_height_feet:
+          type: number
+          title: Average Wall Height Feet
+          description: Average wall height in feet
+          example: 9.0
+          nullable: true
+        bathroom_details:
+          items:
+            $ref: '#/components/schemas/Bathroom'
+          type: array
+          title: Bathroom Details
+          description: Bathroom details
+          example:
+          - type: Full
+          nullable: true
+        bedrooms:
+          type: number
+          title: Bedrooms
+          description: Number of bedrooms
+          example: 3
+          nullable: true
+        fireplaces:
+          type: integer
+          title: Fireplaces
+          description: Number of fireplaces
+          example: 1
+          nullable: true
+        foundation_shape:
+          allOf:
+          - $ref: '#/components/schemas/FoundationShape'
+          description: Foundation Shape
+          example: square_rectangle
+          nullable: true
+        purchase_price_dollars:
+          type: integer
+          title: Purchase Price Dollars
+          description: The property purchase price in dollars
+          example:
+          - '100000'
+          - '5000'
+          - '1234567'
+          nullable: true
+        construction_budget_dollars:
+          type: integer
+          title: Construction Budget Dollars
+          description: The budget allocated for the construction or renovation of the property in dollars
+          example:
+          - '100000'
+          - '5000'
+          - '1234567'
+          nullable: true
+        construction_scope:
+          type: string
+          maxLength: 1024
+          title: Construction Scope
+          description: A brief description of the scope of the construction or renovation of the property
+          example:
+          - Five months, renovating the kitchen and bathrooms.
+          nullable: true
+        post_construction_occupancy:
+          allOf:
+          - $ref: '#/components/schemas/Occupancy'
+          description: The occupancy expectation post construction or renovation
+          example: rental
+          nullable: true
+        post_construction_outcome:
+          allOf:
+          - $ref: '#/components/schemas/PropertyPostConstructionOutcome'
+          description: What will be done with the property post construction or renovation?
+          example: rent
+          nullable: true
+      additionalProperties: false
+      type: object
+      title: QuoteSubmitPropertyDetailsRequest
+      description: 'Descriptive field values for a property.
+
+        Looked up from Steadily''s data sources and can be overridden through the API.
+
+        Fields are specified as optional to allow partially setting just relevant fields.'
+    BuildingQuality:
+      type: string
+      enum:
+      - economy
+      - standard
+      - above_average
+      - custom
+      - premium
+      title: BuildingQuality
+      description: An enumeration.
+    PropertyEstimateMetadata:
+      properties:
+        extra:
+          type: string
+          maxLength: 1024
+          title: Freeform string to store data with an estimate. JSON-encoded string recommended.
+          nullable: true
+      type: object
+      title: PropertyEstimateMetadata
+      description: Metadata to be associated with an estimate.
+    ralphie__models__coverage_models__ExclusionDescriptionValueRequest__ValueOptions:
+      type: string
+      enum:
+      - ''
+      - Accessory Dwelling Unit Insured on Another Policy
+      - Detached Barn
+      - Detached Carport
+      - Detached Garage
+      - Detached Pool House
+      - Detached Shed
+      - Detached Shed/Storage Unit
+      - Detached Structure
+      - Detached Structures Over and/or Partially Over Water
+      - Dock and Attached Deck
+      title: ValueOptions
+      description: An enumeration.
+    SubmitPolicyholder:
+      properties:
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        suffix:
+          type: string
+          title: Suffix
+          description: Name suffix such as Jr or II
+          nullable: true
+        company_name:
+          type: string
+          title: Company Name
+          nullable: true
+        date_of_birth:
+          type: string
+          format: date
+          title: Date Of Birth
+          nullable: true
+        phone_number:
+          type: string
+          title: Phone Number
+          nullable: true
+        email:
+          type: string
+          format: email
+          title: Email
+        mailing_address:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+          title: Address
+          nullable: true
+        previous_address:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+          title: Address
+          nullable: true
+      type: object
+      required:
+      - first_name
+      - last_name
+      - email
+      title: SubmitPolicyholder
+    ralphie__models__coverage_models__OrdinanceOrLawSelectionFactorValueRequest__ValueOptions:
+      type: string
+      enum:
+      - 10%
+      - 25%
+      title: ValueOptions
+      description: An enumeration.
+    OutdoorApplianceExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - outdoor_appliance_exclusion
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: OutdoorApplianceExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PrivateStructuresRoofExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - private_structures_roof_exclusion
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/ExclusionDescriptionValueRequest'
+            - $ref: '#/components/schemas/ExclusionRiskTypeValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: PrivateStructuresRoofExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    MedicalPaymentsCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - medical_payments
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitDeductibleValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: MedicalPaymentsCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    Estimate:
+      properties:
+        lowest:
+          type: integer
+          title: Lowest
+          deprecated: true
+          example: 800
+          nullable: true
+        dp_1:
+          type: integer
+          title: Dp 1
+          example: 1000
+          nullable: true
+        dp_3:
+          type: integer
+          title: Dp 3
+          example: 3000
+          nullable: true
+      type: object
+      title: Estimate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BedBugInfestationCostReimbursementCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - bed_bug_infestation_cost_reimbursement
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: BedBugInfestationCostReimbursementCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    SquattersAndEvictionExpenseCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - squatters_and_eviction_expense
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/SquattersAndEvictionExpenseLimitDeductibleValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: SquattersAndEvictionExpenseCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    MoldAndFungusDamageSubLimitCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - mold_and_fungus_damage_sublimit
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: MoldAndFungusDamageSubLimitCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PremisesLiabilityCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - premises_liability
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/PremisesLiabilityLimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: PremisesLiabilityCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    CustomCoverageValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - custom
+          title: Type
+        value:
+          type: string
+          title: Value
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+        custom_type:
+          type: string
+          title: Custom Type
+      type: object
+      required:
+      - type
+      - value
+      - custom_type
+      title: CustomCoverageValueRequest
+    LimitedHiddenWaterCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - limited_hidden_water
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: LimitedHiddenWaterCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PropertyPostConstructionOutcome:
+      type: string
+      enum:
+      - rent
+      - sell
+      title: PropertyPostConstructionOutcome
+      description: An enumeration.
+    WaterDamagePerilsCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - water_damage_perils
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: WaterDamagePerilsCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    EstimateEntityResponse:
+      properties:
+        entity_id:
+          type: string
+          format: uuid
+          title: Id of the prefilled quote
+          example: db62d0fb-ac08-425f-98c2-f89c2dff6c47
+        contact:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__Contact'
+          title: Contact
+          nullable: true
+        estimate:
+          $ref: '#/components/schemas/PropertyEstimate'
+          title: PropertyEstimate
+          nullable: true
+        referral_code:
+          type: string
+          title: Referral Code
+      type: object
+      required:
+      - entity_id
+      - referral_code
+      title: EstimateEntityResponse
+    LossAssessmentLimitValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - limit
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__LossAssessmentLimitValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: LossAssessmentLimitValueRequest
+    OrdinanceOrLawCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - ordinance_or_law
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/OrdinanceOrLawSelectionFactorValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: OrdinanceOrLawCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ralphie__models__coverage_models__WindAndHailDeductibleDeductibleValueRequest__ValueOptions:
+      type: string
+      enum:
+      - '500'
+      - '1000'
+      - '2000'
+      - '2500'
+      - '5000'
+      - '10000'
+      - 1%
+      - 2%
+      - 3%
+      - 5%
+      - 10%
+      title: ValueOptions
+      description: An enumeration.
+    PersonalInjuryLiabilityCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - personal_injury_liability
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: PersonalInjuryLiabilityCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ralphie__models__quote_estimate__Address:
+      properties:
+        street_address:
+          type: string
+          title: Street Address of property
+          example: 4825 Mount Sinyala Crossover
+          nullable: true
+        city:
+          type: string
+          title: United States city
+          example: Fort Wayne
+          nullable: true
+        state:
+          type: string
+          title: ISO 3166-2:US state
+          example: IN
+          nullable: true
+        zip_code:
+          type: string
+          title: Zip Code of the property
+          example: '46808'
+          nullable: true
+        county:
+          type: string
+          title: County of the property
+          example: Alameda
+          nullable: true
+        lat:
+          type: number
+          title: Latitude of the property
+          example: 33.789177
+          nullable: true
+        lng:
+          type: number
+          title: Longitude of the property
+          example: -117.793104
+          nullable: true
+      type: object
+      title: Address
+      description: Postal address information for a property
+    Garage:
+      properties:
+        size:
+          type: string
+          title: Garage Size
+          description: E. g. 1, 1.5, or 3
+      type: object
+      required:
+      - size
+      title: Garage
+    WindAndHailDeductibleDeductibleValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - deductible
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__WindAndHailDeductibleDeductibleValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: WindAndHailDeductibleDeductibleValueRequest
+    ralphie__models__coverage_models__PremisesLiabilityLimitValueRequest__ValueOptions:
+      type: string
+      enum:
+      - '25000'
+      - '50000'
+      - '100000'
+      - '200000'
+      - '300000'
+      - '500000'
+      - 1000000/2000000
+      title: ValueOptions
+      description: An enumeration.
+    PremisesLiabilityLimitValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - limit
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__PremisesLiabilityLimitValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: PremisesLiabilityLimitValueRequest
+    SwimmingPoolExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - swimming_pool_exclusion
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/ExclusionDescriptionValueRequest'
+            - $ref: '#/components/schemas/ExclusionRiskTypeValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: SwimmingPoolExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ExclusionRiskTypeValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - exclusion_risk_type
+          title: Type
+        value:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Value
+          nullable: true
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      title: ExclusionRiskTypeValueRequest
+    SublimitValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - sublimit
+          title: Type
+        value:
+          type: string
+          title: Value
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: SublimitValueRequest
+    PrivateStructuresCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - private_structures
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+            - $ref: '#/components/schemas/ExcludedValueRequest'
+            - $ref: '#/components/schemas/ExclusionDescriptionValueRequest'
+            - $ref: '#/components/schemas/ExclusionRiskTypeValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: PrivateStructuresCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PersonalLiabilityCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - personal_liability
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/PersonalLiabilityLimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: PersonalLiabilityCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    WaterBackUpAndSumpOverflowOrDischargeCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - water_back_up_and_sump_overflow_or_discharge
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: WaterBackUpAndSumpOverflowOrDischargeCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ralphie__models__coverage_models__SquattersAndEvictionExpenseLimitDeductibleValueRequest__ValueOptions:
+      type: string
+      enum:
+      - 2000/5000
+      - 6000/15000
+      - 10000/25000
+      title: ValueOptions
+      description: An enumeration.
+    WaterDamageLimitationSelectionFactorValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - selection_factor
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__WaterDamageLimitationSelectionFactorValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: WaterDamageLimitationSelectionFactorValueRequest
+    ralphie__models__quote_estimate__PropertyType:
+      type: string
+      enum:
+      - SINGLE_FAMILY
+      - DUPLEX
+      - TRIPLEX
+      - QUADPLEX
+      - APARTMENT_BUILDING
+      - MOBILE_HOME
+      - OTHER
+      title: PropertyType
+      description: An enumeration.
+    AnnualPremiumIncreaseCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - annual_premium_increase
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: AnnualPremiumIncreaseCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ralphie__models__coverage_models__VandalismOrMaliciousMischiefSelectionFactorValueRequest__ValueOptions:
+      type: string
+      enum:
+      - 5%
+      - 10%
+      - 25%
+      - 50%
+      - 100%
+      title: ValueOptions
+      description: An enumeration.
+    ralphie__models__coverage_models__RoofSurfacingLossValuationOptionValueRequest__ValueOptions:
+      type: string
+      enum:
+      - actual_cash_value
+      title: ValueOptions
+      description: An enumeration.
+    WindstormOrHailExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - windstorm_or_hail_exclusion
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/WindstormOrHailExclusionValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: WindstormOrHailExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    Bathroom:
+      properties:
+        type:
+          type: string
+          title: Bathroom type
+          description: e. g. Half, Full
+      type: object
+      required:
+      - type
+      title: Bathroom
+    WaterDamageLimitationCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - water_damage_limitation
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/WaterDamageLimitationSelectionFactorValueRequest'
+            - $ref: '#/components/schemas/SublimitValueRequest'
+            - $ref: '#/components/schemas/DeductibleValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: WaterDamageLimitationCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ExcludedValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - excluded
+          title: Type
+        value:
+          $ref: '#/components/schemas/YesNo'
+          nullable: true
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      title: ExcludedValueRequest
+    OptionalPropertyAddress:
+      properties:
+        street_address:
+          type: string
+          title: Street Address of property
+          example: 4825 Mount Sinyala Crossover
+        street_address_2:
+          type: string
+          title: Street Address 2
+          nullable: true
+        city:
+          type: string
+          title: United States city
+          example: Fort Wayne
+          nullable: true
+        state:
+          type: string
+          title: ISO 3166-2:US state
+          example: IN
+          nullable: true
+        zip_code:
+          type: string
+          title: Zip Code of the property
+          example: '46808'
+          nullable: true
+        county:
+          type: string
+          title: County
+          nullable: true
+      type: object
+      required:
+      - street_address
+      title: OptionalPropertyAddress
+    AdditionalNamedInsured:
+      properties:
+        type:
+          $ref: '#/components/schemas/AdditionalNamedInsuredType'
+        name:
+          type: string
+          title: Name
+        address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - name
+      - address
+      title: AdditionalNamedInsured
+    LossAssessmentCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - loss_assessment
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LossAssessmentLimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: LossAssessmentCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    Property:
+      properties:
+        property_id:
+          type: string
+          title: Property ID used to match requests with results
+          example: 1a5f56
+        current_premium:
+          type: integer
+          title: The current annual premium for the property
+          example: 1994
+          nullable: true
+        address:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+        property_details:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__PropertyDetails'
+          title: PropertyDetails
+          nullable: true
+        property_metadata:
+          $ref: '#/components/schemas/PropertyMetadata'
+          title: PropertyMetadata
+          nullable: true
+      type: object
+      required:
+      - property_id
+      - address
+      title: Property
+      description: 'Note: Some code generator clients may rename the Property class as ModelProperty if property is a reserved keyword'
+    OffPremisesLiabilityExtensionRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - offpremises_liability_extension
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/OffPremisesLiabilityExtensionValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: OffPremisesLiabilityExtensionRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    DeductibleValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - deductible
+          title: Type
+        value:
+          type: string
+          title: Value
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: DeductibleValueRequest
+    CalculatedPropertyDetails:
+      properties:
+        size_sqft:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Size of the property in square feet
+          example: 1800
+          nullable: true
+        year_built:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Year the property was built
+          example: 1980
+          nullable: true
+        number_of_units:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of units on the property
+          example: 1
+          nullable: true
+        property_type:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__PropertyType'
+          title: Type of property
+          example: SINGLE_FAMILY
+          nullable: true
+        replacement_value:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Current replacement value of the property in USD
+          example: 125000
+          nullable: true
+        land_value:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Current land value of the property in USD
+          example: 125000
+          nullable: true
+        stories:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of stories
+          example: 2
+          nullable: true
+        bedrooms:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of bedrooms
+          deprecated: true
+          example: 3
+          nullable: true
+        bathrooms:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Total number of bathrooms
+          deprecated: true
+          example: 2.5
+          nullable: true
+        construction_type:
+          type: string
+          title: Construction Type
+          nullable: true
+        roof_material_type:
+          type: string
+          title: Roof Material Type
+          nullable: true
+        roof_pitch:
+          type: string
+          title: Roof Pitch
+          nullable: true
+      type: object
+      title: CalculatedPropertyDetails
+      description: Details of a property such as the size and type based on our usage.
+    RoofSurfacingExclusionCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - roof_surfacing_exclusion
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: RoofSurfacingExclusionCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    ExtendedReplacementCostSelectionFactorValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - selection_factor
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__ExtendedReplacementCostSelectionFactorValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: ExtendedReplacementCostSelectionFactorValueRequest
+    SelectedValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - selected
+          title: Type
+        value:
+          $ref: '#/components/schemas/YesNo'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: SelectedValueRequest
+    RoofType:
+      type: string
+      enum:
+      - asbestos
+      - concrete_or_slate
+      - rubber_or_tar_and_gravel_or_rolled_roof
+      - metal_excluding_tin_or_aluminum
+      - asphalt_shingles
+      - tile
+      - tin_or_aluminum
+      - wood
+      - other
+      - architectural_shingle
+      - three_tab_shingle
+      - wood_shingle_shake
+      - impact_resistant_shingle
+      - clay
+      - concrete
+      - cement_fiber
+      - tile_shake
+      - standing_seam
+      - corrugated_galvanized
+      - painted_rib
+      - copper_shingle
+      - built_up_with_gravel
+      - built_up_without_gravel
+      - membrane
+      - sprayed_polyurethane_foam
+      - slate
+      - synthetic_composite
+      - solar_shingle
+      title: RoofType
+      description: An enumeration.
+    ralphie__models__coverage_models__ExtendedReplacementCostSelectionFactorValueRequest__ValueOptions:
+      type: string
+      enum:
+      - 10%
+      - 25%
+      title: ValueOptions
+      description: An enumeration.
+    SinkholeLossPersonalPropertyCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - sinkhole_loss_personal_property
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: SinkholeLossPersonalPropertyCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    VandalismOrMaliciousMischiefSelectionFactorValueRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - selection_factor
+          title: Type
+        value:
+          $ref: '#/components/schemas/ralphie__models__coverage_models__VandalismOrMaliciousMischiefSelectionFactorValueRequest__ValueOptions'
+        label:
+          type: string
+          title: Label
+          nullable: true
+        editable:
+          type: string
+          title: Editable
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - value
+      title: VandalismOrMaliciousMischiefSelectionFactorValueRequest
+    ralphie__models__mapped_models__PropertyType:
+      type: string
+      enum:
+      - single_family
+      - townhouse_or_rowhouse
+      - duplex
+      - triplex
+      - quadplex
+      - apartment_building
+      - manufactured_or_mobile_home
+      - other
+      - condominium_unit
+      - barndominium_unit
+      title: PropertyType
+      description: An enumeration.
+    FoundationShape:
+      type: string
+      enum:
+      - square_rectangle
+      - l_shape
+      - t_u_z_shape
+      - h_or_custom_shape
+      - irregular_complex
+      title: FoundationShape
+      description: An enumeration.
+    Savings:
+      properties:
+        current_premium:
+          type: integer
+          title: Current Premium
+          example: 910
+          nullable: true
+        lowest:
+          type: integer
+          title: Lowest
+          example: 800
+          nullable: true
+        savings:
+          type: integer
+          title: Savings
+          example: 110
+          nullable: true
+      type: object
+      title: Savings
+    SubmitPaymentScheduleTypes:
+      type: string
+      enum:
+      - full
+      - mortgagee_billed
+      - semi_annual
+      - quarterly
+      - monthly
+      title: SubmitPaymentScheduleTypes
+      description: An enumeration.
+    DwellingCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - dwelling
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+            - $ref: '#/components/schemas/DwellingLossValuationOptionValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: DwellingCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    PropertyMetadata:
+      properties:
+        extra:
+          type: string
+          maxLength: 1024
+          title: Freeform string to store data with a property. JSON-encoded string recommended.
+          nullable: true
+      type: object
+      title: PropertyMetadata
+      description: Metadata to be associated with a property.
+    ralphie__models__coverage_models__PersonalPropertyLossValuationOptionValueRequest__ValueOptions:
+      type: string
+      enum:
+      - actual_cash_value
+      - replacement_cost
+      - repair_cost
+      - extended_replacement_cost
+      - functional_replacement_cost
+      title: ValueOptions
+      description: An enumeration.
+    SinkholeLossDwellingCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - sinkhole_loss_dwelling
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/SelectedValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: SinkholeLossDwellingCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    MineSubsidenceAdditionalLivingCostsAndFairRentalValueCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - mine_subsidence_additional_living_costs_and_fair_rental_value
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitValueRequest'
+          type: array
+          title: Config
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      title: MineSubsidenceAdditionalLivingCostsAndFairRentalValueCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    CustomCoverageRequest:
+      properties:
+        name:
+          type: string
+          enum:
+          - custom_coverage
+          title: Name
+        config:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SelectedValueRequest'
+            - $ref: '#/components/schemas/LimitDeductibleValueRequest'
+            - $ref: '#/components/schemas/CustomCoverageValueRequest'
+          type: array
+          title: Config
+        coverage_name:
+          type: string
+          title: Coverage Name
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - config
+      - coverage_name
+      title: CustomCoverageRequest
+      description: 'Coverage request can specify just the list of coverages that need to change.
+
+        Anything unspecified is unmodified.
+
+        Coverages are de-selected rather than removed.
+
+        To de-select an optional coverage, set the "Selected" configuration to "no".'
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+    RentalDurationOptions:
+      type: string
+      enum:
+      - long_term
+      - short_term
+      title: RentalDurationOptions
+      description: An enumeration.
+    AdditionalInsuredType:
+      type: string
+      enum:
+      - person
+      - company
+      - mortgagee
+      - non_institutional_lender
+      - trust_or_estate
+      - homeowner_association
+      title: AdditionalInsuredType
+      description: An enumeration.
+    ralphie__models__address__Address:
+      properties:
+        street_address:
+          type: string
+          title: Street Address of property
+          example: 4825 Mount Sinyala Crossover
+        city:
+          type: string
+          title: United States city
+          example: Fort Wayne
+        state:
+          type: string
+          title: ISO 3166-2:US state
+          example: IN
+        zip_code:
+          type: string
+          title: Zip Code of the property
+          example: '46808'
+      type: object
+      required:
+      - street_address
+      - city
+      - state
+      - zip_code
+      title: Address
+      description: Postal address information for a property
+    YesNo:
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      title: YesNo
+      description: An enumeration.
+    ralphie__models__quote_estimate__Contact:
+      properties:
+        first_name:
+          type: string
+          maxLength: 100
+          title: Given (first) name of the insured
+          example: John
+          nullable: true
+        last_name:
+          type: string
+          maxLength: 100
+          title: Family (last) name of the insured
+          example: Smith
+          nullable: true
+        email:
+          type: string
+          format: email
+          title: Email address of the insured
+          example: john.smith@example.com
+          nullable: true
+        phone_number:
+          type: string
+          maxLength: 32
+          title: Phone number of the insured (format not validated)
+          example: '2605551234'
+          nullable: true
+        date_of_birth:
+          type: string
+          format: date
+          title: Date of birth in YYYY-MM-DD format
+          example: '1985-06-15'
+          nullable: true
+        company_name:
+          type: string
+          maxLength: 256
+          title: Company or LLC name of the insured
+          example: Smith Property Management LLC
+          nullable: true
+        mailing_address:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+          title: Mailing address of the insured (if different from property address)
+          nullable: true
+      type: object
+      title: Contact
+  securitySchemes:
+    APIKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-ApiKey
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-ApiKey
+    SecretKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-SecretKey
+    SecretKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-SecretKey

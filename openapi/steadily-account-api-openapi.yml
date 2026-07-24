@@ -1,0 +1,208 @@
+openapi: 3.1.0
+info:
+  title: Partner Account API
+  description: '
+
+    Get instant insurance quote estimates and manage referrals through our Partner API.
+
+    To request an API key contact partnerships-team@steadily.com
+
+    '
+  version: 1.0-cc63f79
+  x-logo:
+    url: https://app.staging.steadily.com/static/images/steadily-logo.svg
+    altText: Steadily
+    href: /redoc
+tags:
+- name: Account
+  description: '
+
+    Steadily uses Bearer Tokens to authenticate requests to the quoting endpoints on behalf of some appointed agent.
+
+
+    There''s two steps to this process:
+
+    1. Use your agency''s Steadily API Key to request a bearer token for an appointed insurance agent.
+
+    2. Use that bearer token to call all other quoting API endpoints by passing in an `Authorization: Bearer <token>` header.
+
+
+    Using the bearer token is equivalent to that agent performing the same action through our quoting UI.
+
+    '
+  x-displayName: Authentication
+paths:
+  /v1/account/info:
+    get:
+      tags:
+      - Account
+      summary: Who Am I
+      description: A basic endpoint used to verify the referral code associated with the provided API key.
+      operationId: who_am_i
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInfoResponse'
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+  /v1/account/agency/token:
+    post:
+      tags:
+      - Account
+      summary: Agent Bearer Token
+      description: 'Generate a Bearer token on behalf of a licensed insurance agent.
+
+
+        You can pass any agent email in the `agent.email` field of the token request to associate quotes with sub-agents in your organization.
+
+        The quote will be attributed to that agent as the producing agent and accessible to other agents under the same agency.
+
+        However, the agent must be appointed with Steadily in order for them to log in to our UI when bridging over.'
+      operationId: Agent Bearer Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/AccountAgencyTokenRequest'
+              title: Agent Info
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAgencyTokenResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    AccountInfoResponse:
+      properties:
+        referral_code:
+          type: string
+          title: Referral Code
+          nullable: true
+      type: object
+      title: AccountInfoResponse
+    AccountAgencyTokenRequest:
+      properties:
+        agent:
+          $ref: '#/components/schemas/AgentInformation'
+      type: object
+      required:
+      - agent
+      title: AccountAgencyTokenRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AgentInformation:
+      properties:
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        national_producer_number:
+          type: string
+          title: National Producer Number
+          nullable: true
+        licensed_states:
+          items:
+            $ref: '#/components/schemas/AgentStateInformation'
+          type: array
+          title: Licensed States
+        email:
+          type: string
+          format: email
+          title: Email
+        profile_id:
+          type: string
+          title: Profile Id
+          nullable: true
+      type: object
+      required:
+      - first_name
+      - last_name
+      - licensed_states
+      - email
+      title: AgentInformation
+    AgentStateInformation:
+      properties:
+        state:
+          type: string
+          title: State
+        state_producer_number:
+          type: string
+          title: State Producer Number
+          nullable: true
+      type: object
+      required:
+      - state
+      title: AgentStateInformation
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AccountAgencyTokenResponse:
+      properties:
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - token
+      title: AccountAgencyTokenResponse
+  securitySchemes:
+    APIKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-ApiKey
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-ApiKey
+    SecretKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-SecretKey
+    SecretKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-SecretKey

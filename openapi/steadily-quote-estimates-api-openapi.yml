@@ -1,0 +1,793 @@
+openapi: 3.1.0
+info:
+  title: Partner Account Quote Estimates API
+  description: '
+
+    Get instant insurance quote estimates and manage referrals through our Partner API.
+
+    To request an API key contact partnerships-team@steadily.com
+
+    '
+  version: 1.0-cc63f79
+  x-logo:
+    url: https://app.staging.steadily.com/static/images/steadily-logo.svg
+    altText: Steadily
+    href: /redoc
+tags:
+- name: Quote Estimates
+  description: '
+
+    The Instant Estimate API is a one-step express API to quickly get a landlord insurance estimate you can display within your platform.
+
+
+    To get started, you only need to send the address and a unique property_id from your system.
+
+    You''ll instantly get back a premium estimate and a link to a pre-filled application your customers can visit to finalize their quote.
+
+    '
+paths:
+  /v1/quote/estimate:
+    post:
+      tags:
+      - Quote Estimates
+      summary: Quote Estimate
+      operationId: quote_estimate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/EstimateRequest'
+              title: Req
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+  /v1/quote/instant-estimate:
+    post:
+      tags:
+      - Quote Estimates
+      summary: Instant Estimate
+      description: 'Instant estimate endpoint for high-volume requests.
+
+
+        Requires all properties to have complete address and property details:
+
+        - Address: street_address, city, state, zip_code, county, lat, lng
+
+        - Property Details: property_type, size_sqft, year_built
+
+
+        Optional primary_insured block prefills the downstream quote flow.'
+      operationId: instant_estimate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/InstantEstimateRequest'
+              title: Req
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    Property:
+      properties:
+        property_id:
+          type: string
+          title: Property ID used to match requests with results
+          example: 1a5f56
+        current_premium:
+          type: integer
+          title: The current annual premium for the property
+          example: 1994
+          nullable: true
+        address:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+        property_details:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__PropertyDetails'
+          title: PropertyDetails
+          nullable: true
+        property_metadata:
+          $ref: '#/components/schemas/PropertyMetadata'
+          title: PropertyMetadata
+          nullable: true
+      type: object
+      required:
+      - property_id
+      - address
+      title: Property
+      description: 'Note: Some code generator clients may rename the Property class as ModelProperty if property is a reserved keyword'
+    InstantEstimateProperty:
+      properties:
+        property_id:
+          type: string
+          title: Property ID used to match requests with results
+          example: 1a5f56
+        current_premium:
+          type: integer
+          title: The current annual premium for the property
+          example: 1994
+          nullable: true
+        address:
+          $ref: '#/components/schemas/InstantEstimateAddress'
+        property_details:
+          $ref: '#/components/schemas/InstantEstimatePropertyDetails'
+        property_metadata:
+          $ref: '#/components/schemas/PropertyMetadata'
+          title: PropertyMetadata
+          nullable: true
+      type: object
+      required:
+      - property_id
+      - address
+      - property_details
+      title: InstantEstimateProperty
+      description: Property with all fields required.
+    PropertyEstimate:
+      properties:
+        property_id:
+          type: string
+          title: Property ID used to match requests with results
+          example: 1a5f56
+        start_url:
+          type: string
+          title: Start Url
+          nullable: true
+        error:
+          type: string
+          title: Error
+          nullable: true
+        original_property:
+          $ref: '#/components/schemas/Property'
+        savings:
+          $ref: '#/components/schemas/Savings'
+          title: Savings
+          nullable: true
+        estimate:
+          $ref: '#/components/schemas/Estimate'
+          title: Estimate
+          nullable: true
+        estimate_metadata:
+          $ref: '#/components/schemas/PropertyEstimateMetadata'
+          title: PropertyEstimateMetadata
+          nullable: true
+        calculated_property:
+          $ref: '#/components/schemas/CalculatedProperty'
+          title: CalculatedProperty
+          nullable: true
+        minimum_earned_premium_days:
+          type: integer
+          title: Minimum earned premium expressed in days. Carrier retains the equivalent of this many days of premium even on early cancellation. Currently surfaced for fix_and_flip occupancy on Fortegra MMGA.
+          example: 90
+          nullable: true
+      type: object
+      required:
+      - property_id
+      - original_property
+      title: PropertyEstimate
+    EstimateFlow:
+      type: string
+      enum:
+      - default
+      - lender
+      title: EstimateFlow
+      description: Quote flow that an estimate's start_url links to.
+    InstantEstimateAddress:
+      properties:
+        street_address:
+          type: string
+          title: Street Address of property
+          example: 4825 Mount Sinyala Crossover
+        city:
+          type: string
+          title: United States city
+          example: Fort Wayne
+        state:
+          type: string
+          title: ISO 3166-2:US state
+          example: IN
+        zip_code:
+          type: string
+          title: Zip Code of the property
+          example: '46808'
+        county:
+          type: string
+          title: County of the property
+          example: Alameda
+        lat:
+          type: number
+          title: Latitude of the property
+          example: 33.789177
+        lng:
+          type: number
+          title: Longitude of the property
+          example: -117.793104
+      type: object
+      required:
+      - street_address
+      - city
+      - state
+      - zip_code
+      - county
+      - lat
+      - lng
+      title: InstantEstimateAddress
+      description: Address with all fields required.
+    EstimateRequest:
+      properties:
+        utm_source:
+          type: string
+          maxLength: 255
+          title: UTM Source
+          description: Identifies the traffic source associated with the estimate request.
+        utm_medium:
+          type: string
+          maxLength: 255
+          title: UTM Medium
+          description: Identifies the marketing medium associated with the estimate request.
+        utm_campaign:
+          type: string
+          maxLength: 255
+          title: UTM Campaign
+          description: Identifies the campaign associated with the estimate request.
+        utm_content:
+          type: string
+          maxLength: 255
+          title: UTM Content
+          description: Identifies the specific ad, placement, or experiment variant associated with the estimate request.
+        metadata:
+          $ref: '#/components/schemas/PropertyEstimateMetadata'
+        properties:
+          items:
+            $ref: '#/components/schemas/Property'
+          type: array
+          title: Properties
+        primary_insured:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__Contact'
+          title: Primary Insured
+          description: Primary insured contact details for prefilling the downstream quote flow. All sub-fields are optional.
+        flow:
+          allOf:
+          - $ref: '#/components/schemas/EstimateFlow'
+          title: Flow
+          description: 'Which flow start_url links to: ''default'' for the standard quote application, ''lender'' for the lender indication flow. Omitted means ''default''.'
+      type: object
+      required:
+      - properties
+      title: EstimateRequest
+      examples:
+      - properties:
+        - property_id: 1a5f56
+          address:
+            street_address: 123 Main St
+            city: Austin
+            state: TX
+            zip_code: '78701'
+    CalculatedPropertyDetails:
+      properties:
+        size_sqft:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Size of the property in square feet
+          example: 1800
+          nullable: true
+        year_built:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Year the property was built
+          example: 1980
+          nullable: true
+        number_of_units:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of units on the property
+          example: 1
+          nullable: true
+        property_type:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__PropertyType'
+          title: Type of property
+          example: SINGLE_FAMILY
+          nullable: true
+        replacement_value:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Current replacement value of the property in USD
+          example: 125000
+          nullable: true
+        land_value:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Current land value of the property in USD
+          example: 125000
+          nullable: true
+        stories:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of stories
+          example: 2
+          nullable: true
+        bedrooms:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of bedrooms
+          deprecated: true
+          example: 3
+          nullable: true
+        bathrooms:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Total number of bathrooms
+          deprecated: true
+          example: 2.5
+          nullable: true
+        construction_type:
+          type: string
+          title: Construction Type
+          nullable: true
+        roof_material_type:
+          type: string
+          title: Roof Material Type
+          nullable: true
+        roof_pitch:
+          type: string
+          title: Roof Pitch
+          nullable: true
+      type: object
+      title: CalculatedPropertyDetails
+      description: Details of a property such as the size and type based on our usage.
+    ralphie__models__quote_estimate__Address:
+      properties:
+        street_address:
+          type: string
+          title: Street Address of property
+          example: 4825 Mount Sinyala Crossover
+          nullable: true
+        city:
+          type: string
+          title: United States city
+          example: Fort Wayne
+          nullable: true
+        state:
+          type: string
+          title: ISO 3166-2:US state
+          example: IN
+          nullable: true
+        zip_code:
+          type: string
+          title: Zip Code of the property
+          example: '46808'
+          nullable: true
+        county:
+          type: string
+          title: County of the property
+          example: Alameda
+          nullable: true
+        lat:
+          type: number
+          title: Latitude of the property
+          example: 33.789177
+          nullable: true
+        lng:
+          type: number
+          title: Longitude of the property
+          example: -117.793104
+          nullable: true
+      type: object
+      title: Address
+      description: Postal address information for a property
+    Savings:
+      properties:
+        current_premium:
+          type: integer
+          title: Current Premium
+          example: 910
+          nullable: true
+        lowest:
+          type: integer
+          title: Lowest
+          example: 800
+          nullable: true
+        savings:
+          type: integer
+          title: Savings
+          example: 110
+          nullable: true
+      type: object
+      title: Savings
+    ralphie__models__quote_estimate__PropertyDetails:
+      properties:
+        size_sqft:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Size of the property in square feet
+          example: 1800
+          nullable: true
+        year_built:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Year the property was built
+          example: 1980
+          nullable: true
+        property_type:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__PropertyType'
+          title: Type of property
+          example: SINGLE_FAMILY
+          nullable: true
+        number_of_units:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of units on the property
+          example: 1
+          nullable: true
+        replacement_value:
+          type: integer
+          minimum: 5000.0
+          title: Current replacement value of the property in USD
+          example: 125000
+          nullable: true
+        stories:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of stories
+          example: 2
+          nullable: true
+        land_value:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total assessed value of the land
+          example: '111065'
+          nullable: true
+        occupancy_type:
+          type: string
+          enum:
+          - fix_and_flip
+          - rental
+          title: Dwelling occupancy type. Defaults to rental when omitted.
+          example: fix_and_flip
+          nullable: true
+        rent:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Current monthly rental value in USD
+          deprecated: true
+          example: 2590
+          nullable: true
+        occupancy:
+          type: integer
+          maximum: 100.0
+          minimum: 0.0
+          title: Percentage of time the property is occupied
+          deprecated: true
+          example: 100
+          nullable: true
+        bedrooms:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of bedrooms
+          deprecated: true
+          example: 3
+          nullable: true
+        bathrooms:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Total number of bathrooms
+          deprecated: true
+          example: 2.5
+          nullable: true
+      type: object
+      title: PropertyDetails
+      description: Details of a property such as the size and type.
+    PropertyEstimateMetadata:
+      properties:
+        extra:
+          type: string
+          maxLength: 1024
+          title: Freeform string to store data with an estimate. JSON-encoded string recommended.
+          nullable: true
+      type: object
+      title: PropertyEstimateMetadata
+      description: Metadata to be associated with an estimate.
+    EstimateResponse:
+      properties:
+        estimates:
+          items:
+            $ref: '#/components/schemas/PropertyEstimate'
+          type: array
+          title: Estimates
+      type: object
+      required:
+      - estimates
+      title: EstimateResponse
+    PropertyMetadata:
+      properties:
+        extra:
+          type: string
+          maxLength: 1024
+          title: Freeform string to store data with a property. JSON-encoded string recommended.
+          nullable: true
+      type: object
+      title: PropertyMetadata
+      description: Metadata to be associated with a property.
+    ralphie__models__quote_estimate__PropertyType:
+      type: string
+      enum:
+      - SINGLE_FAMILY
+      - DUPLEX
+      - TRIPLEX
+      - QUADPLEX
+      - APARTMENT_BUILDING
+      - MOBILE_HOME
+      - OTHER
+      title: PropertyType
+      description: An enumeration.
+    Estimate:
+      properties:
+        lowest:
+          type: integer
+          title: Lowest
+          deprecated: true
+          example: 800
+          nullable: true
+        dp_1:
+          type: integer
+          title: Dp 1
+          example: 1000
+          nullable: true
+        dp_3:
+          type: integer
+          title: Dp 3
+          example: 3000
+          nullable: true
+      type: object
+      title: Estimate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    CalculatedProperty:
+      properties:
+        property_id:
+          type: string
+          title: Property ID used to match requests with results
+          example: 1a5f56
+        address:
+          $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+        property_details:
+          $ref: '#/components/schemas/CalculatedPropertyDetails'
+      type: object
+      required:
+      - property_id
+      - address
+      - property_details
+      title: CalculatedProperty
+    InstantEstimatePropertyDetails:
+      properties:
+        property_type:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__PropertyType'
+          title: Type of property
+          example: SINGLE_FAMILY
+        size_sqft:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Size of the property in square feet
+          example: 1800
+        year_built:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Year the property was built
+          example: 1980
+        number_of_units:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of units on the property
+          example: 1
+          nullable: true
+        replacement_value:
+          type: integer
+          minimum: 5000.0
+          title: Current replacement value of the property in USD
+          example: 125000
+          nullable: true
+        stories:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total number of stories
+          example: 2
+          nullable: true
+        land_value:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Total assessed value of the land
+          example: '111065'
+          nullable: true
+        occupancy_type:
+          type: string
+          enum:
+          - fix_and_flip
+          - rental
+          title: Dwelling occupancy type. Defaults to rental when omitted.
+          example: fix_and_flip
+          nullable: true
+      type: object
+      required:
+      - property_type
+      - size_sqft
+      - year_built
+      title: InstantEstimatePropertyDetails
+      description: Property details with required fields.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    InstantEstimateRequest:
+      properties:
+        utm_source:
+          type: string
+          maxLength: 255
+          title: UTM Source
+          description: Identifies the traffic source associated with the estimate request.
+          nullable: true
+        utm_medium:
+          type: string
+          maxLength: 255
+          title: UTM Medium
+          description: Identifies the marketing medium associated with the estimate request.
+          nullable: true
+        utm_campaign:
+          type: string
+          maxLength: 255
+          title: UTM Campaign
+          description: Identifies the campaign associated with the estimate request.
+          nullable: true
+        utm_content:
+          type: string
+          maxLength: 255
+          title: UTM Content
+          description: Identifies the specific ad, placement, or experiment variant associated with the estimate request.
+          nullable: true
+        metadata:
+          $ref: '#/components/schemas/PropertyEstimateMetadata'
+          title: PropertyEstimateMetadata
+          nullable: true
+        properties:
+          items:
+            $ref: '#/components/schemas/InstantEstimateProperty'
+          type: array
+          maxItems: 1
+          minItems: 1
+          title: Properties
+          description: List of properties to estimate.
+        primary_insured:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__Contact'
+          title: Primary Insured
+          description: Primary insured contact details for prefilling the downstream quote flow. All sub-fields are optional.
+          nullable: true
+        flow:
+          allOf:
+          - $ref: '#/components/schemas/EstimateFlow'
+          title: Flow
+          description: 'Which flow start_url links to: ''default'' for the standard quote application, ''lender'' for the lender indication flow. Omitted means ''default''.'
+          nullable: true
+      type: object
+      required:
+      - properties
+      title: InstantEstimateRequest
+      description: Instant estimate request. Requires all address and specified property details fields to be provided.
+    ralphie__models__quote_estimate__Contact:
+      properties:
+        first_name:
+          type: string
+          maxLength: 100
+          title: Given (first) name of the insured
+          example: John
+          nullable: true
+        last_name:
+          type: string
+          maxLength: 100
+          title: Family (last) name of the insured
+          example: Smith
+          nullable: true
+        email:
+          type: string
+          format: email
+          title: Email address of the insured
+          example: john.smith@example.com
+          nullable: true
+        phone_number:
+          type: string
+          maxLength: 32
+          title: Phone number of the insured (format not validated)
+          example: '2605551234'
+          nullable: true
+        date_of_birth:
+          type: string
+          format: date
+          title: Date of birth in YYYY-MM-DD format
+          example: '1985-06-15'
+          nullable: true
+        company_name:
+          type: string
+          maxLength: 256
+          title: Company or LLC name of the insured
+          example: Smith Property Management LLC
+          nullable: true
+        mailing_address:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__quote_estimate__Address'
+          title: Mailing address of the insured (if different from property address)
+          nullable: true
+      type: object
+      title: Contact
+  securitySchemes:
+    APIKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-ApiKey
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-ApiKey
+    SecretKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-SecretKey
+    SecretKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-SecretKey

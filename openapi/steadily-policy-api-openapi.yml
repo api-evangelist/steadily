@@ -1,0 +1,1861 @@
+openapi: 3.1.0
+info:
+  title: Partner Account Policy API
+  description: '
+
+    Get instant insurance quote estimates and manage referrals through our Partner API.
+
+    To request an API key contact partnerships-team@steadily.com
+
+    '
+  version: 1.0-cc63f79
+  x-logo:
+    url: https://app.staging.steadily.com/static/images/steadily-logo.svg
+    altText: Steadily
+    href: /redoc
+tags:
+- name: Policy
+  description: '
+
+    A Policy is an issued insurance policy.
+
+
+    The declaration document and policy packet are available.
+
+    '
+paths:
+  /v1/agency/policy/{policy_id}:
+    get:
+      tags:
+      - Policy
+      summary: Get Policy
+      description: Retrieve a Policy.
+      operationId: get_policy
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: policy_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Policy Id
+      - name: aud
+        in: query
+        required: false
+        schema:
+          type: string
+          default: steadily:api
+          title: Aud
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ralphie__models__policy__PolicyStatus:
+      type: string
+      enum:
+      - issued
+      title: PolicyStatus
+      description: An enumeration.
+    PaymentScheduleTypes:
+      type: string
+      enum:
+      - full
+      - full_escrow
+      - mortgagee_billed
+      - semi_annual
+      - quarterly
+      - monthly
+      - monthly_eft
+      title: PaymentScheduleTypes
+      description: '| Payment Schedule | Description                           |
+
+        | ---------------- | ------------------------------------- |
+
+        | full             | Client pays in full (5% discount)     |
+
+        | monthly          | Monthly via credit card               |
+
+        | monthly_eft      | Monthly via ACH                       |
+
+        | mortgagee_billed | Mortgagee billed (Max 1 lender total) |
+
+        | full_escrow      | Deprecated                            |'
+    YesNo:
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      title: YesNo
+      description: An enumeration.
+    RenovationStatus:
+      type: string
+      enum:
+      - under_construction
+      - under_renovation
+      - not_under_renovation
+      title: RenovationStatus
+      description: An enumeration.
+    PropertyAddress:
+      properties:
+        street_address:
+          type: string
+          title: Street Address of property
+          example: 4825 Mount Sinyala Crossover
+        city:
+          type: string
+          title: United States city
+          example: Fort Wayne
+        state:
+          type: string
+          title: ISO 3166-2:US state
+          example: IN
+        zip_code:
+          type: string
+          title: Zip Code of the property
+          example: '46808'
+        county:
+          type: string
+          title: County
+          example: Maricopa
+          nullable: true
+        county_fips:
+          type: string
+          title: County FIPS
+          example: '04013'
+          nullable: true
+        lat:
+          type: number
+          title: Latitude of the property
+          example: 41.079273
+          nullable: true
+        lng:
+          type: number
+          title: Longitude of the property
+          example: -85.139351
+          nullable: true
+      type: object
+      required:
+      - street_address
+      - city
+      - state
+      - zip_code
+      title: PropertyAddress
+      description: Postal address information for a property
+    Document:
+      properties:
+        display_name:
+          type: string
+          title: Display Name
+          example: Policy Packet
+        file_name:
+          type: string
+          title: File Name
+          description: The file_name field will return documents with the following convention {display_name}.{file_format}
+          default: ''
+          example: policy_packet.pdf
+          nullable: true
+        file_code:
+          type: string
+          title: File Code
+          description: Source of truth for file type. Prefer this over file_name when filtering for the type of the file
+          example: QUOTE
+          nullable: true
+        url:
+          type: string
+          title: Url
+          description: A url to download the document. Document urls will expire within a few minutes.
+          example: https://example.com/unique_document_url?token=32424
+          nullable: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/DocumentStatus'
+          description: Status of the document being generated. If pending, document is not yet generated. If completed, document url is available
+          default: pending
+          example: pending
+        quote_version:
+          type: integer
+          title: Quote Version
+          nullable: true
+        quote_id:
+          type: string
+          title: Quote Id
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        steadily_universal_dwelling_id:
+          type: string
+          title: Steadily Universal Dwelling Id
+          description: Which dwelling this document corresponds to. Matches steadily_universal_dwelling_id from the dwelling response.
+          example: c67b1d514b26530ed0f8dedbb95a3a0c
+          nullable: true
+      type: object
+      required:
+      - display_name
+      - created_at
+      title: Document
+    BuildingCondition:
+      type: string
+      enum:
+      - excellent
+      - average
+      - fair
+      title: BuildingCondition
+      description: An enumeration.
+    ApiValidationError:
+      properties:
+        loc:
+          items:
+            type: string
+          type: array
+          title: Loc
+          description: The path to the field that caused the error
+          default: []
+        msg:
+          type: string
+          title: Msg
+        type:
+          type: string
+          title: Type
+        retryable:
+          type: boolean
+          title: Retryable
+          nullable: true
+        request_id:
+          type: string
+          title: Request Id
+          nullable: true
+        error_id:
+          type: string
+          title: Error Id
+          description: Internal error tracing ID
+          nullable: true
+        ctx:
+          type: object
+          title: Ctx
+          description: Error specific context
+          default: {}
+          nullable: true
+      type: object
+      required:
+      - msg
+      - type
+      title: ApiValidationError
+      description: 'Error schema based on Pydantic''s ValidationError
+
+        https://pydantic-docs.helpmanual.io/usage/models/#error-handling'
+    CoveragePriceResponse:
+      properties:
+        coverage_id:
+          type: string
+          title: Coverage Id
+        name:
+          type: string
+          title: Name
+        premium_cents:
+          type: integer
+          title: Premium Cents
+        taxes_cents:
+          type: integer
+          title: Taxes Cents
+        total_cents:
+          type: integer
+          title: Total Cents
+      type: object
+      required:
+      - coverage_id
+      - name
+      - premium_cents
+      - taxes_cents
+      - total_cents
+      title: CoveragePriceResponse
+    Policyholder:
+      properties:
+        first_name:
+          type: string
+          title: First Name
+          nullable: true
+        last_name:
+          type: string
+          title: Last Name
+          nullable: true
+        suffix:
+          type: string
+          title: Suffix
+          description: Name suffix such as Jr or II
+          nullable: true
+        company_name:
+          type: string
+          title: Company Name
+          nullable: true
+        date_of_birth:
+          type: string
+          format: date
+          title: Date Of Birth
+          nullable: true
+        phone_number:
+          type: string
+          title: Phone Number
+          nullable: true
+        email:
+          type: string
+          format: email
+          title: Email
+          description: email is marked as nullable, but API callers must always supply a valid email. Missing email will result in a runtime error.
+          nullable: true
+        mailing_address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+          title: Address
+          nullable: true
+        previous_address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+          title: Address
+          nullable: true
+        is_military_member:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Is the applicant a veteran of or serving in the United States Armed Forces? Proof of eligibility may be requested. Falsification could result in denial of a claim.
+          example: 'yes'
+          nullable: true
+        company_types:
+          allOf:
+          - $ref: '#/components/schemas/CompanyTypes'
+          title: Company Types
+          description: If the owner entity is a company, this field describes the companies operations.  Each key is a type of operation the business may engage in, and each value indicates if the copmany entity engages in it.
+          example:
+            contracting: 'yes'
+          nullable: true
+      type: object
+      title: Policyholder
+    QuotePriceResponse:
+      properties:
+        property_premiums:
+          items:
+            $ref: '#/components/schemas/PropertyPriceResponse'
+          type: array
+          title: Property Premiums
+        payment_option:
+          $ref: '#/components/schemas/PaymentOption'
+        payment_options_available:
+          items:
+            $ref: '#/components/schemas/PaymentOption'
+          type: array
+          title: Payment Options Available
+      type: object
+      required:
+      - property_premiums
+      - payment_option
+      - payment_options_available
+      title: QuotePriceResponse
+      description: Gives more detailed, pricing breakdown.
+    CoverageType:
+      type: string
+      enum:
+      - limit
+      - sublimit
+      - deductible
+      - limit_deductible
+      - loss_valuation_option
+      - selection_factor
+      - selected
+      - excluded
+      - exclusion_description
+      - exclusion_risk_type
+      - custom
+      title: CoverageType
+      description: An enumeration.
+    CoverageValueResponse:
+      properties:
+        type:
+          $ref: '#/components/schemas/CoverageType'
+        value:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Value
+        label:
+          type: string
+          title: Label
+        default:
+          type: string
+          title: Default
+          nullable: true
+        options:
+          items:
+            type: string
+          type: array
+          title: Options
+          nullable: true
+        options_additional_allowed:
+          $ref: '#/components/schemas/YesNo'
+          nullable: true
+        min:
+          type: integer
+          title: Min
+          nullable: true
+        max:
+          type: integer
+          title: Max
+          nullable: true
+        editable:
+          $ref: '#/components/schemas/YesNo'
+        bumped_from_value:
+          type: string
+          title: Bumped From Value
+          nullable: true
+        bumped_description:
+          type: string
+          title: Bumped Description
+          nullable: true
+      type: object
+      required:
+      - type
+      - value
+      - label
+      - editable
+      title: CoverageValueResponse
+    PropertyResponse:
+      properties:
+        property_id:
+          type: string
+          title: Property Id
+          example: acf85fa5-4200-4303-96ba-012e546ff628
+        address:
+          $ref: '#/components/schemas/PropertyAddress'
+        property_coverages:
+          items:
+            $ref: '#/components/schemas/CoverageResponse'
+          type: array
+          title: Property Coverages
+        property_manager:
+          $ref: '#/components/schemas/PropertyManager'
+          title: PropertyManager
+          nullable: true
+        property_details:
+          $ref: '#/components/schemas/QuotePropertyDetails'
+          title: QuotePropertyDetails
+          nullable: true
+        property_acknowledgements:
+          $ref: '#/components/schemas/PropertyAcknowledgementsResponse'
+          title: PropertyAcknowledgementsResponse
+          nullable: true
+        additional_insured:
+          items:
+            $ref: '#/components/schemas/AdditionalInsured'
+          type: array
+          title: Additional Insured
+          default: []
+        replacement_cost_estimate:
+          type: integer
+          title: Replacement Cost Estimate
+          description: Replacement cost estimate (Buildings only)
+          example: '375000'
+        user_replacement_cost:
+          $ref: '#/components/schemas/UserReplacementCost'
+          title: UserReplacementCost
+          nullable: true
+        moratoriums:
+          items:
+            $ref: '#/components/schemas/MatchedMoratorium'
+          type: array
+          title: Moratoriums
+          description: List of moratoriums affecting this property. A moratorium indicates that we may be unable to issue a policy for this quote.
+          default: []
+        duplicate_address_policies:
+          $ref: '#/components/schemas/DuplicateAddressPolicies'
+          title: DuplicateAddressPolicies
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - property_id
+      - address
+      - property_coverages
+      - replacement_cost_estimate
+      title: PropertyResponse
+    AdditionalNamedInsuredType:
+      type: string
+      enum:
+      - person
+      - company
+      - trust_or_estate
+      title: AdditionalNamedInsuredType
+      description: An enumeration.
+    ContractStatus:
+      type: string
+      enum:
+      - pending
+      - completed
+      - rejected
+      - voided
+      title: ContractStatus
+      description: An enumeration.
+    QuoteUnderwritingApplicationQuestions:
+      properties:
+        disclaimer:
+          type: string
+          title: Disclaimer
+          nullable: true
+        questions_prefix:
+          type: string
+          title: Questions Prefix
+          nullable: true
+        questions:
+          items:
+            $ref: '#/components/schemas/UwAppQuestion'
+          type: array
+          title: Questions
+          nullable: true
+      type: object
+      title: QuoteUnderwritingApplicationQuestions
+    PolicyTypeOptions:
+      type: string
+      enum:
+      - DP1
+      - DP2
+      - DP3
+      title: PolicyTypeOptions
+      description: An enumeration.
+    MatchedMoratorium:
+      properties:
+        moratorium_id:
+          type: string
+          title: Moratorium Id
+      type: object
+      required:
+      - moratorium_id
+      title: MatchedMoratorium
+    Occupancy:
+      type: string
+      enum:
+      - owner_and_tenant
+      - rental
+      - seasonal
+      - vacant
+      - fix_and_flip
+      - landlord_primary_home
+      title: Occupancy
+      description: An enumeration.
+    HeatingSource:
+      type: string
+      enum:
+      - furnace_electric
+      - furnace_natural_gas
+      - propane_gas
+      - oil
+      - wood_burning_stove_or_fireplace
+      - other
+      title: HeatingSource
+      description: An enumeration.
+    IpodUnderwritingStatementContent:
+      properties:
+        content:
+          type: string
+          title: Content
+        items:
+          items:
+            $ref: '#/components/schemas/IpodUnderwritingStatementContent'
+          type: array
+          title: Items
+      type: object
+      title: IpodUnderwritingStatementContent
+    pymodels_ipod__pydantic_v1__standard_mga__property_details__Bathroom:
+      properties:
+        type:
+          type: string
+          title: Bathroom type
+          description: e. g. Half, Full
+      type: object
+      required:
+      - type
+      title: Bathroom
+    RoofType:
+      type: string
+      enum:
+      - asbestos
+      - concrete_or_slate
+      - rubber_or_tar_and_gravel_or_rolled_roof
+      - metal_excluding_tin_or_aluminum
+      - asphalt_shingles
+      - tile
+      - tin_or_aluminum
+      - wood
+      - other
+      - architectural_shingle
+      - three_tab_shingle
+      - wood_shingle_shake
+      - impact_resistant_shingle
+      - clay
+      - concrete
+      - cement_fiber
+      - tile_shake
+      - standing_seam
+      - corrugated_galvanized
+      - painted_rib
+      - copper_shingle
+      - built_up_with_gravel
+      - built_up_without_gravel
+      - membrane
+      - sprayed_polyurethane_foam
+      - slate
+      - synthetic_composite
+      - solar_shingle
+      title: RoofType
+      description: An enumeration.
+    InsuranceScoreEstimate:
+      type: integer
+      enum:
+      - 999
+      - 725
+      - 865
+      title: InsuranceScoreEstimate
+      description: An enumeration.
+    QuotePaymentResponse:
+      properties:
+        schedule:
+          $ref: '#/components/schemas/PaymentScheduleTypes'
+        payment_schedule_discount:
+          $ref: '#/components/schemas/YesNo'
+      type: object
+      required:
+      - schedule
+      - payment_schedule_discount
+      title: QuotePaymentResponse
+    DuplicateAddressPolicies:
+      properties:
+        deferral_reason:
+          type: string
+          title: Deferral Reason
+          description: If set causes deferral of duplicate address lookup until cleared
+        lookup_status:
+          $ref: '#/components/schemas/LookupStatus'
+        policies:
+          type: object
+          title: Policies
+      type: object
+      title: DuplicateAddressPolicies
+    CompanyTypes:
+      properties:
+        contracting:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Does the entity engage in contracting operations?
+          example: 'yes'
+          nullable: true
+        operations_beyond_rental_property_ownership_and_maintenance:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Does the entity engage in operations beyond rental property ownership and maintenance?
+          example: 'yes'
+          nullable: true
+      type: object
+      title: CompanyTypes
+      description: 'Note: these values are intentionally not mutually exclusive.  They work like tags with tag values.'
+    ContractResponse:
+      properties:
+        contract_id:
+          type: string
+          title: Contract Id
+        status:
+          $ref: '#/components/schemas/ContractStatus'
+      type: object
+      required:
+      - contract_id
+      - status
+      title: ContractResponse
+    ralphie__models__mapped_models__PropertyType:
+      type: string
+      enum:
+      - single_family
+      - townhouse_or_rowhouse
+      - duplex
+      - triplex
+      - quadplex
+      - apartment_building
+      - manufactured_or_mobile_home
+      - other
+      - condominium_unit
+      - barndominium_unit
+      title: PropertyType
+      description: An enumeration.
+    AdditionalInsured:
+      properties:
+        type:
+          $ref: '#/components/schemas/AdditionalInsuredType'
+        name:
+          type: string
+          title: Name
+        loan_number:
+          type: string
+          title: Loan Number
+          description: Loan contract number. Comma separated values if there are multiple loan numbers.
+          example: JPM98765,12345
+          nullable: true
+        address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email of the additional insured
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - name
+      - address
+      title: AdditionalInsured
+    PolicyDetails:
+      properties:
+        insurance_score_estimate:
+          allOf:
+          - $ref: '#/components/schemas/InsuranceScoreEstimate'
+          description: 'Estimated Insurance Score: Average(999) or Good(725)'
+          example: 725
+          nullable: true
+        is_paperless:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          example: 'yes'
+          nullable: true
+        occupancy:
+          allOf:
+          - $ref: '#/components/schemas/Occupancy'
+          description: Dwelling Occupancy
+          example: rental
+        similar_insurance_declined:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Has the applicant had similar insurance declined, cancelled, or non-renewed in the last 5 years?
+          example: 'no'
+          nullable: true
+        self_reported_claims:
+          items:
+            $ref: '#/components/schemas/SelfReportedClaims'
+          type: array
+          title: Self Reported Claims
+          nullable: true
+        unique_tracking_id:
+          type: string
+          title: Unique Tracking Id
+          description: Unique ID to track origin of policy
+          example: id-12345
+          nullable: true
+        wind_coverage_excluded:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: If 'yes' this policy does NOT provide wind coverage.  Otherwise, wind coverage is included.
+          example: 'no'
+          nullable: true
+        ca_dic:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Whether or not this is a Difference in Condition (DIC) policy.
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - occupancy
+      title: PolicyDetails
+    PropertyManager:
+      properties:
+        type:
+          $ref: '#/components/schemas/PropertyManagerType'
+        is_additional_insured:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Is the property manager an additional insured?
+          example: 'no'
+          nullable: true
+        name:
+          type: string
+          title: Name
+        address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+        is_active_manager:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: 'Does the property manager performs all of the following: Tenant screening checks, at least quarterly inspections, and utilizes risk reduction clauses. Proof of eligibility may be requested. Falsification could result in denial of a claim.'
+          example: 'no'
+          nullable: true
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - name
+      - address
+      title: PropertyManager
+    QuoteUnderwritingResponse:
+      properties:
+        attestation:
+          anyOf:
+          - $ref: '#/components/schemas/IpodUnderwritingAttestation'
+          - items:
+              anyOf:
+              - $ref: '#/components/schemas/AttestationStatement'
+              - type: string
+            type: array
+          title: Attestation
+          example:
+          - Agents must communicate these attestations to the applicant verbatim and receive their confirmation. Failure to communicate these attestations to the applicant is an E&O exposure, and could result in claim denial. Applicants attest to the following and confirm that the information provided for the application is true and correct. Applicant understands that failure to provide accurate information and/or complete any required documentation could result in policy cancellation or denial of a claim.
+          - '**Applicant HAS:**
+
+
+
+            - No open claims with any other insurance carrier (unless explicitly approved by Steadily underwriting).
+
+            - Disclosed all losses, whether reported or unreported, that have occurred at the location(s) listed in the policy application or at any other location owned, operated, or managed by the applicant or any affiliated parties within the 60 months immediately preceding the policy''s effective date.'
+          - '**Applicant has NOT:**
+
+
+
+            - Had dwelling insurance non-renewed or canceled due to underwriting reasons (unless explicitly approved by Steadily underwriting).
+
+            - Had a history of arson or insurance fraud.'
+          - 'Attest to the following dwelling conditions for all risks scheduled on the policy:'
+          - Is NOT a mobile or manufactured home, a non-permanent structure, or part of a parcel with 5+ units.
+          - Is NOT located on more than 20 acres.
+          - Is NOT under construction, in foreclosure, condemned, or abandoned and will not be vacant for more than 60 days.
+          - Primary heat sources are thermostatically controlled.
+          - Does NOT have knob & tube wiring; aluminum wiring or fuse boxes.
+          - Is NOT used by sororities or fraternities, as halfway homes, assisted living facilities, nursing homes, daycares, schools or group homes or shelters.
+          - Does NOT have attractive nuisances such as empty swimming pools, playfort in front yard, or unprotected hot tub.
+          - Pools, spas, ponds or hot tubs which are enclosed by a 4 foot high, permanently installed fence with locking capability.
+          - Trampolines have safety netting installed and are enclosed by a 4 foot high, permanently installed fence with locking capability.
+          - Any existing disputes or issues concerning the habitability of the dwelling or the tenant's right to occupy the residence will render the property ineligible.
+          nullable: true
+        answer:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          example: 'no'
+          nullable: true
+        application_questions:
+          allOf:
+          - $ref: '#/components/schemas/QuoteUnderwritingApplicationQuestions'
+          title: Application Questions
+          example: ''
+          nullable: true
+      type: object
+      title: QuoteUnderwritingResponse
+    FoundationShape:
+      type: string
+      enum:
+      - square_rectangle
+      - l_shape
+      - t_u_z_shape
+      - h_or_custom_shape
+      - irregular_complex
+      title: FoundationShape
+      description: An enumeration.
+    Installment:
+      properties:
+        amount_cents:
+          type: integer
+          title: Amount Cents
+          example: 0
+        due_date:
+          type: string
+          format: date
+          title: Due Date
+          example: '2021-04-24'
+      type: object
+      required:
+      - amount_cents
+      - due_date
+      title: Installment
+    SelfReportedClaims:
+      properties:
+        date_of_loss:
+          type: string
+          format: date
+          title: Date of Loss
+          description: Approximate date of the loss
+          nullable: true
+        loss_reason:
+          allOf:
+          - $ref: '#/components/schemas/LossReason'
+          title: Loss Reason
+          example: weather
+          nullable: true
+        loss_amount_dollars:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Loss Amount in Dollars
+          nullable: true
+        caused_by_catastrophe:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          title: Loss related to Catastrophe
+          nullable: true
+      additionalProperties: false
+      type: object
+      title: SelfReportedClaims
+      description: Details of any self-reported claims
+    DocumentStatus:
+      type: string
+      enum:
+      - pending
+      - completed
+      title: DocumentStatus
+      description: An enumeration.
+    InsuranceStructure:
+      type: string
+      enum:
+      - COI_MASTER_MGA
+      - STANDARD_MGA
+      - XMGA
+      - ARCHIVED
+      title: InsuranceStructure
+      description: An enumeration.
+    PropertyPriceResponse:
+      properties:
+        property_id:
+          type: string
+          title: Property Id
+        coverage_premiums:
+          items:
+            $ref: '#/components/schemas/CoveragePriceResponse'
+          type: array
+          title: Coverage Premiums
+        premium_cents:
+          type: integer
+          title: Premium Cents
+        taxes_cents:
+          type: integer
+          title: Taxes Cents
+        total_cents:
+          type: integer
+          title: Total Cents
+        minimum_earned_premium_type:
+          $ref: '#/components/schemas/Type'
+          nullable: true
+        minimum_earned_premium_scalar_amount:
+          type: integer
+          minimum: 0.0
+          title: Minimum Earned Premium Scalar Amount
+          nullable: true
+        minimum_earned_premium_cents:
+          type: integer
+          minimum: 0.0
+          title: Minimum Earned Premium Cents
+          nullable: true
+      type: object
+      required:
+      - property_id
+      - coverage_premiums
+      - premium_cents
+      - taxes_cents
+      - total_cents
+      title: PropertyPriceResponse
+    BuildingQuality:
+      type: string
+      enum:
+      - economy
+      - standard
+      - above_average
+      - custom
+      - premium
+      title: BuildingQuality
+      description: An enumeration.
+    QuotePropertyDetails:
+      properties:
+        year_built:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Year Built
+          description: Year Originally Built
+          example: '2007'
+          nullable: true
+        stories:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Stories
+          example: '2'
+          nullable: true
+        total_sq_feet:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Total Sq Feet
+          description: Building Size (Total Square Feet)
+          example: '1605'
+          nullable: true
+        property_type:
+          allOf:
+          - $ref: '#/components/schemas/ralphie__models__mapped_models__PropertyType'
+          example: single_family
+          nullable: true
+        confirmed_property_style:
+          allOf:
+          - $ref: '#/components/schemas/ConfirmedPropertyStyle'
+          example: condominium_unit
+          nullable: true
+        construction_type:
+          allOf:
+          - $ref: '#/components/schemas/ConstructionType'
+          description: Construction type
+          example: frame
+          nullable: true
+        roof_type:
+          allOf:
+          - $ref: '#/components/schemas/RoofType'
+          description: Roof Type
+          example: asphalt_shingles
+          nullable: true
+        heating_sources:
+          items:
+            $ref: '#/components/schemas/HeatingSource'
+          type: array
+          description: Heating Sources
+          example:
+          - furnace_electric
+          nullable: true
+        has_barred_windows_over_50_percent:
+          type: string
+          title: Has Barred Windows Over 50 Percent
+          example: 'Yes'
+          nullable: true
+        days_uninsured:
+          type: integer
+          title: Days Uninsured
+          example: 1
+          nullable: true
+        central_station:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Does the property have a central station theft or fire alarm monitoring service?
+          example: 'no'
+          nullable: true
+        wrought_iron_bars:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Wrought Iron Bars
+          nullable: true
+        rental_duration:
+          allOf:
+          - $ref: '#/components/schemas/RentalDurationOptions'
+          description: How long do you typically rent for?
+          default: long_term
+          example: long_term
+          nullable: true
+        renovation_status:
+          allOf:
+          - $ref: '#/components/schemas/RenovationStatus'
+          description: Under Renovation or Construction?
+          example: not_under_renovation
+          nullable: true
+        pool_trampoline_hot_tub:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Does this property have a swimming pool, trampoline, or hot tub?
+          example: 'no'
+          nullable: true
+        intermittent_rental:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Intermittent Rental
+          nullable: true
+        building_quality:
+          allOf:
+          - $ref: '#/components/schemas/BuildingQuality'
+          example: standard
+          nullable: true
+        building_condition:
+          allOf:
+          - $ref: '#/components/schemas/BuildingCondition'
+          example: excellent
+          nullable: true
+        internal_data:
+          type: object
+          title: Internal Data
+          description: Extra data about the property used internally by Steadily
+          nullable: true
+        builder_name:
+          type: string
+          title: Builder Name
+          description: 'The name of the company that built this property. We currently recognize the following builders:
+
+            * adams homes
+
+            * american homes 4 rent
+
+            * ashton woods homes
+
+            * beazer homes
+
+            * betenbough homes
+
+            * bloomfield homes
+
+            * brookfield residential properties
+
+            * castlerock communities
+
+            * caviness and cates communities
+
+            * cbh homes
+
+            * century communities
+
+            * chesmar homes
+
+            * clayton properties group
+
+            * d.r. horton
+
+            * david weekley homes
+
+            * drb group
+
+            * dream finders homes
+
+            * drees homes
+
+            * dsld homes
+
+            * eastwood homes
+
+            * edge homes
+
+            * epcon communities
+
+            * first texas homes
+
+            * fischer homes
+
+            * gehan homes
+
+            * gl homes
+
+            * great southern homes
+
+            * green brick partners
+
+            * hayden homes
+
+            * highland homes
+
+            * historymaker homes
+
+            * holiday builders
+
+            * hovnanian enterprises
+
+            * ivory homes
+
+            * kb home
+
+            * kolter homes
+
+            * landsea homes
+
+            * legend homes
+
+            * lennar corp.
+
+            * lgi homes
+
+            * long lake
+
+            * m.d.c. holdings
+
+            * m/i homes
+
+            * maronda homes
+
+            * mattamy homes
+
+            * meritage homes
+
+            * minto communities
+
+            * neal communities of southwest florida
+
+            * nvr
+
+            * perry homes
+
+            * pultegroup
+
+            * rausch coleman homes
+
+            * shea homes
+
+            * smith douglas homes
+
+            * stanley martin homes
+
+            * stylecraft builders
+
+            * taylor morrison
+
+            * the challenger group
+
+            * the villages of lake sumter
+
+            * toll brothers
+
+            * tri pointe homes
+
+            * true homes
+
+            * view homes
+
+            * woodside homes'
+          example: Lennar Corp.
+          nullable: true
+        electrical_hvac_plumbing_renovated:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Has the electrical, HVAC, and plumbing been fully renovated within the last 30 years?
+          example: 'no'
+          nullable: true
+        fire_protection_class:
+          type: string
+          title: Fire Protection Class
+          description: Fire Protection Class
+          example: '9'
+          nullable: true
+        address_info_s3_url:
+          type: string
+          title: Address Info S3 Url
+          description: Additional address info stored in S3
+          example: s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I
+          nullable: true
+        wind_coverage_exclusion_zone:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: Inidcates if an exposure in a wind excluded policy.
+          example: 'no'
+          nullable: true
+        ca_dic_zone:
+          type: string
+          title: Ca Dic Zone
+          description: Which exclusion zone this DIC (Difference in Condition) property falls in, if any.
+          examples:
+          - ineligible
+          - fire_lightning_explosion_smoke
+          nullable: true
+        foundation_type:
+          type: string
+          title: Foundation Type
+          description: Foundation Type
+          example: concrete_slab
+          nullable: true
+        garages:
+          items:
+            $ref: '#/components/schemas/pymodels_ipod__pydantic_v1__standard_mga__property_details__Garage'
+          type: array
+          title: Garages
+          description: Garages
+          example:
+          - size: '2'
+          nullable: true
+        average_wall_height_feet:
+          type: number
+          title: Average Wall Height Feet
+          description: Average wall height in feet
+          example: 9.0
+          nullable: true
+        bathroom_details:
+          items:
+            $ref: '#/components/schemas/pymodels_ipod__pydantic_v1__standard_mga__property_details__Bathroom'
+          type: array
+          title: Bathroom Details
+          description: Bathroom details
+          example:
+          - type: Full
+          nullable: true
+        bedrooms:
+          type: number
+          title: Bedrooms
+          description: Number of bedrooms
+          example: 3
+          nullable: true
+        fireplaces:
+          type: integer
+          title: Fireplaces
+          description: Number of fireplaces
+          example: 1
+          nullable: true
+        foundation_shape:
+          allOf:
+          - $ref: '#/components/schemas/FoundationShape'
+          description: Foundation Shape
+          example: square_rectangle
+          nullable: true
+      type: object
+      title: QuotePropertyDetails
+      description: 'Descriptive field values for a property.
+
+        Looked up from Steadily''s data sources and can be overridden through the API.
+
+        Fields are specified as optional to allow partially setting just relevant fields.'
+    LossReason:
+      type: string
+      enum:
+      - weather
+      - fire
+      - water_appliance
+      - water
+      - theft
+      - earthquake
+      - liability
+      - medical
+      - other
+      title: LossReason
+      description: An enumeration.
+    ConstructionType:
+      type: string
+      enum:
+      - frame
+      - brick_veneer
+      - brick_or_masonry_or_stone
+      - concrete
+      - log
+      - adobe_or_stucco
+      - asbestos
+      - other
+      - adobe_or_stucco_v2
+      - brick_solid
+      - cedar_siding
+      - cement_fiber_siding
+      - concrete_decorative
+      - concrete_exposed
+      - concrete_stucco
+      - log_v2
+      - metal_siding
+      - pre_engineered_metal
+      - vinyl_siding
+      title: ConstructionType
+      description: An enumeration.
+    ConfirmedPropertyStyle:
+      type: string
+      enum:
+      - barndominium_unit
+      - condominium_unit
+      title: ConfirmedPropertyStyle
+      description: An enumeration.
+    Type:
+      type: string
+      enum:
+      - days
+      - flat_cents
+      title: Type
+      description: An enumeration.
+    SurchargeResponse:
+      properties:
+        label:
+          type: string
+          title: Label
+          description: The regulatory label that must be displayed when collecting payment
+          example: Credit card transaction fee
+        state:
+          type: string
+          title: State
+          description: The US state this surcharge applies to
+          example: NY
+        amount_cents:
+          type: integer
+          title: Amount Cents
+          description: The surcharge amount in cents
+          example: 200
+        rate_basis_points:
+          type: integer
+          title: Rate Basis Points
+          description: Surcharge rate expressed in basis points (1 basis point = 0.01%)
+          example: 200
+        applies_to_payment_method:
+          type: string
+          title: Applies To Payment Method
+          description: The payment method this surcharge applies to
+          example: credit_card
+      type: object
+      required:
+      - label
+      - state
+      - amount_cents
+      - rate_basis_points
+      - applies_to_payment_method
+      title: SurchargeResponse
+    IpodUnderwritingAttestation:
+      properties:
+        answer:
+          $ref: '#/components/schemas/YesNo'
+        statement:
+          $ref: '#/components/schemas/IpodUnderwritingStatementContent'
+        notice:
+          $ref: '#/components/schemas/IpodUnderwritingStatementContent'
+      type: object
+      title: IpodUnderwritingAttestation
+    UwAppQuestion:
+      properties:
+        name:
+          type: string
+          title: Name
+        prefix:
+          type: string
+          title: Prefix
+          nullable: true
+        text:
+          items:
+            type: string
+          type: array
+          title: Text
+        answer:
+          type: string
+          title: Answer
+          nullable: true
+      type: object
+      required:
+      - name
+      - text
+      title: UwAppQuestion
+    PropertyManagerType:
+      type: string
+      enum:
+      - person
+      - company
+      title: PropertyManagerType
+      description: An enumeration.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SigningRequirements:
+      properties:
+        requires_diligent_effort_affidavit:
+          type: boolean
+          title: Requires Diligent Effort Affidavit
+          default: false
+        requires_esignature_consent:
+          type: boolean
+          title: Requires Esignature Consent
+          default: false
+      type: object
+      title: SigningRequirements
+      description: Signing steps the agent must complete during the quote flow.
+    RentalDurationOptions:
+      type: string
+      enum:
+      - long_term
+      - short_term
+      title: RentalDurationOptions
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UserReplacementCost:
+      properties:
+        purchase_price:
+          type: integer
+          maximum: 50000000.0
+          minimum: 0.0
+          title: Purchase Price
+        renovation_cost:
+          type: integer
+          maximum: 50000000.0
+          minimum: 0.0
+          title: Renovation Cost
+      type: object
+      required:
+      - purchase_price
+      - renovation_cost
+      title: UserReplacementCost
+    PaymentOption:
+      properties:
+        plan:
+          type: string
+          title: Plan
+          example: full
+        label:
+          type: string
+          title: Label
+          example: ''
+        premium_cents:
+          type: integer
+          title: Premium Cents
+          example: 90003
+        minimum_earned_premium_cents:
+          type: integer
+          minimum: 0.0
+          title: Minimum Earned Premium Cents
+          nullable: true
+        fees_cents:
+          type: integer
+          title: Fees Cents
+          example: 0
+        taxes_cents:
+          type: integer
+          title: Taxes Cents
+          example: 0
+        total_cents:
+          type: integer
+          title: Total Cents
+          example: 90003
+        installments:
+          items:
+            $ref: '#/components/schemas/Installment'
+          type: array
+          title: Installments
+        surcharges:
+          items:
+            $ref: '#/components/schemas/SurchargeResponse'
+          type: array
+          title: Surcharges
+      type: object
+      required:
+      - plan
+      - label
+      - premium_cents
+      - fees_cents
+      - taxes_cents
+      - total_cents
+      - installments
+      title: PaymentOption
+    LookupStatus:
+      type: string
+      enum:
+      - unknown
+      - started
+      - skipped
+      - failed
+      - succeeded
+      title: LookupStatus
+      description: An enumeration.
+    pymodels_ipod__pydantic_v1__standard_mga__property_details__Garage:
+      properties:
+        size:
+          type: string
+          title: Garage Size
+          description: E. g. 1, 1.5, or 3
+      type: object
+      required:
+      - size
+      title: Garage
+    PolicyResponse:
+      properties:
+        policy_type:
+          allOf:
+          - $ref: '#/components/schemas/PolicyTypeOptions'
+          example: DP3
+        insurance_structure:
+          $ref: '#/components/schemas/InsuranceStructure'
+          nullable: true
+        primary_insured:
+          $ref: '#/components/schemas/Policyholder'
+        additional_named_insured:
+          items:
+            $ref: '#/components/schemas/AdditionalNamedInsured'
+          type: array
+          title: Additional Named Insured
+          nullable: true
+        effective_date:
+          type: string
+          format: date
+          title: Effective Date
+          description: Effective date in YYYY-MM-DD format. Defaults to today.
+          example: '2022-01-15'
+        effective_date_timezone:
+          type: string
+          title: Effective Date Timezone
+          nullable: true
+        policy_details:
+          $ref: '#/components/schemas/PolicyDetails'
+          title: PolicyDetails
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          nullable: true
+        previous_policy_id:
+          type: string
+          title: Previous Policy Id
+          nullable: true
+        renewal_policy_id:
+          type: string
+          title: Renewal Policy Id
+          nullable: true
+        renewal_quote_id:
+          type: string
+          title: Renewal Quote Id
+          nullable: true
+        renewal_status:
+          $ref: '#/components/schemas/RenewalStatus'
+          nullable: true
+        renewal_start_date:
+          type: string
+          format: date
+          title: Renewal Start Date
+          nullable: true
+        renewal_end_date:
+          type: string
+          format: date
+          title: Renewal End Date
+          nullable: true
+        properties:
+          items:
+            $ref: '#/components/schemas/PropertyResponse'
+          type: array
+          title: Properties
+        policy_coverages:
+          items:
+            $ref: '#/components/schemas/CoverageResponse'
+          type: array
+          title: Policy Coverages
+        payment:
+          $ref: '#/components/schemas/QuotePaymentResponse'
+          title: QuotePaymentResponse
+          nullable: true
+        underwriting:
+          $ref: '#/components/schemas/QuoteUnderwritingResponse'
+          title: QuoteUnderwritingResponse
+          nullable: true
+        signing_requirements:
+          $ref: '#/components/schemas/SigningRequirements'
+        agent_ui_url:
+          type: string
+          title: Agent Ui Url
+          description: Direct link to Agent UI, which can be used to complete quote.
+          example: https://app.steadily.com/spa/create-policy/?policy_loc={policy_id}
+          nullable: true
+        errors:
+          items:
+            $ref: '#/components/schemas/ApiValidationError'
+          type: array
+          title: Errors
+          nullable: true
+        carrier:
+          type: string
+          title: Carrier
+        public_policy_id:
+          type: string
+          title: Public Policy Id
+          example: OB3-AZ-100034386
+          nullable: true
+        pricing:
+          $ref: '#/components/schemas/QuotePriceResponse'
+          title: QuotePriceResponse
+          nullable: true
+        status:
+          $ref: '#/components/schemas/ralphie__models__policy__PolicyStatus'
+        policy_id:
+          type: string
+          title: Policy Id
+          example: pol_100034386
+        documents:
+          items:
+            $ref: '#/components/schemas/Document'
+          type: array
+          title: Documents
+        mandatory_policyholder_agreement_contract:
+          $ref: '#/components/schemas/ContractResponse'
+          title: ContractResponse
+          nullable: true
+      type: object
+      required:
+      - policy_type
+      - primary_insured
+      - properties
+      - policy_coverages
+      - carrier
+      - public_policy_id
+      - status
+      - policy_id
+      - documents
+      title: PolicyResponse
+      description: Base response structure, shared by DraftQuote, QuoteOffer, etc.
+    AdditionalInsuredType:
+      type: string
+      enum:
+      - person
+      - company
+      - mortgagee
+      - non_institutional_lender
+      - trust_or_estate
+      - homeowner_association
+      title: AdditionalInsuredType
+      description: An enumeration.
+    AdditionalNamedInsured:
+      properties:
+        type:
+          $ref: '#/components/schemas/AdditionalNamedInsuredType'
+        name:
+          type: string
+          title: Name
+        address:
+          $ref: '#/components/schemas/ralphie__models__address__Address'
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - name
+      - address
+      title: AdditionalNamedInsured
+    ralphie__models__address__Address:
+      properties:
+        street_address:
+          type: string
+          title: Street Address of property
+          example: 4825 Mount Sinyala Crossover
+        city:
+          type: string
+          title: United States city
+          example: Fort Wayne
+        state:
+          type: string
+          title: ISO 3166-2:US state
+          example: IN
+        zip_code:
+          type: string
+          title: Zip Code of the property
+          example: '46808'
+      type: object
+      required:
+      - street_address
+      - city
+      - state
+      - zip_code
+      title: Address
+      description: Postal address information for a property
+    RenewalStatus:
+      type: string
+      enum:
+      - draft
+      - quoted
+      - bound
+      - invalidated
+      title: RenewalStatus
+      description: An enumeration.
+    CoverageResponse:
+      properties:
+        name:
+          type: string
+          title: Name
+          example: water_damage_limitation
+        parent_coverage:
+          type: string
+          title: Parent Coverage
+          example: equipment_breakdown
+        config:
+          items:
+            $ref: '#/components/schemas/CoverageValueResponse'
+          type: array
+          title: Config
+          default: []
+        label:
+          type: string
+          title: Label
+          example: Water Damage Limitation
+      type: object
+      required:
+      - name
+      title: CoverageResponse
+      example:
+        name: water_damage_limitation
+        config:
+        - type: limit
+          label: Water Damage Limitation
+          value: 10%
+          default: 10%
+          options:
+          - 10%
+          - 25%
+          - 50%
+          - 75%
+          - 100%
+          editable: 'yes'
+        - type: sublimit
+          label: Water Damage Limitation - Fungi Rot Sublimit
+          value: '5000'
+          default: '5000'
+          options:
+          - '5000'
+          - '10000'
+          editable: 'no'
+    AttestationStatement:
+      properties:
+        content:
+          type: string
+          title: Content
+          nullable: true
+        items:
+          items:
+            $ref: '#/components/schemas/AttestationStatement'
+          type: array
+          title: Items
+          nullable: true
+      type: object
+      title: AttestationStatement
+    PropertyAcknowledgementsResponse:
+      properties:
+        steadily_roof_condition_exclusion_user_agrees_to_all_terms:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          description: If 'yes' the agent and insured understand that a roof exclusion has been automatically applied to their policy
+          nullable: true
+        claims_automations:
+          items:
+            type: object
+          type: array
+          title: Claims Automations
+          description: Claims-driven coverage decisions applied to this property, present once applied
+          nullable: true
+      type: object
+      title: PropertyAcknowledgementsResponse
+  securitySchemes:
+    APIKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-ApiKey
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-ApiKey
+    SecretKeyQuery:
+      type: apiKey
+      in: query
+      name: X-Steadily-SecretKey
+    SecretKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Steadily-SecretKey
