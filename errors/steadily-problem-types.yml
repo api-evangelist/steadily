@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/steadily-partner-openapi-original.json
+format: json
+envelope:
+  media_type: application/json
+  shape: FastAPI validation-error envelope — a top-level `detail[]` array of
+    ValidationError objects; each carries `loc` (path to the offending field),
+    `msg` (human message), and `type` (machine error code).
+  schema: '#/components/schemas/HTTPValidationError'
+notes: >-
+  The Steadily Partner API is a FastAPI application. Across all 20 operations the
+  only documented non-2xx response is HTTP 422 (Unprocessable Entity) carrying the
+  standard FastAPI HTTPValidationError body. The spec does not enumerate 4xx auth
+  errors (401/403) or 5xx errors, and responses are application/json (not
+  application/problem+json / RFC 9457).
+problems:
+- status: 422
+  title: Validation Error
+  media_type: application/json
+  schema: '#/components/schemas/HTTPValidationError'
+  detail_item_schema: '#/components/schemas/ValidationError'
+  fields:
+  - loc: array of string|integer — location of the failing input (e.g. ["body", "email"])
+  - msg: string — human-readable error message
+  - type: string — machine-readable error type (e.g. "value_error", "missing")
+  applies_to_operations:
+  - Agent Bearer Token
+  - quote_estimate
+  - instant_estimate
+  - refer_lead
+  - get_lead
+  - partner_lead
+  - partner_account
+  - partner_policy
+  - partner_summary
+  - lender_fuzzy_policy_search
+  - quote_create
+  - quote_list
+  - quote_info
+  - quote_update
+  - price_quote
+  - underwriting_info
+  - offer_quote
+  - get_offer
+  - get_policy

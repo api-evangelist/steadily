@@ -1,0 +1,28 @@
+{
+  "provider": "steadily",
+  "sources": [
+    "steadily-account-api-openapi.yml",
+    "steadily-draft-quote-api-openapi.yml",
+    "steadily-lead-referrals-api-openapi.yml",
+    "steadily-lender-api-openapi.yml",
+    "steadily-policy-api-openapi.yml",
+    "steadily-quote-estimates-api-openapi.yml",
+    "steadily-quote-offer-api-openapi.yml",
+    "steadily-reporting-api-openapi.yml"
+  ],
+  "outputs": [
+    "steadily-account-api-openapi.yml",
+    "steadily-draft-quote-api-openapi.yml",
+    "steadily-lead-referrals-api-openapi.yml",
+    "steadily-lender-api-openapi.yml",
+    "steadily-policy-api-openapi.yml",
+    "steadily-quote-estimates-api-openapi.yml",
+    "steadily-quote-offer-api-openapi.yml",
+    "steadily-reporting-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

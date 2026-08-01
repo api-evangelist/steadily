@@ -1,27 +1,312 @@
 aid: steadily
 name: Steadily
-description: 'Steadily is a company surfaced as a portfolio company of matrix-partners and added to the
-  API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: >-
+  Steadily is a US landlord-insurance provider — built by landlords, for landlords —
+  writing rental-property policies in all 50 states with online quotes in minutes and
+  coverage designed around how rental properties actually work. Its Partner API, a
+  FastAPI-based REST service at api.steadily.com, lets property managers, lenders, and
+  marketplaces generate instant insurance estimates, refer leads, and track bound
+  policies. Appointed independent agencies use the companion Rater Quotes API to
+  create, price, underwrite, and offer quotes directly from their rater. Steadily was
+  founded by a landlord who could not find decent insurance for his own rental property.
 url: https://raw.githubusercontent.com/api-evangelist/steadily/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://app.steadily.com/static/images/steadily-logo.svg
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - matrix-partners
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Fintech
-apis: []
+- Insurance
+- Landlord Insurance
+- Insurtech
+- Real Estate
+- Rental Property
+- API
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: steadily:steadily-account-api
+  name: Steadily Account API
+  description: >-
+    Steadily uses Bearer Tokens to authenticate requests to the quoting endpoints on behalf of some appointed
+    agent.
+
+
+    There's two steps to this process:
+
+    1. Use your agency's Steadily API Key to request a bearer token for an appointed insurance agent.
+
+    2. Use that bearer token to call all other quoting API endpoints by passing in an `Authorization:
+    Bearer <token>` header.
+
+
+    Using the bearer token is equivalent to that agent performing the same action through our quoting
+    UI.
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-account-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
+- aid: steadily:steadily-draft-quote-api
+  name: Steadily Draft Quote API
+  description: >-
+    A Draft Quote is an editable draft of a policy.
+
+
+    Create a new draft quote by passing in basic insured and property information to `POST /v1/agency/draft_quote`
+    with an authenticated bearer token header.
+
+    Provide any known details about the property in the request - Steadily will resolve the rest of the
+    information from our data sources.
+
+
+    Our requests and responses are designed to mirror each other so that the request structure is self-documenting.
+
+    To perform updates, send back the full quote payload you got from create with any modifications made
+    in-place.
+
+
+    Use the `/price` endpoint to get a pricing breakdown and `/underwrite` to check for underwriting decisions
+    and alerts.
+
+
+    The response includes an `agent_ui_url` field — this is the URL used to bridge the agent into the
+    Steadily UI
+
+    to review the quote, resolve any underwriting alerts, and complete the bind flow.
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Draft Quote
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-draft-quote-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
+- aid: steadily:steadily-lead-referrals-api
+  name: Steadily Lead Referrals API
+  description: >-
+    Submit and retrieve lead referrals.
+
+
+    Use the refer lead endpoint to submit a lead with full quote details and start the insurance quote
+    process.
+
+    You'll get back a quote estimate and a start_url for the customer to continue their application.
+
+    You can retrieve the status of the lead through the get endpoint or use our reporting features to
+    manage all referrals.
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Lead Referrals
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-lead-referrals-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
+- aid: steadily:steadily-lender-api
+  name: Steadily Lender API
+  description: Policy information and change requests for third-party lender integrations
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Lender
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-lender-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
+- aid: steadily:steadily-policy-api
+  name: Steadily Policy API
+  description: >-
+    A Policy is an issued insurance policy.
+
+
+    The declaration document and policy packet are available.
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Policy
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-policy-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
+- aid: steadily:steadily-quote-estimates-api
+  name: Steadily Quote Estimates API
+  description: >-
+    The Instant Estimate API is a one-step express API to quickly get a landlord insurance estimate you
+    can display within your platform.
+
+
+    To get started, you only need to send the address and a unique property_id from your system.
+
+    You'll instantly get back a premium estimate and a link to a pre-filled application your customers
+    can visit to finalize their quote.
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Quote Estimates
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-quote-estimates-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
+- aid: steadily:steadily-quote-offer-api
+  name: Steadily Quote Offer API
+  description: >-
+    An Offer is an immutable offer for coverage extended to a customer.
+
+    Offers are generated from draft quotes and provides a PDF quote document.
+
+
+    Creating an offer requires no outstanding underwriting alerts on the quote.
+
+    If alerts are present, the agent must bridge into the Steadily UI (via the `agent_ui_url` from the
+    draft quote response)
+
+    to resolve them before an offer can be generated.
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Quote Offer
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-quote-offer-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
+- aid: steadily:steadily-reporting-api
+  name: Steadily Reporting API
+  description: >-
+    Reporting on the referrals you've sent Steadily and the referral fees you've earned.
+
+
+    The lead, account, and policy endpoints follow each referral through its lifetime.
+
+    The summary views provide aggregated monthly referral counts and earnings over a date range.
+
+
+    Note that authorization to the reporting endpoint uses a separate Secret Key - not the API key used
+    for estimates.
+
+    You can provision new secret keys through your [Partner Portal](https://app.steadily.com/partner-portal).
+
+    All reporting is scoped to your referral code.
+  humanURL: https://api.steadily.com/redoc
+  baseURL: https://api.steadily.com
+  tags:
+  - Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/steadily-reporting-api-openapi.yml
+  - type: Documentation
+    url: https://api.steadily.com/redoc
+  - type: Documentation
+    url: https://api.steadily.com/estimate-api/redoc
+  - type: Documentation
+    url: https://api.steadily.com/quote-rater/redoc
 common:
+- type: Authentication
+  url: authentication/steadily-authentication.yml
+- type: DomainSecurity
+  url: security/steadily-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/steadily-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.steadily.com/security
+- type: AgenticAccess
+  url: agentic-access/steadily-agentic-access.yml
+- type: Conventions
+  url: conventions/steadily-conventions.yml
+- type: ErrorCatalog
+  url: errors/steadily-problem-types.yml
+- type: DataModel
+  url: data-model/steadily-data-model.yml
+- type: MCPServer
+  url: mcp/steadily-mcp.yml
+- type: Conformance
+  url: conformance/steadily-conformance.yml
+- type: Lifecycle
+  url: lifecycle/steadily-lifecycle.yml
+- type: LLMsTxt
+  url: llms/steadily-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DeveloperPortal
+  url: https://api.steadily.com/
+- type: Documentation
+  url: https://api.steadily.com/redoc
+- type: APIReference
+  url: https://api.steadily.com/estimate-api/redoc
+- type: GettingStarted
+  url: https://www.steadily.com/api
+- type: Blog
+  url: https://www.steadily.com/blog
+- type: PrivacyPolicy
+  url: https://www.steadily.com/privacy-policy
+- type: HelpCenter
+  url: https://help.steadily.com
+- type: SignUp
+  url: https://www.steadily.com/partners
 - type: Website
   url: https://steadily.com
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

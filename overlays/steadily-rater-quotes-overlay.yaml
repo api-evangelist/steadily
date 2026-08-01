@@ -1,0 +1,12 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Steadily Rater Quotes API
+  version: 1.0.0
+extends: openapi/steadily-rater-quotes-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: steadily
+    x-apievangelist-audience: appointed / licensed independent agencies
+    x-apievangelist-base-url: https://api.steadily.com
+    x-apievangelist-auth: api-key + agent bearer token (POST /v1/account/agency/token)

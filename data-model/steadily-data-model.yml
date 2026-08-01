@@ -1,0 +1,67 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/steadily-partner-openapi-original.json
+summary: >-
+  Entity-relationship graph for the Steadily Partner API, derived from OpenAPI
+  response schemas, path parameters, and id-reference fields. Steadily is a
+  landlord-insurance platform; the core domain moves an inbound prospect from an
+  estimate/lead, into a draft quote, to a priced offer, and finally a bound policy.
+entities:
+- name: Account
+  description: The partner/agency account associated with an API key; also the
+    verified referral identity returned by who_am_i.
+  id_prefix: null
+  key_operations: [who_am_i, partner_account]
+  schema: AccountInfoResponse
+- name: Lead
+  description: An inbound insurance prospect / estimate referral captured from a
+    partner integration.
+  id_field: entity_id
+  key_operations: [quote_estimate, instant_estimate, refer_lead, get_lead, partner_lead]
+  schema: EstimateEntityResponse
+- name: Quote
+  description: A draft quote created by an appointed agency through the Rater
+    Quotes API; can be priced and underwritten.
+  id_field: quote_id
+  id_prefix: qte_
+  key_operations: [quote_create, quote_list, quote_info, quote_update, price_quote, underwriting_info]
+  schema: QuoteResponse
+- name: Offer
+  description: A firm quote offer generated from a draft quote.
+  id_field: offer_id
+  key_operations: [offer_quote, get_offer]
+  schema: OfferResponse
+- name: Policy
+  description: A bound landlord-insurance policy.
+  id_field: policy_id
+  key_operations: [get_policy, partner_policy, lender_fuzzy_policy_search]
+  schema: PolicyResponse
+relationships:
+- from: Lead
+  to: Account
+  kind: belongs_to
+  via: account/referral code
+- from: Quote
+  to: Account
+  kind: belongs_to
+  via: agency account (aud)
+- from: Offer
+  to: Quote
+  kind: belongs_to
+  via: quote_id (offer created from a draft quote)
+- from: Policy
+  to: Offer
+  kind: belongs_to
+  via: accepted offer
+- from: Account
+  to: Policy
+  kind: has_many
+  via: partner_policy report
+- from: Account
+  to: Lead
+  kind: has_many
+  via: partner_lead report
+notes: >-
+  Relationships are inferred from the operation surface (create-quote ->
+  price/underwrite -> offer -> policy) and reporting endpoints. Field-level foreign
+  keys beyond the path ids are not fully enumerated in the spec.

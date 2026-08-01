@@ -1,0 +1,177 @@
+# Steadily
+
+> Steadily is fast and affordable landlord insurance — built by landlords, for landlords.
+> We write policies for rental property owners in all 50 US states, with online quotes
+> in a couple of minutes and coverage designed around how rental properties actually work.
+
+Steadily was founded by a landlord who couldn't find decent insurance for his own rental
+property, and the product reflects that origin: policies cover the perils landlords
+actually face (fire, storm and hail, water, vandalism and burglary, riot and civil
+commotion), plus landlord-specific protections like loss of rent and legal liability
+that homeowners policies don't address well. Steadily insures long-term and short-term
+residential rentals — single-family homes, multifamily up to 4 units, ADUs, condos,
+and vacant or under-restoration properties. Steadily does not currently write commercial
+property or buildings with 5+ units.
+
+Steadily also partners heavily with independent insurance agents, who can quote and bind
+Steadily policies through a dedicated agent portal.
+
+## Core pages
+
+- [Get a quote](https://app.steadily.com/dwelling_single_funnel/): Online quote flow, typically completed in a couple of minutes. Quote entry points are also available throughout the site (homepage, coverage pages, state pages, property pages).
+- [Agents](https://www.steadily.com/agents): Forms, resources, and onboarding for independent agents writing Steadily policies.
+- [Partners](https://www.steadily.com/partners): Partnership opportunities for lenders, marketplaces, property managers, and other companies.
+- [Claims info](https://www.steadily.com/claims): Overview of the claims process.
+- [Submit a claim](https://www.steadily.com/claim-submit): Online claim submission form.
+- [Contact](https://www.steadily.com/contact-us): Phone, email, and contact form.
+- [Support](https://help.steadily.com/): Help center for policyholders.
+- [Customer login](https://app.steadily.com/customer/login/): Existing policyholder portal.
+
+## Coverages
+
+Steadily's seven core coverages for landlord policies:
+
+- [All landlord coverages](https://www.steadily.com/landlord-coverages): Overview of every peril and protection included in a Steadily policy.
+- [Fire](https://www.steadily.com/landlord-coverages/fire): Structural fire damage, smoke damage, personal property the landlord owns at the unit, and lost rental income during repairs.
+- [Legal liability](https://www.steadily.com/landlord-coverages/liability): Medical bills, legal defense, and settlements when a tenant or visitor is injured at the rental. Included in every Steadily policy in all 50 states, with $300K to $2M per-occurrence limits.
+- [Loss of rent](https://www.steadily.com/landlord-coverages/loss-of-rent): Replaces lost rental income when a covered event makes the property temporarily uninhabitable.
+- [Riot and civil commotion](https://www.steadily.com/landlord-coverages/riot-civil-commotion): Property damage from organized civil unrest. Documentation connecting damage to the unrest is required.
+- [Storm and hail](https://www.steadily.com/landlord-coverages/storm-and-hail): Structural damage from wind, hail, tornadoes, and storms.
+- [Vandalism and burglary](https://www.steadily.com/landlord-coverages/vandalism-burglary): Damage and loss from break-ins and isolated vandalism. A police report is typically required to file a claim.
+- [Water](https://www.steadily.com/landlord-coverages/water): Sudden water damage from burst pipes, plumbing failures, and appliance overflow. Flood damage from rising water requires a separate flood policy.
+
+## Property types
+
+Steadily writes policies for these residential rental property types:
+
+- [Single-family home](https://www.steadily.com/properties/single-family-home): Detached single-family rentals.
+- [Multifamily (2–4 units)](https://www.steadily.com/properties/multifamily-home): Duplexes, triplexes, and quadplexes. Steadily does not write 5+ unit buildings.
+- [ADU (accessory dwelling unit)](https://www.steadily.com/properties/adu): Backyard cottages, in-law suites, and other ADUs.
+- [Condo](https://www.steadily.com/properties/condo): Landlord coverage for condo units rented to tenants.
+- [Vacant and restoration](https://www.steadily.com/properties/vacant-restoration): Properties that are vacant or under renovation.
+
+## Short-term rentals
+
+Steadily writes short-term rental insurance (Airbnb, Vrbo, vacation rentals) in all 50 states.
+
+- [Short-term rental insurance hub](https://www.steadily.com/short-term): Overview and entry point for short-term rental coverage.
+
+City-specific short-term rental pages:
+
+- [Atlanta, GA](https://www.steadily.com/short-term/atlanta-ga)
+- [Austin, TX](https://www.steadily.com/short-term/austin-tx)
+- [Boston, MA](https://www.steadily.com/short-term/boston-ma)
+- [Chicago, IL](https://www.steadily.com/short-term/chicago-il)
+- [Dallas, TX](https://www.steadily.com/short-term/dallas-tx)
+- [Denver, CO](https://www.steadily.com/short-term/denver-co)
+- [Houston, TX](https://www.steadily.com/short-term/houston-tx)
+- [Las Vegas, NV](https://www.steadily.com/short-term/las-vegas-nv)
+- [Los Angeles, CA](https://www.steadily.com/short-term/los-angeles-ca)
+- [Miami, FL](https://www.steadily.com/short-term/miami-fl)
+- [New Orleans, LA](https://www.steadily.com/short-term/new-orleans-la)
+- [New York City](https://www.steadily.com/short-term/nyc-new-york-city)
+- [Orlando, FL](https://www.steadily.com/short-term/orlando-fl)
+- [Philadelphia, PA](https://www.steadily.com/short-term/philadelphia-pa)
+- [Phoenix, AZ](https://www.steadily.com/short-term/phoenix-az)
+- [San Diego, CA](https://www.steadily.com/short-term/san-diego-ca)
+- [San Francisco, CA](https://www.steadily.com/short-term/san-francisco-ca)
+- [Scottsdale, AZ](https://www.steadily.com/short-term/scottsdale-az)
+- [Seattle, WA](https://www.steadily.com/short-term/seattle-wa)
+- [Washington, DC](https://www.steadily.com/short-term/washington-dc)
+
+Each state also has its own short-term rental page at `/short-term/{state-name}` (e.g., `/short-term/texas`, `/short-term/california`).
+
+## State pages
+
+Steadily writes landlord insurance in all 50 US states. Each state page covers state-specific landlord laws, average premiums, and local considerations.
+
+- [All states directory](https://www.steadily.com/states)
+- [Alabama](https://www.steadily.com/states/alabama)
+- [Alaska](https://www.steadily.com/states/alaska)
+- [Arizona](https://www.steadily.com/states/arizona)
+- [Arkansas](https://www.steadily.com/states/arkansas)
+- [California](https://www.steadily.com/states/california)
+- [Colorado](https://www.steadily.com/states/colorado)
+- [Connecticut](https://www.steadily.com/states/connecticut)
+- [Delaware](https://www.steadily.com/states/delaware)
+- [Florida](https://www.steadily.com/states/florida)
+- [Georgia](https://www.steadily.com/states/georgia)
+- [Hawaii](https://www.steadily.com/states/hawaii)
+- [Idaho](https://www.steadily.com/states/idaho)
+- [Illinois](https://www.steadily.com/states/illinois)
+- [Indiana](https://www.steadily.com/states/indiana)
+- [Iowa](https://www.steadily.com/states/iowa)
+- [Kansas](https://www.steadily.com/states/kansas)
+- [Kentucky](https://www.steadily.com/states/kentucky)
+- [Louisiana](https://www.steadily.com/states/louisiana)
+- [Maine](https://www.steadily.com/states/maine)
+- [Maryland](https://www.steadily.com/states/maryland)
+- [Massachusetts](https://www.steadily.com/states/massachusetts)
+- [Michigan](https://www.steadily.com/states/michigan)
+- [Minnesota](https://www.steadily.com/states/minnesota)
+- [Mississippi](https://www.steadily.com/states/mississippi)
+- [Missouri](https://www.steadily.com/states/missouri)
+- [Montana](https://www.steadily.com/states/montana)
+- [Nebraska](https://www.steadily.com/states/nebraska)
+- [Nevada](https://www.steadily.com/states/nevada)
+- [New Hampshire](https://www.steadily.com/states/new-hampshire)
+- [New Jersey](https://www.steadily.com/states/new-jersey)
+- [New Mexico](https://www.steadily.com/states/new-mexico)
+- [New York](https://www.steadily.com/states/new-york)
+- [North Carolina](https://www.steadily.com/states/north-carolina)
+- [North Dakota](https://www.steadily.com/states/north-dakota)
+- [Ohio](https://www.steadily.com/states/ohio)
+- [Oklahoma](https://www.steadily.com/states/oklahoma)
+- [Oregon](https://www.steadily.com/states/oregon)
+- [Pennsylvania](https://www.steadily.com/states/pennsylvania)
+- [Rhode Island](https://www.steadily.com/states/rhode-island)
+- [South Carolina](https://www.steadily.com/states/south-carolina)
+- [South Dakota](https://www.steadily.com/states/south-dakota)
+- [Tennessee](https://www.steadily.com/states/tennessee)
+- [Texas](https://www.steadily.com/states/texas)
+- [Utah](https://www.steadily.com/states/utah)
+- [Vermont](https://www.steadily.com/states/vermont)
+- [Virginia](https://www.steadily.com/states/virginia)
+- [Washington](https://www.steadily.com/states/washington)
+- [West Virginia](https://www.steadily.com/states/west-virginia)
+- [Wisconsin](https://www.steadily.com/states/wisconsin)
+- [Wyoming](https://www.steadily.com/states/wyoming)
+
+## City pages
+
+Steadily publishes landlord insurance pages for 450+ US cities at `/landlord-insurance/{city}-{state}` (e.g., `/landlord-insurance/austin-tx`). These pages cover local rental market context and city-specific landlord considerations.
+
+## Landlord resources
+
+- [Landlord hub](https://www.steadily.com/landlord-hub): Central library of resources for landlords and real estate investors.
+- [Landlord insurance calculator](https://www.steadily.com/landlord-hub/landlord-insurance-calculator): Estimate landlord insurance cost based on property address and building age.
+- [Forms](https://www.steadily.com/landlord-hub/forms): Lease templates and landlord forms.
+- [Laws](https://www.steadily.com/landlord-hub/laws): State-specific landlord-tenant law summaries.
+- [Ask Steadily AI](https://www.steadily.com/landlord-hub/ask-steadily): AI-powered Q&A tool for landlord questions.
+- [Blog](https://www.steadily.com/blog): Articles on state-specific landlord laws, policy and regulatory changes affecting rental businesses, and landlord operations.
+
+## FAQ and education
+
+- [Landlord insurance guide](https://www.steadily.com/faq/landlord-insurance-guide): Comprehensive primer on landlord insurance — what it covers, what it costs, and how it works.
+- [Landlord insurance vs. homeowners insurance](https://www.steadily.com/faq/landlord-insurance-vs-homeowners-insurance): Why homeowners policies don't cover rental properties and what changes when a property is rented out.
+- [Who needs landlord insurance](https://www.steadily.com/faq/who-needs-landlord-insurance): Who should carry landlord insurance and when it's required.
+- [Landlord insurance cost](https://www.steadily.com/faq/how-much-does-landlord-insurance-cost): What drives landlord insurance pricing and typical cost ranges.
+
+## For insurance agents
+
+- [Agent program](https://www.steadily.com/agents): Become appointed to sell Steadily landlord insurance.
+- [Agent resource hub](https://www.steadily.com/agent-hub): Tools and references for appointed agents.
+- [Policy types](https://www.steadily.com/agent-hub/policy-types): DP-1, DP-3, and other policy forms Steadily offers.
+- [Agent FAQs](https://www.steadily.com/agent-hub/faqs): Common questions from appointed agents.
+
+## For partners
+
+- [Partner program overview](https://www.steadily.com/partners): Partnership opportunities with Steadily.
+- [Lenders](https://www.steadily.com/partners/lending): Insurance partnership for mortgage lenders and DSCR lenders.
+- [Marketplaces](https://www.steadily.com/partners/marketplaces): Partnership for real estate and rental marketplaces.
+- [Property managers](https://www.steadily.com/partners/property-managers): Insurance solutions for property management companies.
+
+## Optional
+
+- [Reviews](https://www.steadily.com/reviews): Customer reviews and media coverage of Steadily.
+- [Press room](https://www.steadily.com/press-room): Press releases and major company news.

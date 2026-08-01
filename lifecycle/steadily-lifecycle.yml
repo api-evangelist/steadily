@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/steadily-partner-openapi-original.json
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://api.steadily.com/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No published deprecation policy or RFC 8594 Sunset/Deprecation header
+    support was found.
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
+notes: >-
+  Steadily publishes a versioned (/v1) Partner API but no separate status page,
+  SLA, changelog, or deprecation policy was located on the developer portal or
+  main site. Values recorded as absent rather than fabricated.

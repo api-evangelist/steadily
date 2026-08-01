@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+hosts:
+- host: https://api.steadily.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    note: Returns the developer-portal SPA HTML fallback, not a real RFC 9116
+      security.txt. Treated as not present. (Disclosure policy lives at
+      https://www.steadily.com/security — see security/ artifacts.)
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    note: SPA HTML fallback, not a real OIDC discovery document. Not present.
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://www.steadily.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/steadily-llms.txt
+    note: Real llms.txt served at https://www.steadily.com/llms.txt (saved verbatim).
+notes: >-
+  No genuine /.well-known/ discovery documents are published. The api.steadily.com
+  host returns its developer-portal SPA (HTTP 200) for unknown paths, so those 200s
+  are soft-404s and no raw files were saved. A real llms.txt exists at the marketing
+  host and is captured under llms/.

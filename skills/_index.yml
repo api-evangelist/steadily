@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/steadily-partner-openapi-original.json
+skills:
+- file: steadily-partner-estimate-and-refer.md
+  name: Steadily partner estimate and refer a lead
+  api: openapi/steadily-estimate-api-openapi-original.json
+  operations: [instant_estimate, quote_estimate, refer_lead, get_lead, partner_summary]
+- file: steadily-agency-quote-to-offer.md
+  name: Steadily agency quote to offer
+  api: openapi/steadily-rater-quotes-openapi-original.json
+  operations: [who_am_i, Agent Bearer Token, quote_create, quote_update, price_quote, underwriting_info, offer_quote, get_offer, get_policy]

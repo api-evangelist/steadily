@@ -1,0 +1,18 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Steadily Partner API
+  version: 1.0.0
+extends: openapi/steadily-partner-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: steadily
+    x-apievangelist-category: landlord-insurance
+    x-apievangelist-auth: api-key (X-Steadily-ApiKey / X-Steadily-SecretKey) + agent bearer token
+    x-apievangelist-pagination: cursor (limit + starting_after_id, next)
+    x-apievangelist-key-request: partnerships-team@steadily.com
+- target: $
+  update:
+    x-apievangelist-servers-note: >-
+      The published spec declares no servers[]; the production base URL is
+      https://api.steadily.com and all operations are under /v1.

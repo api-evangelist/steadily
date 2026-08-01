@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/steadily-estimate-api-openapi-original.json, openapi/steadily-partner-openapi-original.json,
+  openapi/steadily-rater-quotes-openapi-original.json
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+  - query
+schemes:
+- name: APIKeyQuery
+  type: apiKey
+  in: query
+  parameter: X-Steadily-ApiKey
+  sources:
+  - openapi/steadily-estimate-api-openapi-original.json
+  - openapi/steadily-partner-openapi-original.json
+  - openapi/steadily-rater-quotes-openapi-original.json
+- name: APIKeyHeader
+  type: apiKey
+  in: header
+  parameter: X-Steadily-ApiKey
+  sources:
+  - openapi/steadily-estimate-api-openapi-original.json
+  - openapi/steadily-partner-openapi-original.json
+  - openapi/steadily-rater-quotes-openapi-original.json
+- name: SecretKeyQuery
+  type: apiKey
+  in: query
+  parameter: X-Steadily-SecretKey
+  sources:
+  - openapi/steadily-estimate-api-openapi-original.json
+  - openapi/steadily-partner-openapi-original.json
+- name: SecretKeyHeader
+  type: apiKey
+  in: header
+  parameter: X-Steadily-SecretKey
+  sources:
+  - openapi/steadily-estimate-api-openapi-original.json
+  - openapi/steadily-partner-openapi-original.json
+- name: HTTPBearer
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/steadily-partner-openapi-original.json
+  - openapi/steadily-rater-quotes-openapi-original.json

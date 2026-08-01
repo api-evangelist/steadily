@@ -1,0 +1,63 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/steadily-partner-openapi-original.json
+summary: >-
+  Cross-cutting request/response semantics for the Steadily Partner API, derived
+  from the published OpenAPI 3.1 spec and the developer portal at
+  https://api.steadily.com/. It is a FastAPI-based REST API over JSON.
+authentication:
+  style: api-key
+  schemes:
+  - name: X-Steadily-ApiKey
+    in: [header, query]
+    kind: apiKey (publishable/referral key)
+  - name: X-Steadily-SecretKey
+    in: [header, query]
+    kind: apiKey (secret key)
+  - name: Authorization
+    in: header
+    kind: http bearer (agent bearer token, minted via POST /v1/account/agency/token)
+  ref: authentication/steadily-authentication.yml
+  key_request: Contact partnerships-team@steadily.com to request an API key.
+versioning:
+  scheme: uri-path
+  current: v1
+  example: https://api.steadily.com/v1/quote/estimate
+  notes: All operations are namespaced under /v1/. No date- or header-based
+    versioning is documented.
+pagination:
+  style: cursor
+  params:
+    limit: page size (integer, minimum 1)
+    starting_after_id: cursor — return records after this id
+    order_by: sort control (on report endpoints)
+  response_fields:
+    limit: echoed page size
+    next: cursor to the next page (present on *ListPage responses)
+  list_response_schemas:
+  - QuoteListPage
+  - LeadListPage
+  - AccountListPage
+  - PolicyListPage
+  filtering:
+    created_after / created_before: creation-time window (report endpoints)
+    updated_after / updated_before: update-time window (report endpoints)
+    status: filter by record status
+idempotency:
+  supported: false
+  notes: No Idempotency-Key header or idempotent-retry contract is documented in
+    the spec or developer portal. Do NOT assume safe retry of POST operations.
+error_envelope:
+  media_type: application/json
+  shape: FastAPI HTTPValidationError — top-level detail[] array of {loc, msg, type}
+  documented_statuses: [422]
+  ref: errors/steadily-problem-types.yml
+identifiers:
+  style: prefixed opaque strings
+  examples:
+    draft_quote_id: qte_100259208
+rate_limiting:
+  signaled: unknown — no rate-limit headers or policy documented in the spec
+media_types:
+  request: application/json
+  response: application/json

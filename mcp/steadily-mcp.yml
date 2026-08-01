@@ -1,0 +1,74 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/steadily-partner-openapi-original.json
+note: >-
+  No official hosted/remote Steadily MCP server was found (checked the developer
+  portal at api.steadily.com, npm @modelcontextprotocol, and MCP registries). This
+  is a CANDIDATE tool list derived one-to-one from the Steadily Partner API
+  operations, to seed an MCP server should one be built.
+server:
+  name: steadily-partner
+  transport: http
+  url: null
+tools:
+- name: who_am_i
+  description: Verify the referral code associated with the provided API key.
+  source_operation: openapi/steadily-partner-openapi-original.json#who_am_i
+- name: agency_bearer_token
+  description: Mint an agent bearer token for an appointed agency.
+  source_operation: openapi/steadily-partner-openapi-original.json#Agent Bearer Token
+- name: quote_estimate
+  description: Get a landlord-insurance quote estimate.
+  source_operation: openapi/steadily-partner-openapi-original.json#quote_estimate
+- name: instant_estimate
+  description: Get an instant insurance estimate in seconds.
+  source_operation: openapi/steadily-partner-openapi-original.json#instant_estimate
+- name: refer_lead
+  description: Submit/refer an insurance lead to Steadily.
+  source_operation: openapi/steadily-partner-openapi-original.json#refer_lead
+- name: get_lead
+  description: Retrieve a previously submitted estimate/lead by entity id.
+  source_operation: openapi/steadily-partner-openapi-original.json#get_lead
+- name: partner_lead
+  description: List/report on partner leads.
+  source_operation: openapi/steadily-partner-openapi-original.json#partner_lead
+- name: partner_account
+  description: List/report on partner accounts.
+  source_operation: openapi/steadily-partner-openapi-original.json#partner_account
+- name: partner_policy
+  description: List/report on bound partner policies.
+  source_operation: openapi/steadily-partner-openapi-original.json#partner_policy
+- name: partner_summary
+  description: Retrieve a partner activity summary report.
+  source_operation: openapi/steadily-partner-openapi-original.json#partner_summary
+- name: lender_fuzzy_policy_search
+  description: Fuzzy-search bound policies (lender use case).
+  source_operation: openapi/steadily-partner-openapi-original.json#lender_fuzzy_policy_search
+- name: quote_create
+  description: Create a draft quote (Rater Quotes API).
+  source_operation: openapi/steadily-partner-openapi-original.json#quote_create
+- name: quote_list
+  description: List draft quotes.
+  source_operation: openapi/steadily-partner-openapi-original.json#quote_list
+- name: quote_info
+  description: Get a draft quote by id.
+  source_operation: openapi/steadily-partner-openapi-original.json#quote_info
+- name: quote_update
+  description: Update a draft quote.
+  source_operation: openapi/steadily-partner-openapi-original.json#quote_update
+- name: price_quote
+  description: Price a draft quote.
+  source_operation: openapi/steadily-partner-openapi-original.json#price_quote
+- name: underwriting_info
+  description: Retrieve underwriting information for a draft quote.
+  source_operation: openapi/steadily-partner-openapi-original.json#underwriting_info
+- name: offer_quote
+  description: Generate a firm offer from a draft quote.
+  source_operation: openapi/steadily-partner-openapi-original.json#offer_quote
+- name: get_offer
+  description: Retrieve a quote offer by id.
+  source_operation: openapi/steadily-partner-openapi-original.json#get_offer
+- name: get_policy
+  description: Retrieve a bound policy by id.
+  source_operation: openapi/steadily-partner-openapi-original.json#get_policy
