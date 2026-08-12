@@ -261,6 +261,8 @@ apis:
   - type: Documentation
     url: https://api.steadily.com/quote-rater/redoc
 common:
+- type: Overlay
+  url: overlays/steadily-estimate-api-overlay.yaml
 - type: Authentication
   url: authentication/steadily-authentication.yml
 - type: DomainSecurity
