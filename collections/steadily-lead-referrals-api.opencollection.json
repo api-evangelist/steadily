@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner Account Lead Referrals API",
+    "version": "1.0-cc63f79"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lead Referrals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Refer Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/quote/submit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-ApiKey",
+              "value": "{{X-Steadily-ApiKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Refer Lead"
+        },
+        {
+          "info": {
+            "name": "Get Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/quote/estimate/:entity_id",
+            "params": [
+              {
+                "name": "entity_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-ApiKey",
+              "value": "{{X-Steadily-ApiKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get Lead"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

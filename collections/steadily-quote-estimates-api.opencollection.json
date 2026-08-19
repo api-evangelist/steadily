@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner Account Quote Estimates API",
+    "version": "1.0-cc63f79"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quote Estimates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Quote Estimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/quote/estimate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-ApiKey",
+              "value": "{{X-Steadily-ApiKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Quote Estimate"
+        },
+        {
+          "info": {
+            "name": "Instant Estimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/quote/instant-estimate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-ApiKey",
+              "value": "{{X-Steadily-ApiKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Instant estimate endpoint for high-volume requests.\n\nRequires all properties to have complete address and property details:\n- Address: street_address, city, state, zip_code, county, lat, lng\n- Property Details: property_type, size_sqft, year_built\n\nOptional primary_insured block prefills the downstream quote flow."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

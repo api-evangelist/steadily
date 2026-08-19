@@ -1,0 +1,296 @@
+{
+  "item": [
+    {
+      "id": "f34819c3-0a9a-4881-b081-7f43c7b161d0",
+      "name": "Account",
+      "description": {
+        "content": "\nSteadily uses Bearer Tokens to authenticate requests to the quoting endpoints on behalf of some appointed agent.\n\nThere's two steps to this process:\n1. Use your agency's Steadily API Key to request a bearer token for an appointed insurance agent.\n2. Use that bearer token to call all other quoting API endpoints by passing in an `Authorization: Bearer <token>` header.\n\nUsing the bearer token is equivalent to that agent performing the same action through our quoting UI.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eef7387b-72c0-4635-8125-b5de8d4b8c66",
+          "name": "Who Am I",
+          "request": {
+            "name": "Who Am I",
+            "description": {
+              "content": "A basic endpoint used to verify the referral code associated with the provided API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "account",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-ApiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "044c6bf5-0c15-46e8-986e-ae39fb4d8076",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "account",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"referral_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4fa3354-e3ce-4ce7-afa2-493179b415b5",
+          "name": "Agent Bearer Token",
+          "request": {
+            "name": "Agent Bearer Token",
+            "description": {
+              "content": "Generate a Bearer token on behalf of a licensed insurance agent.\n\nYou can pass any agent email in the `agent.email` field of the token request to associate quotes with sub-agents in your organization.\nThe quote will be attributed to that agent as the producing agent and accessible to other agents under the same agency.\nHowever, the agent must be appointed with Steadily in order for them to log in to our UI when bridging over.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "account",
+                "agency",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-ApiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agent\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"licensed_states\": [\n      {\n        \"state\": \"<string>\",\n        \"state_producer_number\": \"<string>\"\n      },\n      {\n        \"state\": \"<string>\",\n        \"state_producer_number\": \"<string>\"\n      }\n    ],\n    \"email\": \"<email>\",\n    \"national_producer_number\": \"<string>\",\n    \"profile_id\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3bc5e957-e7ad-48a6-8664-c21e2d39a24b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "account",
+                    "agency",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"licensed_states\": [\n      {\n        \"state\": \"string\",\n        \"state_producer_number\": \"string\"\n      },\n      {\n        \"state\": \"string\",\n        \"state_producer_number\": \"string\"\n      }\n    ],\n    \"email\": \"nbh7exbbX@sZIyvFvVkAgrSNFmDnZVQK.yrd\",\n    \"national_producer_number\": \"string\",\n    \"profile_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fafe612-195c-451a-9b09-62ffd6c4c0b0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "account",
+                    "agency",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"licensed_states\": [\n      {\n        \"state\": \"string\",\n        \"state_producer_number\": \"string\"\n      },\n      {\n        \"state\": \"string\",\n        \"state_producer_number\": \"string\"\n      }\n    ],\n    \"email\": \"nbh7exbbX@sZIyvFvVkAgrSNFmDnZVQK.yrd\",\n    \"national_producer_number\": \"string\",\n    \"profile_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "66ae5c92-3986-48d9-9519-809d36e27f6d",
+    "name": "Partner Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nGet instant insurance quote estimates and manage referrals through our Partner API.\nTo request an API key contact partnerships-team@steadily.com\n",
+      "type": "text/plain"
+    }
+  }
+}

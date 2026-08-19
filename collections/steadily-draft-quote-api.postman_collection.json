@@ -1,0 +1,1256 @@
+{
+  "item": [
+    {
+      "id": "37e2f6f9-30bf-4283-8f0c-8e1585818ba4",
+      "name": "Draft Quote",
+      "description": {
+        "content": "\nA Draft Quote is an editable draft of a policy.\n\nCreate a new draft quote by passing in basic insured and property information to `POST /v1/agency/draft_quote` with an authenticated bearer token header.\nProvide any known details about the property in the request - Steadily will resolve the rest of the information from our data sources.\n\nOur requests and responses are designed to mirror each other so that the request structure is self-documenting.\nTo perform updates, send back the full quote payload you got from create with any modifications made in-place.\n\nUse the `/price` endpoint to get a pricing breakdown and `/underwrite` to check for underwriting decisions and alerts.\n\nThe response includes an `agent_ui_url` field — this is the URL used to bridge the agent into the Steadily UI\nto review the quote, resolve any underwriting alerts, and complete the bind flow.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f82c2bb8-7238-4b00-82ee-c6bb5c2f5739",
+          "name": "Quote Create",
+          "request": {
+            "name": "Quote Create",
+            "description": {
+              "content": "Create a new quote from scratch by providing\n\n  - **Policy Type** — See [DP1 vs DP3](https://www.steadily.com/blog/dp1-vs-dp3-insurance-policies) and [Policy\nTypes](https://www.steadily.com/agent-hub/policy-types) for details.\n  - **Primary Insured** — Name, date of birth, and email\n  - **Policy Details** — Occupancy status\n  - **Property Addresses** — One or more addresses to cover\n\n  You can omit coverages from your create request and we'll configure everything to available defaults.\n  Since our coverage options often vary by state, territory and even by other coverages you have selected, use the options returned in the quote response as the source-of-truth for which coverages are available.\n  If the coverage option you selected is not available, the response will automatically match against the nearest value (default) or return an error if `exact` `coverage_matching` is requested.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "agency",
+                "draft_quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "coverage_matching",
+                  "value": "<string>",
+                  "description": "Specify how coverages should be configured. Default to `nearest`, which caps coverage values to the closest min/max."
+                },
+                {
+                  "disabled": false,
+                  "key": "aud",
+                  "value": "steadily:api"
+                },
+                {
+                  "disabled": false,
+                  "key": "quote_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offer_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "policy_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote_id\": \"<string>\",\n  \"quote\": {\n    \"policy_type\": \"<string>\",\n    \"primary_insured\": {\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"suffix\": \"<string>\",\n      \"company_name\": \"<string>\",\n      \"date_of_birth\": \"<date>\",\n      \"phone_number\": \"<string>\",\n      \"email\": \"<email>\",\n      \"mailing_address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\"\n      },\n      \"previous_address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\"\n      },\n      \"is_military_member\": \"<string>\",\n      \"company_types\": {\n        \"contracting\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"operations_beyond_rental_property_ownership_and_maintenance\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"policy_details\": {\n      \"occupancy\": \"<string>\",\n      \"insurance_score_estimate\": \"<integer>\",\n      \"is_paperless\": \"<string>\",\n      \"similar_insurance_declined\": \"<string>\",\n      \"self_reported_claims\": [\n        {\n          \"date_of_loss\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loss_reason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loss_amount_dollars\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"caused_by_catastrophe\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"date_of_loss\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loss_reason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loss_amount_dollars\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"caused_by_catastrophe\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"unique_tracking_id\": \"<string>\",\n      \"wind_coverage_excluded\": \"<string>\",\n      \"ca_dic\": \"<string>\"\n    },\n    \"insurance_structure\": \"<string>\",\n    \"additional_named_insured\": [\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"effective_date\": \"<date>\",\n    \"effective_date_timezone\": \"<string>\",\n    \"previous_policy_id\": \"<string>\",\n    \"renewal_policy_id\": \"<string>\",\n    \"renewal_quote_id\": \"<string>\",\n    \"renewal_status\": \"<string>\",\n    \"renewal_start_date\": \"<date>\",\n    \"renewal_end_date\": \"<date>\",\n    \"properties\": [\n      {\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"county\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"county_fips\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lat\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lng\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"property_id\": \"<string>\",\n        \"property_coverages\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"property_manager\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_additional_insured\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_active_manager\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"property_details\": {\n          \"year_built\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"stories\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"total_sq_feet\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"property_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"confirmed_property_style\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"construction_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"roof_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"heating_sources\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_barred_windows_over_50_percent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"days_uninsured\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"central_station\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"wrought_iron_bars\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rental_duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"renovation_status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"pool_trampoline_hot_tub\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"intermittent_rental\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"building_quality\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"building_condition\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"internal_data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"builder_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"electrical_hvac_plumbing_renovated\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fire_protection_class\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address_info_s3_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"wind_coverage_exclusion_zone\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ca_dic_zone\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"foundation_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"garages\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"average_wall_height_feet\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bathroom_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bedrooms\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fireplaces\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"foundation_shape\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"property_acknowledgements\": {\n          \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"duplicate_address_policies\": {\n          \"deferral_reason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lookup_status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"policies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"county\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"county_fips\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lat\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lng\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"property_id\": \"<string>\",\n        \"property_coverages\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"property_manager\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_additional_insured\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"is_active_manager\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"property_details\": {\n          \"year_built\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"stories\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"total_sq_feet\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"property_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"confirmed_property_style\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"construction_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"roof_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"heating_sources\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_barred_windows_over_50_percent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"days_uninsured\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"central_station\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"wrought_iron_bars\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rental_duration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"renovation_status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"pool_trampoline_hot_tub\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"intermittent_rental\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"building_quality\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"building_condition\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"internal_data\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"builder_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"electrical_hvac_plumbing_renovated\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fire_protection_class\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"address_info_s3_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"wind_coverage_exclusion_zone\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ca_dic_zone\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"foundation_type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"garages\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"average_wall_height_feet\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bathroom_details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"bedrooms\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fireplaces\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"foundation_shape\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"property_acknowledgements\": {\n          \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"duplicate_address_policies\": {\n          \"deferral_reason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lookup_status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"policies\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"policy_coverages\": [\n      {\n        \"name\": \"<string>\",\n        \"config\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"name\": \"<string>\",\n        \"config\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"payment\": {\n      \"schedule\": \"<string>\",\n      \"payment_schedule_discount\": \"<string>\"\n    },\n    \"underwriting\": {\n      \"answer\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e753f03c-52f2-44c6-af1c-99188562e8ba",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "coverage_matching",
+                      "value": "nearest"
+                    },
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "quote_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote\": {\n    \"policy_type\": \"DP3\",\n    \"primary_insured\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john@doe.com\",\n      \"date_of_birth\": \"1980-01-01\"\n    },\n    \"policy_details\": {\n      \"occupancy\": \"rental\"\n    },\n    \"properties\": [\n      {\n        \"address\": {\n          \"street_address\": \"1564 Deer Run Pl\",\n          \"city\": \"Lancaster\",\n          \"state\": \"OH\",\n          \"zip_code\": \"43130\",\n          \"county\": \"Fairfield\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policy_type\": \"DP3\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"2021-02-15\",\n    \"phone_number\": \"string\",\n    \"email\": \"fukdfnbjCad@PIjSHeApTCAOUphpJoMEiqgV.cl\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"is_military_member\": \"yes\",\n    \"company_types\": {\n      \"contracting\": \"yes\"\n    }\n  },\n  \"properties\": [\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 3250,\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 1738,\n        \"stories\": 7061.905459442593,\n        \"total_sq_feet\": 6663.537125052109,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"no\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"yes\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 38364976,\n        \"renovation_cost\": 34393336\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"succeeded\",\n        \"policies\": {}\n      }\n    },\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 3250,\n      \"property_manager\": {\n        \"type\": \"person\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 1106,\n        \"stories\": 2104.2518247044727,\n        \"total_sq_feet\": 7923.610764141154,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"no\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"no\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 35563143,\n        \"renovation_cost\": 25607345\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"succeeded\",\n        \"policies\": {}\n      }\n    }\n  ],\n  \"policy_coverages\": [\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    },\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    }\n  ],\n  \"carrier\": \"string\",\n  \"public_policy_id\": \"OB3-AZ-100034386\",\n  \"quote_id\": \"qte_100034386\",\n  \"public_quote_id\": \"string\",\n  \"status\": \"declined\",\n  \"insurance_structure\": \"STANDARD_MGA\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"company\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"effective_date_timezone\": \"string\",\n  \"policy_details\": {\n    \"occupancy\": \"rental\",\n    \"insurance_score_estimate\": 725,\n    \"is_paperless\": \"yes\",\n    \"similar_insurance_declined\": \"no\",\n    \"self_reported_claims\": [\n      {\n        \"date_of_loss\": \"1984-07-13\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 5952,\n        \"caused_by_catastrophe\": \"yes\"\n      },\n      {\n        \"date_of_loss\": \"2011-09-18\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 2581,\n        \"caused_by_catastrophe\": \"yes\"\n      }\n    ],\n    \"unique_tracking_id\": \"id-12345\",\n    \"wind_coverage_excluded\": \"no\",\n    \"ca_dic\": \"no\"\n  },\n  \"updated_at\": \"2016-08-22T08:02:21.937Z\",\n  \"previous_policy_id\": \"string\",\n  \"renewal_policy_id\": \"string\",\n  \"renewal_quote_id\": \"string\",\n  \"renewal_status\": \"invalidated\",\n  \"renewal_start_date\": \"2020-01-09\",\n  \"renewal_end_date\": \"1960-11-06\",\n  \"payment\": {\n    \"schedule\": \"monthly_eft\",\n    \"payment_schedule_discount\": \"no\"\n  },\n  \"underwriting\": {\n    \"attestation\": {\n      \"answer\": \"no\",\n      \"statement\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      },\n      \"notice\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      }\n    },\n    \"answer\": \"no\",\n    \"application_questions\": {\n      \"disclaimer\": \"string\",\n      \"questions_prefix\": \"string\",\n      \"questions\": [\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        }\n      ]\n    }\n  },\n  \"signing_requirements\": {\n    \"requires_diligent_effort_affidavit\": false,\n    \"requires_esignature_consent\": false\n  },\n  \"agent_ui_url\": \"https://app.steadily.com/spa/create-policy/?policy_loc={policy_id}\",\n  \"errors\": [\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    },\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "535f14c7-8063-4dfb-bf4a-ba61acbe6cb5",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "coverage_matching",
+                      "value": "nearest"
+                    },
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "quote_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote\": {\n    \"policy_type\": \"DP3\",\n    \"primary_insured\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"email\": \"john@doe.com\",\n      \"date_of_birth\": \"1980-01-01\"\n    },\n    \"policy_details\": {\n      \"occupancy\": \"rental\"\n    },\n    \"properties\": [\n      {\n        \"address\": {\n          \"street_address\": \"1564 Deer Run Pl\",\n          \"city\": \"Lancaster\",\n          \"state\": \"OH\",\n          \"zip_code\": \"43130\",\n          \"county\": \"Fairfield\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3554157-a4f2-4e86-b0c8-d3280b10d052",
+          "name": "Quote List",
+          "request": {
+            "name": "Quote List",
+            "description": {
+              "content": "Return a history of quotes for an agency.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "agency",
+                "draft_quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "aud",
+                  "value": "steadily:api"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "policy_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "f468dd6c-e2a6-4748-bff3-d2a0eacc6969",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"quotes\": [\n    {\n      \"draft_quote_id\": \"qte_100259208\",\n      \"email\": \"agent@agency.com\"\n    },\n    {\n      \"draft_quote_id\": \"qte_100268302\",\n      \"email\": \"agent@agency.com\"\n    },\n    {\n      \"draft_quote_id\": \"qte_100299309\",\n      \"email\": \"agent@agency.com\"\n    }\n  ],\n  \"limit\": 547,\n  \"next_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db92d869-c15e-4fbe-b149-f9d6001852a6",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bcc01d01-be29-4181-b7c0-6cdc5bcb48db",
+          "name": "Quote Info",
+          "request": {
+            "name": "Quote Info",
+            "description": {
+              "content": "Retrieve quote details",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "agency",
+                "draft_quote",
+                ":quote_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "aud",
+                  "value": "steadily:api"
+                },
+                {
+                  "disabled": false,
+                  "key": "offer_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "policy_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quote_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac9da81b-63ae-481b-9ecb-243cac0ae2c4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"qte_100034386\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policy_type\": \"DP3\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"2021-02-15\",\n    \"phone_number\": \"string\",\n    \"email\": \"fukdfnbjCad@PIjSHeApTCAOUphpJoMEiqgV.cl\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"is_military_member\": \"yes\",\n    \"company_types\": {\n      \"contracting\": \"yes\"\n    }\n  },\n  \"properties\": [\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 3250,\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 1738,\n        \"stories\": 7061.905459442593,\n        \"total_sq_feet\": 6663.537125052109,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"no\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"yes\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 38364976,\n        \"renovation_cost\": 34393336\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"succeeded\",\n        \"policies\": {}\n      }\n    },\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 3250,\n      \"property_manager\": {\n        \"type\": \"person\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 1106,\n        \"stories\": 2104.2518247044727,\n        \"total_sq_feet\": 7923.610764141154,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"no\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"no\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 35563143,\n        \"renovation_cost\": 25607345\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"succeeded\",\n        \"policies\": {}\n      }\n    }\n  ],\n  \"policy_coverages\": [\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    },\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    }\n  ],\n  \"carrier\": \"string\",\n  \"public_policy_id\": \"OB3-AZ-100034386\",\n  \"quote_id\": \"qte_100034386\",\n  \"public_quote_id\": \"string\",\n  \"status\": \"declined\",\n  \"insurance_structure\": \"STANDARD_MGA\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"company\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"effective_date_timezone\": \"string\",\n  \"policy_details\": {\n    \"occupancy\": \"rental\",\n    \"insurance_score_estimate\": 725,\n    \"is_paperless\": \"yes\",\n    \"similar_insurance_declined\": \"no\",\n    \"self_reported_claims\": [\n      {\n        \"date_of_loss\": \"1984-07-13\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 5952,\n        \"caused_by_catastrophe\": \"yes\"\n      },\n      {\n        \"date_of_loss\": \"2011-09-18\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 2581,\n        \"caused_by_catastrophe\": \"yes\"\n      }\n    ],\n    \"unique_tracking_id\": \"id-12345\",\n    \"wind_coverage_excluded\": \"no\",\n    \"ca_dic\": \"no\"\n  },\n  \"updated_at\": \"2016-08-22T08:02:21.937Z\",\n  \"previous_policy_id\": \"string\",\n  \"renewal_policy_id\": \"string\",\n  \"renewal_quote_id\": \"string\",\n  \"renewal_status\": \"invalidated\",\n  \"renewal_start_date\": \"2020-01-09\",\n  \"renewal_end_date\": \"1960-11-06\",\n  \"payment\": {\n    \"schedule\": \"monthly_eft\",\n    \"payment_schedule_discount\": \"no\"\n  },\n  \"underwriting\": {\n    \"attestation\": {\n      \"answer\": \"no\",\n      \"statement\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      },\n      \"notice\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      }\n    },\n    \"answer\": \"no\",\n    \"application_questions\": {\n      \"disclaimer\": \"string\",\n      \"questions_prefix\": \"string\",\n      \"questions\": [\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        }\n      ]\n    }\n  },\n  \"signing_requirements\": {\n    \"requires_diligent_effort_affidavit\": false,\n    \"requires_esignature_consent\": false\n  },\n  \"agent_ui_url\": \"https://app.steadily.com/spa/create-policy/?policy_loc={policy_id}\",\n  \"errors\": [\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    },\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "832310d5-cdfa-4735-856a-7796759640d2",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"qte_100034386\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7870e572-20d7-4bae-9e22-c17e04c3c84a",
+          "name": "Quote Update",
+          "request": {
+            "name": "Quote Update",
+            "description": {
+              "content": "Update fields on an existing draft quote.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "agency",
+                "draft_quote",
+                ":quote_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "aud",
+                  "value": "steadily:api"
+                },
+                {
+                  "disabled": false,
+                  "key": "offer_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "policy_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quote_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy_type\": \"<string>\",\n  \"primary_insured\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"company_name\": \"<string>\",\n    \"date_of_birth\": \"<date>\",\n    \"phone_number\": \"<string>\",\n    \"email\": \"<email>\",\n    \"mailing_address\": {\n      \"street_address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip_code\": \"<string>\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip_code\": \"<string>\"\n    },\n    \"is_military_member\": \"<string>\",\n    \"company_types\": {\n      \"contracting\": {\n        \"description\": \"Does the entity engage in contracting operations?\",\n        \"example\": \"yes\",\n        \"nullable\": true,\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"operations_beyond_rental_property_ownership_and_maintenance\": {\n        \"description\": \"Does the entity engage in operations beyond rental property ownership and maintenance?\",\n        \"example\": \"yes\",\n        \"nullable\": true,\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"policy_details\": {\n    \"occupancy\": \"<string>\",\n    \"insurance_score_estimate\": \"<integer>\",\n    \"is_paperless\": \"<string>\",\n    \"similar_insurance_declined\": \"<string>\",\n    \"self_reported_claims\": [\n      {\n        \"date_of_loss\": \"<date>\",\n        \"loss_reason\": {\n          \"title\": \"Loss Reason\",\n          \"example\": \"weather\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"loss_amount_dollars\": \"<integer>\",\n        \"caused_by_catastrophe\": {\n          \"title\": \"Loss related to Catastrophe\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"date_of_loss\": \"<date>\",\n        \"loss_reason\": {\n          \"title\": \"Loss Reason\",\n          \"example\": \"weather\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"loss_amount_dollars\": \"<integer>\",\n        \"caused_by_catastrophe\": {\n          \"title\": \"Loss related to Catastrophe\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"unique_tracking_id\": \"<string>\",\n    \"wind_coverage_excluded\": \"<string>\",\n    \"ca_dic\": \"<string>\"\n  },\n  \"quote_id\": \"<string>\",\n  \"insurance_structure\": \"<string>\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\"\n      }\n    }\n  ],\n  \"effective_date\": \"<date>\",\n  \"effective_date_timezone\": \"<string>\",\n  \"previous_policy_id\": \"<string>\",\n  \"renewal_policy_id\": \"<string>\",\n  \"renewal_quote_id\": \"<string>\",\n  \"renewal_status\": \"<string>\",\n  \"renewal_start_date\": \"<date>\",\n  \"renewal_end_date\": \"<date>\",\n  \"properties\": [\n    {\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"county\": \"<string>\",\n        \"county_fips\": \"<string>\",\n        \"lat\": \"<number>\",\n        \"lng\": \"<number>\"\n      },\n      \"property_id\": \"<string>\",\n      \"property_coverages\": [\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": {\n          \"description\": \"Is the property manager an additional insured?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"is_active_manager\": {\n          \"description\": \"Does the property manager performs all of the following: Tenant screening checks, at least quarterly inspections, and utilizes risk reduction clauses. Proof of eligibility may be requested. Falsification could result in denial of a claim.\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"property_details\": {\n        \"year_built\": \"<integer>\",\n        \"stories\": \"<number>\",\n        \"total_sq_feet\": \"<number>\",\n        \"property_type\": {\n          \"example\": \"single_family\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"confirmed_property_style\": {\n          \"example\": \"condominium_unit\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"construction_type\": {\n          \"description\": \"Construction type\",\n          \"example\": \"frame\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"roof_type\": {\n          \"description\": \"Roof Type\",\n          \"example\": \"asphalt_shingles\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"heating_sources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"has_barred_windows_over_50_percent\": \"<string>\",\n        \"days_uninsured\": \"<integer>\",\n        \"central_station\": {\n          \"description\": \"Does the property have a central station theft or fire alarm monitoring service?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": {\n          \"description\": \"Under Renovation or Construction?\",\n          \"example\": \"not_under_renovation\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pool_trampoline_hot_tub\": {\n          \"description\": \"Does this property have a swimming pool, trampoline, or hot tub?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": {\n          \"example\": \"standard\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_condition\": {\n          \"example\": \"excellent\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"internal_data\": \"<object>\",\n        \"builder_name\": \"<string>\",\n        \"electrical_hvac_plumbing_renovated\": {\n          \"description\": \"Has the electrical, HVAC, and plumbing been fully renovated within the last 30 years?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"fire_protection_class\": \"<string>\",\n        \"address_info_s3_url\": \"<string>\",\n        \"wind_coverage_exclusion_zone\": {\n          \"description\": \"Inidcates if an exposure in a wind excluded policy.\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ca_dic_zone\": \"<string>\",\n        \"foundation_type\": \"<string>\",\n        \"garages\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"average_wall_height_feet\": \"<number>\",\n        \"bathroom_details\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"bedrooms\": \"<number>\",\n        \"fireplaces\": \"<integer>\",\n        \"foundation_shape\": {\n          \"description\": \"Foundation Shape\",\n          \"example\": \"square_rectangle\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n          \"description\": \"If 'yes' the agent and insured understand that a roof exclusion has been automatically applied to their policy\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"<string>\",\n        \"lookup_status\": \"<string>\",\n        \"policies\": \"<object>\"\n      }\n    },\n    {\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"county\": \"<string>\",\n        \"county_fips\": \"<string>\",\n        \"lat\": \"<number>\",\n        \"lng\": \"<number>\"\n      },\n      \"property_id\": \"<string>\",\n      \"property_coverages\": [\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": {\n          \"description\": \"Is the property manager an additional insured?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"is_active_manager\": {\n          \"description\": \"Does the property manager performs all of the following: Tenant screening checks, at least quarterly inspections, and utilizes risk reduction clauses. Proof of eligibility may be requested. Falsification could result in denial of a claim.\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"property_details\": {\n        \"year_built\": \"<integer>\",\n        \"stories\": \"<number>\",\n        \"total_sq_feet\": \"<number>\",\n        \"property_type\": {\n          \"example\": \"single_family\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"confirmed_property_style\": {\n          \"example\": \"condominium_unit\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"construction_type\": {\n          \"description\": \"Construction type\",\n          \"example\": \"frame\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"roof_type\": {\n          \"description\": \"Roof Type\",\n          \"example\": \"asphalt_shingles\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"heating_sources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"has_barred_windows_over_50_percent\": \"<string>\",\n        \"days_uninsured\": \"<integer>\",\n        \"central_station\": {\n          \"description\": \"Does the property have a central station theft or fire alarm monitoring service?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": {\n          \"description\": \"Under Renovation or Construction?\",\n          \"example\": \"not_under_renovation\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pool_trampoline_hot_tub\": {\n          \"description\": \"Does this property have a swimming pool, trampoline, or hot tub?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": {\n          \"example\": \"standard\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_condition\": {\n          \"example\": \"excellent\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"internal_data\": \"<object>\",\n        \"builder_name\": \"<string>\",\n        \"electrical_hvac_plumbing_renovated\": {\n          \"description\": \"Has the electrical, HVAC, and plumbing been fully renovated within the last 30 years?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"fire_protection_class\": \"<string>\",\n        \"address_info_s3_url\": \"<string>\",\n        \"wind_coverage_exclusion_zone\": {\n          \"description\": \"Inidcates if an exposure in a wind excluded policy.\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ca_dic_zone\": \"<string>\",\n        \"foundation_type\": \"<string>\",\n        \"garages\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"average_wall_height_feet\": \"<number>\",\n        \"bathroom_details\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"bedrooms\": \"<number>\",\n        \"fireplaces\": \"<integer>\",\n        \"foundation_shape\": {\n          \"description\": \"Foundation Shape\",\n          \"example\": \"square_rectangle\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n          \"description\": \"If 'yes' the agent and insured understand that a roof exclusion has been automatically applied to their policy\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"<string>\",\n        \"lookup_status\": \"<string>\",\n        \"policies\": \"<object>\"\n      }\n    }\n  ],\n  \"policy_coverages\": [\n    {\n      \"name\": \"<string>\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"payment\": {\n    \"schedule\": \"<string>\",\n    \"payment_schedule_discount\": \"<string>\"\n  },\n  \"underwriting\": {\n    \"answer\": \"no\",\n    \"application_questions\": {\n      \"disclaimer\": \"<string>\",\n      \"questions_prefix\": \"<string>\",\n      \"questions\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  },\n  \"force_rerun_lookups\": false,\n  \"valuation_update_behavior\": \"default\",\n  \"force_valuation_dwelling_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "70ffb942-1aa0-47a5-bc36-ec9a97e42a2b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy_type\": \"DP3\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"2017-05-20\",\n    \"phone_number\": \"string\",\n    \"email\": \"O8eNZs1YaYv@wRaqk.fg\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"is_military_member\": \"yes\",\n    \"company_types\": {\n      \"contracting\": \"yes\"\n    }\n  },\n  \"policy_details\": {\n    \"occupancy\": \"rental\",\n    \"insurance_score_estimate\": 725,\n    \"is_paperless\": \"yes\",\n    \"similar_insurance_declined\": \"no\",\n    \"self_reported_claims\": [\n      {\n        \"date_of_loss\": \"2025-06-09\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 4203,\n        \"caused_by_catastrophe\": {\n          \"title\": \"Loss related to Catastrophe\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"date_of_loss\": \"2014-12-16\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 758,\n        \"caused_by_catastrophe\": {\n          \"title\": \"Loss related to Catastrophe\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"unique_tracking_id\": \"id-12345\",\n    \"wind_coverage_excluded\": \"no\",\n    \"ca_dic\": \"yes\"\n  },\n  \"quote_id\": \"qte_100034386\",\n  \"insurance_structure\": \"XMGA\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"effective_date_timezone\": \"string\",\n  \"previous_policy_id\": \"string\",\n  \"renewal_policy_id\": \"string\",\n  \"renewal_quote_id\": \"string\",\n  \"renewal_status\": \"invalidated\",\n  \"renewal_start_date\": \"1964-05-11\",\n  \"renewal_end_date\": \"2024-09-14\",\n  \"properties\": [\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 2604,\n        \"stories\": 4672.083584809106,\n        \"total_sq_feet\": 7223.728267339874,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n          \"description\": \"If 'yes' the agent and insured understand that a roof exclusion has been automatically applied to their policy\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"unknown\",\n        \"policies\": {}\n      }\n    },\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 9529,\n        \"stories\": 696.5416198111691,\n        \"total_sq_feet\": 4925.374645097734,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n          \"description\": \"If 'yes' the agent and insured understand that a roof exclusion has been automatically applied to their policy\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"skipped\",\n        \"policies\": {}\n      }\n    }\n  ],\n  \"policy_coverages\": [\n    {\n      \"name\": \"medical_payments\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"medical_payments\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"payment\": {\n    \"schedule\": \"full\"\n  },\n  \"underwriting\": {\n    \"answer\": \"no\",\n    \"application_questions\": {\n      \"disclaimer\": \"string\",\n      \"questions_prefix\": \"string\",\n      \"questions\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  },\n  \"force_rerun_lookups\": false,\n  \"valuation_update_behavior\": \"default\",\n  \"force_valuation_dwelling_ids\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policy_type\": \"DP3\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"2021-02-15\",\n    \"phone_number\": \"string\",\n    \"email\": \"fukdfnbjCad@PIjSHeApTCAOUphpJoMEiqgV.cl\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"is_military_member\": \"yes\",\n    \"company_types\": {\n      \"contracting\": \"yes\"\n    }\n  },\n  \"properties\": [\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 3250,\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 1738,\n        \"stories\": 7061.905459442593,\n        \"total_sq_feet\": 6663.537125052109,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"no\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"yes\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 38364976,\n        \"renovation_cost\": 34393336\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"succeeded\",\n        \"policies\": {}\n      }\n    },\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 3250,\n      \"property_manager\": {\n        \"type\": \"person\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 1106,\n        \"stories\": 2104.2518247044727,\n        \"total_sq_feet\": 7923.610764141154,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"no\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"no\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 35563143,\n        \"renovation_cost\": 25607345\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"succeeded\",\n        \"policies\": {}\n      }\n    }\n  ],\n  \"policy_coverages\": [\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    },\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    }\n  ],\n  \"carrier\": \"string\",\n  \"public_policy_id\": \"OB3-AZ-100034386\",\n  \"quote_id\": \"qte_100034386\",\n  \"public_quote_id\": \"string\",\n  \"status\": \"declined\",\n  \"insurance_structure\": \"STANDARD_MGA\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"company\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"effective_date_timezone\": \"string\",\n  \"policy_details\": {\n    \"occupancy\": \"rental\",\n    \"insurance_score_estimate\": 725,\n    \"is_paperless\": \"yes\",\n    \"similar_insurance_declined\": \"no\",\n    \"self_reported_claims\": [\n      {\n        \"date_of_loss\": \"1984-07-13\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 5952,\n        \"caused_by_catastrophe\": \"yes\"\n      },\n      {\n        \"date_of_loss\": \"2011-09-18\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 2581,\n        \"caused_by_catastrophe\": \"yes\"\n      }\n    ],\n    \"unique_tracking_id\": \"id-12345\",\n    \"wind_coverage_excluded\": \"no\",\n    \"ca_dic\": \"no\"\n  },\n  \"updated_at\": \"2016-08-22T08:02:21.937Z\",\n  \"previous_policy_id\": \"string\",\n  \"renewal_policy_id\": \"string\",\n  \"renewal_quote_id\": \"string\",\n  \"renewal_status\": \"invalidated\",\n  \"renewal_start_date\": \"2020-01-09\",\n  \"renewal_end_date\": \"1960-11-06\",\n  \"payment\": {\n    \"schedule\": \"monthly_eft\",\n    \"payment_schedule_discount\": \"no\"\n  },\n  \"underwriting\": {\n    \"attestation\": {\n      \"answer\": \"no\",\n      \"statement\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      },\n      \"notice\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      }\n    },\n    \"answer\": \"no\",\n    \"application_questions\": {\n      \"disclaimer\": \"string\",\n      \"questions_prefix\": \"string\",\n      \"questions\": [\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        }\n      ]\n    }\n  },\n  \"signing_requirements\": {\n    \"requires_diligent_effort_affidavit\": false,\n    \"requires_esignature_consent\": false\n  },\n  \"agent_ui_url\": \"https://app.steadily.com/spa/create-policy/?policy_loc={policy_id}\",\n  \"errors\": [\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    },\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e342c3a3-bd97-41b3-bde9-a1ff87d8f1d2",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy_type\": \"DP3\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"2017-05-20\",\n    \"phone_number\": \"string\",\n    \"email\": \"O8eNZs1YaYv@wRaqk.fg\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"is_military_member\": \"yes\",\n    \"company_types\": {\n      \"contracting\": \"yes\"\n    }\n  },\n  \"policy_details\": {\n    \"occupancy\": \"rental\",\n    \"insurance_score_estimate\": 725,\n    \"is_paperless\": \"yes\",\n    \"similar_insurance_declined\": \"no\",\n    \"self_reported_claims\": [\n      {\n        \"date_of_loss\": \"2025-06-09\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 4203,\n        \"caused_by_catastrophe\": {\n          \"title\": \"Loss related to Catastrophe\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"date_of_loss\": \"2014-12-16\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 758,\n        \"caused_by_catastrophe\": {\n          \"title\": \"Loss related to Catastrophe\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"unique_tracking_id\": \"id-12345\",\n    \"wind_coverage_excluded\": \"no\",\n    \"ca_dic\": \"yes\"\n  },\n  \"quote_id\": \"qte_100034386\",\n  \"insurance_structure\": \"XMGA\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"effective_date_timezone\": \"string\",\n  \"previous_policy_id\": \"string\",\n  \"renewal_policy_id\": \"string\",\n  \"renewal_quote_id\": \"string\",\n  \"renewal_status\": \"invalidated\",\n  \"renewal_start_date\": \"1964-05-11\",\n  \"renewal_end_date\": \"2024-09-14\",\n  \"properties\": [\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 2604,\n        \"stories\": 4672.083584809106,\n        \"total_sq_feet\": 7223.728267339874,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n          \"description\": \"If 'yes' the agent and insured understand that a roof exclusion has been automatically applied to their policy\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"unknown\",\n        \"policies\": {}\n      }\n    },\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\"\n            }\n          ]\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 9529,\n        \"stories\": 696.5416198111691,\n        \"total_sq_feet\": 4925.374645097734,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": {\n          \"description\": \"If 'yes' the agent and insured understand that a roof exclusion has been automatically applied to their policy\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"skipped\",\n        \"policies\": {}\n      }\n    }\n  ],\n  \"policy_coverages\": [\n    {\n      \"name\": \"medical_payments\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"medical_payments\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  ],\n  \"payment\": {\n    \"schedule\": \"full\"\n  },\n  \"underwriting\": {\n    \"answer\": \"no\",\n    \"application_questions\": {\n      \"disclaimer\": \"string\",\n      \"questions_prefix\": \"string\",\n      \"questions\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  },\n  \"force_rerun_lookups\": false,\n  \"valuation_update_behavior\": \"default\",\n  \"force_valuation_dwelling_ids\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca6d27a5-0096-4b99-8fce-a40d5ee0550d",
+          "name": "Price Quote",
+          "request": {
+            "name": "Price Quote",
+            "description": {
+              "content": "Get pricing breakdown and details for a quote.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "agency",
+                "draft_quote",
+                ":quote_id",
+                "price"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_payment_schedules_breakdown",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "aud",
+                  "value": "steadily:api"
+                },
+                {
+                  "disabled": false,
+                  "key": "offer_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "policy_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quote_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f9622e0e-e068-45b1-a718-8202c8e66608",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_payment_schedules_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"qte_100034386\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"property_premiums\": [\n    {\n      \"property_id\": \"string\",\n      \"coverage_premiums\": [\n        {\n          \"coverage_id\": \"string\",\n          \"name\": \"string\",\n          \"premium_cents\": 2572,\n          \"taxes_cents\": 6855,\n          \"total_cents\": 4778\n        },\n        {\n          \"coverage_id\": \"string\",\n          \"name\": \"string\",\n          \"premium_cents\": 8605,\n          \"taxes_cents\": 3844,\n          \"total_cents\": 3302\n        }\n      ],\n      \"premium_cents\": 5343,\n      \"taxes_cents\": 7146,\n      \"total_cents\": 5407,\n      \"minimum_earned_premium_type\": \"flat_cents\",\n      \"minimum_earned_premium_scalar_amount\": 6405,\n      \"minimum_earned_premium_cents\": 870\n    },\n    {\n      \"property_id\": \"string\",\n      \"coverage_premiums\": [\n        {\n          \"coverage_id\": \"string\",\n          \"name\": \"string\",\n          \"premium_cents\": 6100,\n          \"taxes_cents\": 2208,\n          \"total_cents\": 8113\n        },\n        {\n          \"coverage_id\": \"string\",\n          \"name\": \"string\",\n          \"premium_cents\": 6592,\n          \"taxes_cents\": 602,\n          \"total_cents\": 2223\n        }\n      ],\n      \"premium_cents\": 8389,\n      \"taxes_cents\": 9708,\n      \"total_cents\": 2262,\n      \"minimum_earned_premium_type\": \"flat_cents\",\n      \"minimum_earned_premium_scalar_amount\": 5407,\n      \"minimum_earned_premium_cents\": 0\n    }\n  ],\n  \"payment_option\": {\n    \"plan\": \"full\",\n    \"label\": \"\",\n    \"premium_cents\": 90003,\n    \"fees_cents\": 0,\n    \"taxes_cents\": 0,\n    \"total_cents\": 90003,\n    \"installments\": [\n      {\n        \"amount_cents\": 0,\n        \"due_date\": \"2021-04-24\"\n      },\n      {\n        \"amount_cents\": 0,\n        \"due_date\": \"2021-04-24\"\n      }\n    ],\n    \"minimum_earned_premium_cents\": 1954,\n    \"surcharges\": [\n      {\n        \"label\": \"Credit card transaction fee\",\n        \"state\": \"NY\",\n        \"amount_cents\": 200,\n        \"rate_basis_points\": 200,\n        \"applies_to_payment_method\": \"credit_card\"\n      },\n      {\n        \"label\": \"Credit card transaction fee\",\n        \"state\": \"NY\",\n        \"amount_cents\": 200,\n        \"rate_basis_points\": 200,\n        \"applies_to_payment_method\": \"credit_card\"\n      }\n    ]\n  },\n  \"payment_options_available\": [\n    {\n      \"plan\": \"full\",\n      \"label\": \"\",\n      \"premium_cents\": 90003,\n      \"fees_cents\": 0,\n      \"taxes_cents\": 0,\n      \"total_cents\": 90003,\n      \"installments\": [\n        {\n          \"amount_cents\": 0,\n          \"due_date\": \"2021-04-24\"\n        },\n        {\n          \"amount_cents\": 0,\n          \"due_date\": \"2021-04-24\"\n        }\n      ],\n      \"minimum_earned_premium_cents\": 595,\n      \"surcharges\": [\n        {\n          \"label\": \"Credit card transaction fee\",\n          \"state\": \"NY\",\n          \"amount_cents\": 200,\n          \"rate_basis_points\": 200,\n          \"applies_to_payment_method\": \"credit_card\"\n        },\n        {\n          \"label\": \"Credit card transaction fee\",\n          \"state\": \"NY\",\n          \"amount_cents\": 200,\n          \"rate_basis_points\": 200,\n          \"applies_to_payment_method\": \"credit_card\"\n        }\n      ]\n    },\n    {\n      \"plan\": \"full\",\n      \"label\": \"\",\n      \"premium_cents\": 90003,\n      \"fees_cents\": 0,\n      \"taxes_cents\": 0,\n      \"total_cents\": 90003,\n      \"installments\": [\n        {\n          \"amount_cents\": 0,\n          \"due_date\": \"2021-04-24\"\n        },\n        {\n          \"amount_cents\": 0,\n          \"due_date\": \"2021-04-24\"\n        }\n      ],\n      \"minimum_earned_premium_cents\": 3180,\n      \"surcharges\": [\n        {\n          \"label\": \"Credit card transaction fee\",\n          \"state\": \"NY\",\n          \"amount_cents\": 200,\n          \"rate_basis_points\": 200,\n          \"applies_to_payment_method\": \"credit_card\"\n        },\n        {\n          \"label\": \"Credit card transaction fee\",\n          \"state\": \"NY\",\n          \"amount_cents\": 200,\n          \"rate_basis_points\": 200,\n          \"applies_to_payment_method\": \"credit_card\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2adf3b6-5e40-4eb9-aa2e-ca9e938ecb1e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_payment_schedules_breakdown",
+                      "value": "true"
+                    },
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"qte_100034386\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fbbc596c-f132-4a4a-8cb8-9deb335b6a7d",
+          "name": "Underwriting Info",
+          "request": {
+            "name": "Underwriting Info",
+            "description": {
+              "content": "Check underwriting rules for this Quote.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "agency",
+                "draft_quote",
+                ":quote_id",
+                "underwrite"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "aud",
+                  "value": "steadily:api"
+                },
+                {
+                  "disabled": false,
+                  "key": "offer_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "policy_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quote_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quote_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "464b01d6-733d-4576-9a31-76ac85103d21",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id",
+                    "underwrite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"qte_100034386\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"underwriting_decision\": \"accept\",\n  \"alerts\": [\n    {\n      \"underwriting_rule\": \"string\",\n      \"rule_decision\": \"accept\",\n      \"is_overridden\": \"yes\",\n      \"detail\": \"string\",\n      \"property_id\": \"string\",\n      \"override_type\": \"string\",\n      \"rule_type\": \"string\",\n      \"automated_response\": \"string\",\n      \"override_value\": \"string\",\n      \"underwriting_call_to_action\": \"contact_support_approval\",\n      \"metadata\": {},\n      \"category\": \"SHOWSTOPPER\",\n      \"msg_id\": \"string\",\n      \"title\": \"string\",\n      \"fields\": {\n        \"dwelling\": [\n          \"string\",\n          \"string\"\n        ],\n        \"policy\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"underwriting_rule\": \"string\",\n      \"rule_decision\": \"reject\",\n      \"is_overridden\": \"no\",\n      \"detail\": \"string\",\n      \"property_id\": \"string\",\n      \"override_type\": \"string\",\n      \"rule_type\": \"string\",\n      \"automated_response\": \"string\",\n      \"override_value\": \"string\",\n      \"underwriting_call_to_action\": \"no_action\",\n      \"metadata\": {},\n      \"category\": \"SYSTEM_ERROR\",\n      \"msg_id\": \"string\",\n      \"title\": \"string\",\n      \"fields\": {\n        \"dwelling\": [\n          \"string\",\n          \"string\"\n        ],\n        \"policy\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ebe93e2-442e-491b-b2a5-3842891c0fcb",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "draft_quote",
+                    ":quote_id",
+                    "underwrite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    },
+                    {
+                      "key": "offer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "policy_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quote_id\": \"qte_100034386\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f5a2a16c-67d3-494d-9d14-5a4cd6ee52bb",
+    "name": "Partner Account Draft Quote API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nGet instant insurance quote estimates and manage referrals through our Partner API.\nTo request an API key contact partnerships-team@steadily.com\n",
+      "type": "text/plain"
+    }
+  }
+}

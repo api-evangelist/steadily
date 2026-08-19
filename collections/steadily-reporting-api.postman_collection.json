@@ -1,0 +1,911 @@
+{
+  "item": [
+    {
+      "id": "8fe4397e-51ac-40f0-a2e2-0da053fa5dc8",
+      "name": "Reporting",
+      "description": {
+        "content": "\nReporting on the referrals you've sent Steadily and the referral fees you've earned.\n\nThe lead, account, and policy endpoints follow each referral through its lifetime.\nThe summary views provide aggregated monthly referral counts and earnings over a date range.\n\nNote that authorization to the reporting endpoint uses a separate Secret Key - not the API key used for estimates.\nYou can provision new secret keys through your [Partner Portal](https://app.steadily.com/partner-portal).\nAll reporting is scoped to your referral code.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "35dbcd01-c053-40aa-9759-1bf64ee2f784",
+          "name": "Partner Lead",
+          "request": {
+            "name": "Partner Lead",
+            "description": {
+              "content": "List the leads you've referred, newest first.\n\nEach lead includes the contact, the properties quoted, and the Steadily agent who is assisting that lead.\n\nLead statuses indicate how that lead performed:\n- New - Newly created leads.\n- Converted - Leads that convert and buy a policy.\n- Unqualified - Leads that ultimately did not convert.\n- Awaiting quote - Leads that are currently being quoted, pending customer decision or underwriting review.\n\nAccount-level reporting also provides a contacted status to indicate whether we've successfully established contact with that customer.\n\nResults are paginated; follow next_url for the next page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "report",
+                "lead"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "-created_timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-SecretKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ef64335b-be91-4df7-9f60-8221aa0a8bca",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "lead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_timestamp"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_quote"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"leads\": [\n    {\n      \"lead_id\": \"string\",\n      \"created_at_timestamp\": \"1948-12-12T12:10:57.286Z\",\n      \"updated_at_timestamp\": \"2009-06-28T15:17:02.832Z\",\n      \"status\": \"new\",\n      \"record_type\": \"homeowner\",\n      \"contact\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"suffix\": \"string\",\n        \"date_of_birth\": \"1959-10-21\",\n        \"phone_number\": \"string\",\n        \"email\": \"vaSE48NFflF@Tkmez.xqz\",\n        \"mailing_address\": {\n          \"address_1\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"zip\": \"string\"\n        },\n        \"self_reported_claims\": [\n          {\n            \"date_of_loss\": \"1953-04-27\",\n            \"loss_reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loss_amount_dollars\": 652,\n            \"caused_by_catastrophe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"date_of_loss\": \"1949-11-26\",\n            \"loss_reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loss_amount_dollars\": 625,\n            \"caused_by_catastrophe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"properties\": [\n        {\n          \"lead_property_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_details\": {\n            \"year_built\": 4101,\n            \"total_sq_feet\": 4806,\n            \"property_type\": \"string\",\n            \"construction_type\": \"string\",\n            \"roof_type\": \"string\",\n            \"heating_sources\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"rental_duration\": \"string\",\n            \"renovation_status\": \"string\",\n            \"intermittent_rental\": \"string\"\n          },\n          \"replacement_cost_estimate\": 9837,\n          \"external_property_id\": \"string\"\n        },\n        {\n          \"lead_property_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_details\": {\n            \"year_built\": 6194,\n            \"total_sq_feet\": 7955,\n            \"property_type\": \"string\",\n            \"construction_type\": \"string\",\n            \"roof_type\": \"string\",\n            \"heating_sources\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"rental_duration\": \"string\",\n            \"renovation_status\": \"string\",\n            \"intermittent_rental\": \"string\"\n          },\n          \"replacement_cost_estimate\": 1033,\n          \"external_property_id\": \"string\"\n        }\n      ],\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"account_id\": \"string\",\n      \"external_record_id\": \"string\",\n      \"referral_code\": \"string\",\n      \"agent\": {\n        \"email\": \"string\"\n      }\n    },\n    {\n      \"lead_id\": \"string\",\n      \"created_at_timestamp\": \"1973-08-04T12:21:27.089Z\",\n      \"updated_at_timestamp\": \"2002-01-16T02:50:44.438Z\",\n      \"status\": \"awaiting_quote\",\n      \"record_type\": \"renter\",\n      \"contact\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"suffix\": \"string\",\n        \"date_of_birth\": \"1979-11-29\",\n        \"phone_number\": \"string\",\n        \"email\": \"7jb6kN@aqUamHjBWWAIIhEgIudqo.ratr\",\n        \"mailing_address\": {\n          \"address_1\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"zip\": \"string\"\n        },\n        \"self_reported_claims\": [\n          {\n            \"date_of_loss\": \"2017-08-19\",\n            \"loss_reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loss_amount_dollars\": 7468,\n            \"caused_by_catastrophe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"date_of_loss\": \"2003-06-05\",\n            \"loss_reason\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"loss_amount_dollars\": 7782,\n            \"caused_by_catastrophe\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"properties\": [\n        {\n          \"lead_property_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_details\": {\n            \"year_built\": 1265,\n            \"total_sq_feet\": 6308,\n            \"property_type\": \"string\",\n            \"construction_type\": \"string\",\n            \"roof_type\": \"string\",\n            \"heating_sources\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"rental_duration\": \"string\",\n            \"renovation_status\": \"string\",\n            \"intermittent_rental\": \"string\"\n          },\n          \"replacement_cost_estimate\": 9925,\n          \"external_property_id\": \"string\"\n        },\n        {\n          \"lead_property_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_details\": {\n            \"year_built\": 3515,\n            \"total_sq_feet\": 8018,\n            \"property_type\": \"string\",\n            \"construction_type\": \"string\",\n            \"roof_type\": \"string\",\n            \"heating_sources\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"rental_duration\": \"string\",\n            \"renovation_status\": \"string\",\n            \"intermittent_rental\": \"string\"\n          },\n          \"replacement_cost_estimate\": 5065,\n          \"external_property_id\": \"string\"\n        }\n      ],\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"account_id\": \"string\",\n      \"external_record_id\": \"string\",\n      \"referral_code\": \"string\",\n      \"agent\": {\n        \"email\": \"string\"\n      }\n    }\n  ],\n  \"limit\": 96,\n  \"next_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0304029d-ce97-460d-bb60-9400e7423a03",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "lead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_timestamp"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_quote"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c07cb339-69f2-402f-b671-29f423dc05e7",
+          "name": "Partner Account",
+          "request": {
+            "name": "Partner Account",
+            "description": {
+              "content": "List the accounts you've referred to Steadily, newest first.\n\nAn account represents the long-term profile for a policyholder. Each account may have many contacts and policies.\nResults are paginated; follow next_url for the next page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "report",
+                "account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "-created_timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-SecretKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aeb9e30d-1d63-432e-bf76-226cf82c6458",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_timestamp"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accounts\": [\n    {\n      \"account_id\": \"string\",\n      \"created_at_timestamp\": \"2023-02-21T22:19:08.403Z\",\n      \"updated_at_timestamp\": \"2001-03-24T09:41:07.167Z\",\n      \"contacts\": [\n        {\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"suffix\": \"string\",\n          \"date_of_birth\": \"2010-12-19\",\n          \"phone_number\": \"string\",\n          \"email\": \"ndzwpy3gv5vL7bc@cuyiSKmcQjQEaFJ.bxu\",\n          \"mailing_address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"self_reported_claims\": [\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"suffix\": \"string\",\n          \"date_of_birth\": \"1963-05-06\",\n          \"phone_number\": \"string\",\n          \"email\": \"50VfD@QORdsBkNaKWPiLTIPWdBApjQgV.ixd\",\n          \"mailing_address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"self_reported_claims\": [\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"account_name\": \"string\",\n      \"external_record_id\": \"string\",\n      \"referral_code\": \"string\",\n      \"agent\": {\n        \"email\": \"string\"\n      },\n      \"contacted_status\": \"pending_contact\"\n    },\n    {\n      \"account_id\": \"string\",\n      \"created_at_timestamp\": \"1954-02-19T11:33:24.415Z\",\n      \"updated_at_timestamp\": \"1970-06-30T10:22:51.203Z\",\n      \"contacts\": [\n        {\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"suffix\": \"string\",\n          \"date_of_birth\": \"2019-01-28\",\n          \"phone_number\": \"string\",\n          \"email\": \"mo8rVXlv@YQr.kz\",\n          \"mailing_address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"self_reported_claims\": [\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"suffix\": \"string\",\n          \"date_of_birth\": \"2018-01-11\",\n          \"phone_number\": \"string\",\n          \"email\": \"Od7DKrH4lyXm@xgI.ci\",\n          \"mailing_address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"self_reported_claims\": [\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"date_of_loss\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_reason\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"loss_amount_dollars\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"caused_by_catastrophe\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"account_name\": \"string\",\n      \"external_record_id\": \"string\",\n      \"referral_code\": \"string\",\n      \"agent\": {\n        \"email\": \"string\"\n      },\n      \"contacted_status\": \"pending_contact\"\n    }\n  ],\n  \"limit\": 88,\n  \"next_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cfe8d2d-e23e-414c-8b11-e11757ba67d0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_timestamp"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92e67e06-9783-4abf-b139-474391a678d7",
+          "name": "Partner Policy",
+          "request": {
+            "name": "Partner Policy",
+            "description": {
+              "content": "List the policies bound for customers you've referred, newest first.\n\nEach policy includes its term, premium, coverages, properties, and documents.\nNote that the level of detail may vary depending on if it's a Steadily direct policy or a third-party policy bound through Steadily.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "report",
+                "policy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "-created_timestamp"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_after",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_before",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-SecretKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "80877188-cc45-4c56-9e44-d74e233b97f8",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_timestamp"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "issued"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policies\": [\n    {\n      \"account_id\": \"string\",\n      \"created_at_timestamp\": \"1993-12-07T13:21:13.646Z\",\n      \"updated_at_timestamp\": \"1970-07-09T21:09:00.274Z\",\n      \"policy_id\": \"string\",\n      \"policy_type\": \"DP1\",\n      \"status\": \"quoted\",\n      \"properties\": [\n        {\n          \"policy_location_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_coverages\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"lead_property_id\": \"string\",\n          \"external_property_id\": \"string\"\n        },\n        {\n          \"policy_location_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_coverages\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"lead_property_id\": \"string\",\n          \"external_property_id\": \"string\"\n        }\n      ],\n      \"policy_coverages\": [\n        {\n          \"name\": \"string\",\n          \"config\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"config\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"policy_documents\": [\n        {\n          \"document_id\": \"string\",\n          \"display_name\": \"string\",\n          \"file_name\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"document_id\": \"string\",\n          \"display_name\": \"string\",\n          \"file_name\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"effective_date\": \"1954-02-24\",\n      \"carrier\": \"string\",\n      \"public_policy_id\": \"string\",\n      \"premium_dollars\": \"string\",\n      \"payment_schedule\": \"transaction\"\n    },\n    {\n      \"account_id\": \"string\",\n      \"created_at_timestamp\": \"2024-01-02T13:53:43.949Z\",\n      \"updated_at_timestamp\": \"1947-11-04T10:33:46.930Z\",\n      \"policy_id\": \"string\",\n      \"policy_type\": \"DP3\",\n      \"status\": \"issued\",\n      \"properties\": [\n        {\n          \"policy_location_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_coverages\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"lead_property_id\": \"string\",\n          \"external_property_id\": \"string\"\n        },\n        {\n          \"policy_location_id\": \"string\",\n          \"address\": {\n            \"address_1\": \"string\",\n            \"city\": \"string\",\n            \"state\": \"string\",\n            \"zip\": \"string\"\n          },\n          \"property_coverages\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"config\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"lead_property_id\": \"string\",\n          \"external_property_id\": \"string\"\n        }\n      ],\n      \"policy_coverages\": [\n        {\n          \"name\": \"string\",\n          \"config\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"config\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"label\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"value\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"policy_documents\": [\n        {\n          \"document_id\": \"string\",\n          \"display_name\": \"string\",\n          \"file_name\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"document_id\": \"string\",\n          \"display_name\": \"string\",\n          \"file_name\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"effective_date\": \"2019-07-25\",\n      \"carrier\": \"string\",\n      \"public_policy_id\": \"string\",\n      \"premium_dollars\": \"string\",\n      \"payment_schedule\": \"premium_financed\"\n    }\n  ],\n  \"limit\": 49,\n  \"next_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b276ef6f-520f-4ebd-be2f-6ad17b175427",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "starting_after_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_timestamp"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "issued"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db64db91-14b7-403d-a8dc-d7def1517721",
+          "name": "Partner Summary",
+          "request": {
+            "name": "Partner Summary",
+            "description": {
+              "content": "Your monthly referral activity and earnings summary.\n\nUse start_month and end_month to set the reporting window. Defaults to the earliest activity when omitted.\nLifetime totals span all time, regardless of the window.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "report",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_month",
+                  "value": "<string>",
+                  "description": "Window start month (inclusive), YYYY-MM"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_month",
+                  "value": "<string>",
+                  "description": "Window end month (inclusive), YYYY-MM"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-SecretKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1b6343a5-cbdd-4ce5-98d7-2f3e816255af",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_month",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_month",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"partner\": {\n    \"account_name\": \"string\",\n    \"referral_code\": \"string\",\n    \"logo_url\": \"string\"\n  },\n  \"lifetime\": {\n    \"counts\": {\n      \"accounts_referred\": 6989,\n      \"properties_contacted\": 5305,\n      \"rental_contacted\": 3722,\n      \"flip_contacted\": 455\n    },\n    \"transaction_count\": 3021,\n    \"referral_fees\": \"string\",\n    \"payments\": \"string\",\n    \"floor_month\": \"string\"\n  },\n  \"monthly\": [\n    {\n      \"month\": \"2026-05\",\n      \"counts\": {\n        \"accounts_referred\": 5507,\n        \"properties_contacted\": 2801,\n        \"rental_contacted\": 6160,\n        \"flip_contacted\": 5371\n      },\n      \"rental_referral_fee\": \"string\",\n      \"flip_referral_fee\": \"string\",\n      \"referral_fees\": \"string\",\n      \"payments\": \"string\",\n      \"transaction_count\": 5476,\n      \"transactions\": [\n        {\n          \"transaction_id\": \"string\",\n          \"transaction_at\": \"1993-07-26T18:59:07.552Z\",\n          \"transaction_amount\": \"string\",\n          \"rental_referral_fee\": \"string\",\n          \"flip_referral_fee\": \"string\"\n        },\n        {\n          \"transaction_id\": \"string\",\n          \"transaction_at\": \"1971-12-16T01:14:15.794Z\",\n          \"transaction_amount\": \"string\",\n          \"rental_referral_fee\": \"string\",\n          \"flip_referral_fee\": \"string\"\n        }\n      ]\n    },\n    {\n      \"month\": \"2026-05\",\n      \"counts\": {\n        \"accounts_referred\": 2623,\n        \"properties_contacted\": 7627,\n        \"rental_contacted\": 9461,\n        \"flip_contacted\": 5915\n      },\n      \"rental_referral_fee\": \"string\",\n      \"flip_referral_fee\": \"string\",\n      \"referral_fees\": \"string\",\n      \"payments\": \"string\",\n      \"transaction_count\": 1787,\n      \"transactions\": [\n        {\n          \"transaction_id\": \"string\",\n          \"transaction_at\": \"1980-08-22T20:38:01.618Z\",\n          \"transaction_amount\": \"string\",\n          \"rental_referral_fee\": \"string\",\n          \"flip_referral_fee\": \"string\"\n        },\n        {\n          \"transaction_id\": \"string\",\n          \"transaction_at\": \"1964-09-21T12:37:53.263Z\",\n          \"transaction_amount\": \"string\",\n          \"rental_referral_fee\": \"string\",\n          \"flip_referral_fee\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"window_start_month\": \"string\",\n  \"window_end_month\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c2160b7-466b-4651-92ea-54de41974766",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "report",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_month",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_month",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-Steadily-SecretKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8ee31942-f60a-4c95-805f-9be548baba96",
+    "name": "Partner Account Reporting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nGet instant insurance quote estimates and manage referrals through our Partner API.\nTo request an API key contact partnerships-team@steadily.com\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner Account Quote Offer API",
+    "version": "1.0-cc63f79"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quote Offer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Offer Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agency/quote_offer",
+            "params": [
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "quote_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Immutable Offer from a Quote. (Lock Quote)"
+        },
+        {
+          "info": {
+            "name": "Get Offer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/agency/quote_offer/:offer_id",
+            "params": [
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "quote_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve an existing Offer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

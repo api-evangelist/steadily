@@ -1,0 +1,198 @@
+{
+  "item": [
+    {
+      "id": "34c0a69d-c609-4078-a90c-cd4f9f66b888",
+      "name": "Lender",
+      "description": {
+        "content": "\nPolicy information and change requests for third-party lender integrations\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b45ab53d-9699-4ff6-a4fb-352721fc97d7",
+          "name": "Fuzzy policy search by voice input",
+          "request": {
+            "name": "Fuzzy policy search by voice input",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "lender",
+                "policy",
+                "fuzzy_search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "policy_number",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-ApiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f39357fc-9a42-4c49-a849-a81e26cf8ad2",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "lender",
+                    "policy",
+                    "fuzzy_search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policy_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policies\": [\n    {\n      \"policy_id\": \"string\",\n      \"policy_number\": \"string\",\n      \"properties\": [\n        {\n          \"state\": \"string\",\n          \"full_address\": \"string\"\n        },\n        {\n          \"state\": \"string\",\n          \"full_address\": \"string\"\n        }\n      ],\n      \"policy_status\": \"string\",\n      \"effective_date\": \"string\",\n      \"expiration_date\": \"string\",\n      \"insured_name\": \"string\",\n      \"is_pending_cancellation\": false,\n      \"is_retail_policy\": false,\n      \"carrier_name\": \"string\",\n      \"billing_company_friendly_name\": \"string\",\n      \"billing_company_phone\": \"string\",\n      \"steadily_transfer_allowed\": true\n    },\n    {\n      \"policy_id\": \"string\",\n      \"policy_number\": \"string\",\n      \"properties\": [\n        {\n          \"state\": \"string\",\n          \"full_address\": \"string\"\n        },\n        {\n          \"state\": \"string\",\n          \"full_address\": \"string\"\n        }\n      ],\n      \"policy_status\": \"string\",\n      \"effective_date\": \"string\",\n      \"expiration_date\": \"string\",\n      \"insured_name\": \"string\",\n      \"is_pending_cancellation\": true,\n      \"is_retail_policy\": false,\n      \"carrier_name\": \"string\",\n      \"billing_company_friendly_name\": \"string\",\n      \"billing_company_phone\": \"string\",\n      \"steadily_transfer_allowed\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41e0ebb0-a398-4f17-803e-2923dd3718ca",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "lender",
+                    "policy",
+                    "fuzzy_search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policy_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fac40c5f-e83c-47c2-bbdb-adc4aef652c8",
+    "name": "Partner Account Lender API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nGet instant insurance quote estimates and manage referrals through our Partner API.\nTo request an API key contact partnerships-team@steadily.com\n",
+      "type": "text/plain"
+    }
+  }
+}

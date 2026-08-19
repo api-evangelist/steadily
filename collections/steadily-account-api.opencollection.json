@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner Account API",
+    "version": "1.0-cc63f79"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Who Am I",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/account/info",
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-ApiKey",
+              "value": "{{X-Steadily-ApiKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "A basic endpoint used to verify the referral code associated with the provided API key."
+        },
+        {
+          "info": {
+            "name": "Agent Bearer Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/account/agency/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-ApiKey",
+              "value": "{{X-Steadily-ApiKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Generate a Bearer token on behalf of a licensed insurance agent.\n\nYou can pass any agent email in the `agent.email` field of the token request to associate quotes with sub-agents in your organization.\nThe quote will be attributed to that agent as the producing agent and accessible to other agents under the same agency.\nHowever, the agent must be appointed with Steadily in order for them to log in to our UI when bridging over."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

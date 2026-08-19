@@ -1,0 +1,185 @@
+{
+  "item": [
+    {
+      "id": "6668fcc2-daef-47c4-989c-0f2796c561ff",
+      "name": "Policy",
+      "description": {
+        "content": "\nA Policy is an issued insurance policy.\n\nThe declaration document and policy packet are available.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "af1a073d-d45b-40d4-bf04-405249e68078",
+          "name": "Get Policy",
+          "request": {
+            "name": "Get Policy",
+            "description": {
+              "content": "Retrieve a Policy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "agency",
+                "policy",
+                ":policy_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "aud",
+                  "value": "steadily:api"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policy_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "467c25e2-26b3-4770-bed0-8d345c3d036f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "policy",
+                    ":policy_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policy_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policy_type\": \"DP3\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"2019-02-06\",\n    \"phone_number\": \"string\",\n    \"email\": \"TxBLR7E@pUMDrEftMJfqjPbyBpHYeWRllTgBaHHiq.xzmi\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\"\n    },\n    \"is_military_member\": \"yes\",\n    \"company_types\": {\n      \"contracting\": \"yes\"\n    }\n  },\n  \"properties\": [\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 6229,\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 3868,\n        \"stories\": 671.8259490805463,\n        \"total_sq_feet\": 2261.3627083766523,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"yes\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"no\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 47213464,\n        \"renovation_cost\": 39231439\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"unknown\",\n        \"policies\": {}\n      }\n    },\n    {\n      \"property_id\": \"acf85fa5-4200-4303-96ba-012e546ff628\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Maricopa\",\n        \"county_fips\": \"04013\",\n        \"lat\": 41.079273,\n        \"lng\": -85.139351\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        },\n        {\n          \"name\": \"water_damage_limitation\",\n          \"config\": [\n            {\n              \"type\": \"limit\",\n              \"label\": \"Water Damage Limitation\",\n              \"value\": \"10%\",\n              \"default\": \"10%\",\n              \"options\": [\n                \"10%\",\n                \"25%\",\n                \"50%\",\n                \"75%\",\n                \"100%\"\n              ],\n              \"editable\": \"yes\"\n            },\n            {\n              \"type\": \"sublimit\",\n              \"label\": \"Water Damage Limitation - Fungi Rot Sublimit\",\n              \"value\": \"5000\",\n              \"default\": \"5000\",\n              \"options\": [\n                \"5000\",\n                \"10000\"\n              ],\n              \"editable\": \"no\"\n            }\n          ]\n        }\n      ],\n      \"replacement_cost_estimate\": 3097,\n      \"property_manager\": {\n        \"type\": \"person\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 4691,\n        \"stories\": 6609.946487005171,\n        \"total_sq_feet\": 6565.153599118479,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"no\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"no\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\"\n      },\n      \"property_acknowledgements\": {\n        \"steadily_roof_condition_exclusion_user_agrees_to_all_terms\": \"yes\"\n      },\n      \"user_replacement_cost\": {\n        \"purchase_price\": 39347453,\n        \"renovation_cost\": 6289597\n      },\n      \"duplicate_address_policies\": {\n        \"deferral_reason\": \"string\",\n        \"lookup_status\": \"succeeded\",\n        \"policies\": {}\n      }\n    }\n  ],\n  \"policy_coverages\": [\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    },\n    {\n      \"name\": \"water_damage_limitation\",\n      \"parent_coverage\": \"equipment_breakdown\",\n      \"label\": \"Water Damage Limitation\"\n    }\n  ],\n  \"carrier\": \"string\",\n  \"public_policy_id\": \"OB3-AZ-100034386\",\n  \"status\": \"issued\",\n  \"policy_id\": \"pol_100034386\",\n  \"documents\": [\n    {\n      \"display_name\": \"Policy Packet\",\n      \"created_at\": \"1948-10-13T23:58:42.408Z\",\n      \"file_name\": \"policy_packet.pdf\",\n      \"file_code\": \"QUOTE\",\n      \"url\": \"https://example.com/unique_document_url?token=32424\",\n      \"status\": \"pending\",\n      \"quote_version\": 560,\n      \"quote_id\": \"string\",\n      \"steadily_universal_dwelling_id\": \"c67b1d514b26530ed0f8dedbb95a3a0c\"\n    },\n    {\n      \"display_name\": \"Policy Packet\",\n      \"created_at\": \"1970-12-18T01:52:25.308Z\",\n      \"file_name\": \"policy_packet.pdf\",\n      \"file_code\": \"QUOTE\",\n      \"url\": \"https://example.com/unique_document_url?token=32424\",\n      \"status\": \"pending\",\n      \"quote_version\": 7923,\n      \"quote_id\": \"string\",\n      \"steadily_universal_dwelling_id\": \"c67b1d514b26530ed0f8dedbb95a3a0c\"\n    }\n  ],\n  \"insurance_structure\": \"COI_MASTER_MGA\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"trust_or_estate\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"effective_date_timezone\": \"string\",\n  \"policy_details\": {\n    \"occupancy\": \"rental\",\n    \"insurance_score_estimate\": 725,\n    \"is_paperless\": \"yes\",\n    \"similar_insurance_declined\": \"no\",\n    \"self_reported_claims\": [\n      {\n        \"date_of_loss\": \"1966-01-01\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 9602,\n        \"caused_by_catastrophe\": \"no\"\n      },\n      {\n        \"date_of_loss\": \"2001-03-24\",\n        \"loss_reason\": \"weather\",\n        \"loss_amount_dollars\": 7662,\n        \"caused_by_catastrophe\": \"no\"\n      }\n    ],\n    \"unique_tracking_id\": \"id-12345\",\n    \"wind_coverage_excluded\": \"no\",\n    \"ca_dic\": \"yes\"\n  },\n  \"updated_at\": \"1967-03-04T23:40:00.666Z\",\n  \"previous_policy_id\": \"string\",\n  \"renewal_policy_id\": \"string\",\n  \"renewal_quote_id\": \"string\",\n  \"renewal_status\": \"draft\",\n  \"renewal_start_date\": \"2024-07-01\",\n  \"renewal_end_date\": \"1994-05-11\",\n  \"payment\": {\n    \"schedule\": \"full\",\n    \"payment_schedule_discount\": \"yes\"\n  },\n  \"underwriting\": {\n    \"attestation\": {\n      \"answer\": \"no\",\n      \"statement\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      },\n      \"notice\": {\n        \"content\": \"string\",\n        \"items\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/IpodUnderwritingStatementContent detected>\"\n          }\n        ]\n      }\n    },\n    \"answer\": \"no\",\n    \"application_questions\": {\n      \"disclaimer\": \"string\",\n      \"questions_prefix\": \"string\",\n      \"questions\": [\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"text\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"prefix\": \"string\",\n          \"answer\": \"string\"\n        }\n      ]\n    }\n  },\n  \"signing_requirements\": {\n    \"requires_diligent_effort_affidavit\": false,\n    \"requires_esignature_consent\": false\n  },\n  \"agent_ui_url\": \"https://app.steadily.com/spa/create-policy/?policy_loc={policy_id}\",\n  \"errors\": [\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    },\n    {\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"retryable\": false,\n      \"request_id\": \"string\",\n      \"error_id\": \"string\",\n      \"ctx\": {}\n    }\n  ],\n  \"pricing\": {\n    \"property_premiums\": [\n      {\n        \"property_id\": \"string\",\n        \"coverage_premiums\": [\n          {\n            \"coverage_id\": \"string\",\n            \"name\": \"string\",\n            \"premium_cents\": 8793,\n            \"taxes_cents\": 5125,\n            \"total_cents\": 2870\n          },\n          {\n            \"coverage_id\": \"string\",\n            \"name\": \"string\",\n            \"premium_cents\": 1406,\n            \"taxes_cents\": 5622,\n            \"total_cents\": 6168\n          }\n        ],\n        \"premium_cents\": 703,\n        \"taxes_cents\": 4,\n        \"total_cents\": 7836,\n        \"minimum_earned_premium_type\": \"flat_cents\",\n        \"minimum_earned_premium_scalar_amount\": 6765,\n        \"minimum_earned_premium_cents\": 7962\n      },\n      {\n        \"property_id\": \"string\",\n        \"coverage_premiums\": [\n          {\n            \"coverage_id\": \"string\",\n            \"name\": \"string\",\n            \"premium_cents\": 2974,\n            \"taxes_cents\": 2969,\n            \"total_cents\": 7294\n          },\n          {\n            \"coverage_id\": \"string\",\n            \"name\": \"string\",\n            \"premium_cents\": 9218,\n            \"taxes_cents\": 2013,\n            \"total_cents\": 7961\n          }\n        ],\n        \"premium_cents\": 2815,\n        \"taxes_cents\": 6697,\n        \"total_cents\": 588,\n        \"minimum_earned_premium_type\": \"flat_cents\",\n        \"minimum_earned_premium_scalar_amount\": 193,\n        \"minimum_earned_premium_cents\": 6836\n      }\n    ],\n    \"payment_option\": {\n      \"plan\": \"full\",\n      \"label\": \"\",\n      \"premium_cents\": 90003,\n      \"fees_cents\": 0,\n      \"taxes_cents\": 0,\n      \"total_cents\": 90003,\n      \"installments\": [\n        {\n          \"amount_cents\": 0,\n          \"due_date\": \"2021-04-24\"\n        },\n        {\n          \"amount_cents\": 0,\n          \"due_date\": \"2021-04-24\"\n        }\n      ],\n      \"minimum_earned_premium_cents\": 8438,\n      \"surcharges\": [\n        {\n          \"label\": \"Credit card transaction fee\",\n          \"state\": \"NY\",\n          \"amount_cents\": 200,\n          \"rate_basis_points\": 200,\n          \"applies_to_payment_method\": \"credit_card\"\n        },\n        {\n          \"label\": \"Credit card transaction fee\",\n          \"state\": \"NY\",\n          \"amount_cents\": 200,\n          \"rate_basis_points\": 200,\n          \"applies_to_payment_method\": \"credit_card\"\n        }\n      ]\n    },\n    \"payment_options_available\": [\n      {\n        \"plan\": \"full\",\n        \"label\": \"\",\n        \"premium_cents\": 90003,\n        \"fees_cents\": 0,\n        \"taxes_cents\": 0,\n        \"total_cents\": 90003,\n        \"installments\": [\n          {\n            \"amount_cents\": 0,\n            \"due_date\": \"2021-04-24\"\n          },\n          {\n            \"amount_cents\": 0,\n            \"due_date\": \"2021-04-24\"\n          }\n        ],\n        \"minimum_earned_premium_cents\": 3130,\n        \"surcharges\": [\n          {\n            \"label\": \"Credit card transaction fee\",\n            \"state\": \"NY\",\n            \"amount_cents\": 200,\n            \"rate_basis_points\": 200,\n            \"applies_to_payment_method\": \"credit_card\"\n          },\n          {\n            \"label\": \"Credit card transaction fee\",\n            \"state\": \"NY\",\n            \"amount_cents\": 200,\n            \"rate_basis_points\": 200,\n            \"applies_to_payment_method\": \"credit_card\"\n          }\n        ]\n      },\n      {\n        \"plan\": \"full\",\n        \"label\": \"\",\n        \"premium_cents\": 90003,\n        \"fees_cents\": 0,\n        \"taxes_cents\": 0,\n        \"total_cents\": 90003,\n        \"installments\": [\n          {\n            \"amount_cents\": 0,\n            \"due_date\": \"2021-04-24\"\n          },\n          {\n            \"amount_cents\": 0,\n            \"due_date\": \"2021-04-24\"\n          }\n        ],\n        \"minimum_earned_premium_cents\": 2791,\n        \"surcharges\": [\n          {\n            \"label\": \"Credit card transaction fee\",\n            \"state\": \"NY\",\n            \"amount_cents\": 200,\n            \"rate_basis_points\": 200,\n            \"applies_to_payment_method\": \"credit_card\"\n          },\n          {\n            \"label\": \"Credit card transaction fee\",\n            \"state\": \"NY\",\n            \"amount_cents\": 200,\n            \"rate_basis_points\": 200,\n            \"applies_to_payment_method\": \"credit_card\"\n          }\n        ]\n      }\n    ]\n  },\n  \"mandatory_policyholder_agreement_contract\": {\n    \"contract_id\": \"string\",\n    \"status\": \"rejected\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e163f344-528a-451c-ba50-7a2f3e8f5e8a",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "agency",
+                    "policy",
+                    ":policy_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "aud",
+                      "value": "steadily:api"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policy_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "481a67d5-6561-4c04-83a1-a9eb225af145",
+    "name": "Partner Account Policy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nGet instant insurance quote estimates and manage referrals through our Partner API.\nTo request an API key contact partnerships-team@steadily.com\n",
+      "type": "text/plain"
+    }
+  }
+}

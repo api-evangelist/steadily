@@ -1,0 +1,356 @@
+{
+  "item": [
+    {
+      "id": "dcb51896-cc98-4cce-b5be-f2f9ac27b42b",
+      "name": "Lead Referrals",
+      "description": {
+        "content": "\nSubmit and retrieve lead referrals.\n\nUse the refer lead endpoint to submit a lead with full quote details and start the insurance quote process.\nYou'll get back a quote estimate and a start_url for the customer to continue their application.\nYou can retrieve the status of the lead through the get endpoint or use our reporting features to manage all referrals.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b4bf255-49ab-4c6a-9970-f948622b7d7e",
+          "name": "Refer Lead",
+          "request": {
+            "name": "Refer Lead",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "quote",
+                "submit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-ApiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_record_id\": \"<string>\",\n  \"primary_insured\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"suffix\": \"<string>\",\n    \"company_name\": \"<string>\",\n    \"date_of_birth\": \"<date>\",\n    \"phone_number\": \"<string>\",\n    \"mailing_address\": {\n      \"street_address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip_code\": \"<string>\",\n      \"county\": \"<string>\",\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n    },\n    \"previous_address\": {\n      \"street_address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip_code\": \"<string>\",\n      \"county\": \"<string>\",\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n    }\n  },\n  \"policy_type\": \"<string>\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\"\n      }\n    }\n  ],\n  \"effective_date\": \"<date>\",\n  \"properties\": [\n    {\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"street_address_2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"county\": \"<string>\"\n      },\n      \"property_coverages\": [\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"coverage_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"coverage_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"<string>\",\n        \"name\": \"<string>\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": {\n          \"description\": \"Is the property manager an additional insured?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"is_active_manager\": {\n          \"description\": \"Does the property manager performs all of the following: Tenant screening checks, at least quarterly inspections, and utilizes risk reduction clauses. Proof of eligibility may be requested. Falsification could result in denial of a claim.\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"property_details\": {\n        \"year_built\": \"<integer>\",\n        \"stories\": \"<number>\",\n        \"total_sq_feet\": \"<number>\",\n        \"property_type\": {\n          \"example\": \"single_family\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"confirmed_property_style\": {\n          \"example\": \"condominium_unit\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"construction_type\": {\n          \"description\": \"Construction type\",\n          \"example\": \"frame\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"roof_type\": {\n          \"description\": \"Roof Type\",\n          \"example\": \"asphalt_shingles\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"heating_sources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"has_barred_windows_over_50_percent\": \"<string>\",\n        \"days_uninsured\": \"<integer>\",\n        \"central_station\": {\n          \"description\": \"Does the property have a central station theft or fire alarm monitoring service?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": {\n          \"description\": \"Under Renovation or Construction?\",\n          \"example\": \"not_under_renovation\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pool_trampoline_hot_tub\": {\n          \"description\": \"Does this property have a swimming pool, trampoline, or hot tub?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": {\n          \"example\": \"standard\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_condition\": {\n          \"example\": \"excellent\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"internal_data\": \"<object>\",\n        \"builder_name\": \"<string>\",\n        \"electrical_hvac_plumbing_renovated\": {\n          \"description\": \"Has the electrical, HVAC, and plumbing been fully renovated within the last 30 years?\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"fire_protection_class\": \"<string>\",\n        \"address_info_s3_url\": \"<string>\",\n        \"wind_coverage_exclusion_zone\": {\n          \"description\": \"Inidcates if an exposure in a wind excluded policy.\",\n          \"example\": \"no\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"ca_dic_zone\": \"<string>\",\n        \"foundation_type\": \"<string>\",\n        \"garages\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"average_wall_height_feet\": \"<number>\",\n        \"bathroom_details\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"bedrooms\": \"<number>\",\n        \"fireplaces\": \"<integer>\",\n        \"foundation_shape\": {\n          \"description\": \"Foundation Shape\",\n          \"example\": \"square_rectangle\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"purchase_price_dollars\": \"<integer>\",\n        \"construction_budget_dollars\": \"<integer>\",\n        \"construction_scope\": \"<string>\",\n        \"post_construction_occupancy\": {\n          \"description\": \"The occupancy expectation post construction or renovation\",\n          \"example\": \"rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"post_construction_outcome\": {\n          \"description\": \"What will be done with the property post construction or renovation?\",\n          \"example\": \"rent\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"replacement_cost_estimate\": \"<string>\",\n      \"external_property_id\": \"<string>\"\n    }\n  ],\n  \"policy_details\": {\n    \"occupancy\": \"<string>\"\n  },\n  \"policy_coverages\": [\n    {\n      \"name\": \"<string>\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"coverage_name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"coverage_name\": \"<string>\"\n    }\n  ],\n  \"payment\": {\n    \"schedule\": \"<string>\"\n  },\n  \"metadata\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f3d1ada-6d2d-4e5e-89ce-b610364bda5b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_record_id\": \"string\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"email\": \"45743@KebQawSneAyAYUkYNRiPx.icki\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"1954-03-19\",\n    \"phone_number\": \"string\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    }\n  },\n  \"policy_type\": \"DP3\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"trust_or_estate\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"properties\": [\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"street_address_2\": \"string\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"string\"\n      },\n      \"property_coverages\": [\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"coverage_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"coverage_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 6750,\n        \"stories\": 2861.855172783895,\n        \"total_sq_feet\": 1170.9592647572708,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\",\n        \"purchase_price_dollars\": 605,\n        \"construction_budget_dollars\": 1034,\n        \"construction_scope\": \"string\",\n        \"post_construction_occupancy\": \"rental\",\n        \"post_construction_outcome\": \"rent\"\n      },\n      \"replacement_cost_estimate\": \"string\",\n      \"external_property_id\": \"string\"\n    }\n  ],\n  \"policy_details\": {\n    \"occupancy\": \"rental\"\n  },\n  \"policy_coverages\": [\n    {\n      \"name\": \"custom_coverage\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"coverage_name\": \"string\"\n    },\n    {\n      \"name\": \"custom_coverage\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"coverage_name\": \"string\"\n    }\n  ],\n  \"payment\": {\n    \"schedule\": \"semi_annual\"\n  },\n  \"metadata\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_record_id\": \"string\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"email\": \"kgLVkKUr@xpvOOSvGEekoInWgzXbzGuUPGWwLScw.muxa\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"1967-04-08\",\n    \"phone_number\": \"string\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    }\n  },\n  \"policy_type\": \"DP3\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"company\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"trust_or_estate\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"properties\": [\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"street_address_2\": \"string\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"string\"\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"custom_coverage\",\n          \"config\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"coverage_name\": \"string\"\n        },\n        {\n          \"name\": \"custom_coverage\",\n          \"config\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"coverage_name\": \"string\"\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 6968,\n        \"stories\": 4413.522766750293,\n        \"total_sq_feet\": 9962.056150411125,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"yes\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"yes\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\",\n        \"purchase_price_dollars\": 9856,\n        \"construction_budget_dollars\": 7567,\n        \"construction_scope\": \"string\",\n        \"post_construction_occupancy\": \"rental\",\n        \"post_construction_outcome\": \"rent\"\n      },\n      \"replacement_cost_estimate\": \"string\",\n      \"external_property_id\": \"string\"\n    },\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"street_address_2\": \"string\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"string\"\n      },\n      \"property_coverages\": [\n        {\n          \"name\": \"custom_coverage\",\n          \"config\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"coverage_name\": \"string\"\n        },\n        {\n          \"name\": \"custom_coverage\",\n          \"config\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"coverage_name\": \"string\"\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"person\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\"\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 1175,\n        \"stories\": 2211.663295910978,\n        \"total_sq_feet\": 2622.2199033558286,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": \"yes\",\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": \"yes\",\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\",\n        \"purchase_price_dollars\": 5310,\n        \"construction_budget_dollars\": 925,\n        \"construction_scope\": \"string\",\n        \"post_construction_occupancy\": \"rental\",\n        \"post_construction_outcome\": \"rent\"\n      },\n      \"replacement_cost_estimate\": \"string\",\n      \"external_property_id\": \"string\"\n    }\n  ],\n  \"policy_details\": {\n    \"occupancy\": \"rental\"\n  },\n  \"policy_coverages\": [\n    {\n      \"name\": \"custom_coverage\",\n      \"config\": [\n        {\n          \"type\": \"selected\",\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": \"string\",\n          \"editable\": \"string\"\n        },\n        {\n          \"type\": \"selected\",\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": \"string\",\n          \"editable\": \"string\"\n        }\n      ],\n      \"coverage_name\": \"string\"\n    },\n    {\n      \"name\": \"custom_coverage\",\n      \"config\": [\n        {\n          \"type\": \"selected\",\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": \"string\",\n          \"editable\": \"string\"\n        },\n        {\n          \"type\": \"selected\",\n          \"value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": \"string\",\n          \"editable\": \"string\"\n        }\n      ],\n      \"coverage_name\": \"string\"\n    }\n  ],\n  \"payment\": {\n    \"schedule\": \"monthly\"\n  },\n  \"metadata\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b82c1665-ebed-4c52-ba0a-b3baeb1f64bd",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "submit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_record_id\": \"string\",\n  \"primary_insured\": {\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"email\": \"45743@KebQawSneAyAYUkYNRiPx.icki\",\n    \"suffix\": \"string\",\n    \"company_name\": \"string\",\n    \"date_of_birth\": \"1954-03-19\",\n    \"phone_number\": \"string\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    },\n    \"previous_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    }\n  },\n  \"policy_type\": \"DP3\",\n  \"additional_named_insured\": [\n    {\n      \"type\": \"trust_or_estate\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    },\n    {\n      \"type\": \"person\",\n      \"name\": \"string\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\"\n      }\n    }\n  ],\n  \"effective_date\": \"2022-01-15\",\n  \"properties\": [\n    {\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"street_address_2\": \"string\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"string\"\n      },\n      \"property_coverages\": [\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"coverage_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"config\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"coverage_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"property_manager\": {\n        \"type\": \"company\",\n        \"name\": \"string\",\n        \"address\": {\n          \"street_address\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"city\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"state\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"zip_code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"is_additional_insured\": \"no\",\n        \"is_active_manager\": \"no\"\n      },\n      \"property_details\": {\n        \"year_built\": 6750,\n        \"stories\": 2861.855172783895,\n        \"total_sq_feet\": 1170.9592647572708,\n        \"property_type\": \"single_family\",\n        \"confirmed_property_style\": \"condominium_unit\",\n        \"construction_type\": \"frame\",\n        \"roof_type\": \"asphalt_shingles\",\n        \"heating_sources\": [\n          \"furnace_electric\"\n        ],\n        \"has_barred_windows_over_50_percent\": \"Yes\",\n        \"days_uninsured\": 1,\n        \"central_station\": \"no\",\n        \"wrought_iron_bars\": {\n          \"description\": \"Wrought Iron Bars\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"rental_duration\": \"long_term\",\n        \"renovation_status\": \"not_under_renovation\",\n        \"pool_trampoline_hot_tub\": \"no\",\n        \"intermittent_rental\": {\n          \"description\": \"Intermittent Rental\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"building_quality\": \"standard\",\n        \"building_condition\": \"excellent\",\n        \"internal_data\": {},\n        \"builder_name\": \"Lennar Corp.\",\n        \"electrical_hvac_plumbing_renovated\": \"no\",\n        \"fire_protection_class\": \"9\",\n        \"address_info_s3_url\": \"s3://steadily-test-app-carlos/logs/2024/04/08/01HTZGD6ZKZK3F40VCGYW42N9I\",\n        \"wind_coverage_exclusion_zone\": \"no\",\n        \"ca_dic_zone\": \"ineligible\",\n        \"foundation_type\": \"concrete_slab\",\n        \"garages\": [\n          {\n            \"size\": \"2\"\n          }\n        ],\n        \"average_wall_height_feet\": 9,\n        \"bathroom_details\": [\n          {\n            \"type\": \"Full\"\n          }\n        ],\n        \"bedrooms\": 3,\n        \"fireplaces\": 1,\n        \"foundation_shape\": \"square_rectangle\",\n        \"purchase_price_dollars\": 605,\n        \"construction_budget_dollars\": 1034,\n        \"construction_scope\": \"string\",\n        \"post_construction_occupancy\": \"rental\",\n        \"post_construction_outcome\": \"rent\"\n      },\n      \"replacement_cost_estimate\": \"string\",\n      \"external_property_id\": \"string\"\n    }\n  ],\n  \"policy_details\": {\n    \"occupancy\": \"rental\"\n  },\n  \"policy_coverages\": [\n    {\n      \"name\": \"custom_coverage\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"coverage_name\": \"string\"\n    },\n    {\n      \"name\": \"custom_coverage\",\n      \"config\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"coverage_name\": \"string\"\n    }\n  ],\n  \"payment\": {\n    \"schedule\": \"semi_annual\"\n  },\n  \"metadata\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "566d21aa-9c20-430a-a2fc-33dcd3815ddb",
+          "name": "Get Lead",
+          "request": {
+            "name": "Get Lead",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "quote",
+                "estimate",
+                ":entity_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entity_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-ApiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "28d59b21-6784-4ecf-94eb-59e285b84170",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "estimate",
+                    ":entity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entity_id\": \"db62d0fb-ac08-425f-98c2-f89c2dff6c47\",\n  \"referral_code\": \"string\",\n  \"contact\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Smith\",\n    \"email\": \"john.smith@example.com\",\n    \"phone_number\": \"2605551234\",\n    \"date_of_birth\": \"1985-06-15\",\n    \"company_name\": \"Smith Property Management LLC\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    }\n  },\n  \"estimate\": {\n    \"property_id\": \"1a5f56\",\n    \"original_property\": {\n      \"property_id\": \"1a5f56\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Alameda\",\n        \"lat\": 33.789177,\n        \"lng\": -117.793104\n      },\n      \"current_premium\": 1994,\n      \"property_details\": {\n        \"size_sqft\": 1800,\n        \"year_built\": 1980,\n        \"property_type\": \"SINGLE_FAMILY\",\n        \"number_of_units\": 1,\n        \"replacement_value\": 125000,\n        \"stories\": 2,\n        \"land_value\": 4545,\n        \"occupancy_type\": \"fix_and_flip\",\n        \"rent\": 2590,\n        \"occupancy\": 100,\n        \"bedrooms\": 3,\n        \"bathrooms\": 2.5\n      },\n      \"property_metadata\": {\n        \"extra\": \"string\"\n      }\n    },\n    \"start_url\": \"string\",\n    \"error\": \"string\",\n    \"savings\": {\n      \"current_premium\": 910,\n      \"lowest\": 800,\n      \"savings\": 110\n    },\n    \"estimate\": {\n      \"lowest\": 800,\n      \"dp_1\": 1000,\n      \"dp_3\": 3000\n    },\n    \"estimate_metadata\": {\n      \"extra\": \"string\"\n    },\n    \"calculated_property\": {\n      \"property_id\": \"1a5f56\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Alameda\",\n        \"lat\": 33.789177,\n        \"lng\": -117.793104\n      },\n      \"property_details\": {\n        \"size_sqft\": 1800,\n        \"year_built\": 1980,\n        \"number_of_units\": 1,\n        \"property_type\": \"SINGLE_FAMILY\",\n        \"replacement_value\": 125000,\n        \"land_value\": 125000,\n        \"stories\": 2,\n        \"bedrooms\": 3,\n        \"bathrooms\": 2.5,\n        \"construction_type\": \"string\",\n        \"roof_material_type\": \"string\",\n        \"roof_pitch\": \"string\"\n      }\n    },\n    \"minimum_earned_premium_days\": 90\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53d454cf-849d-4e7c-9056-9e2b0f0582e3",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "estimate",
+                    ":entity_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entity_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "43485e82-528c-40fc-a8ae-b40414d6950b",
+    "name": "Partner Account Lead Referrals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nGet instant insurance quote estimates and manage referrals through our Partner API.\nTo request an API key contact partnerships-team@steadily.com\n",
+      "type": "text/plain"
+    }
+  }
+}

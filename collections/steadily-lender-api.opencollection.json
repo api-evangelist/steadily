@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner Account Lender API",
+    "version": "1.0-cc63f79"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lender",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fuzzy policy search by voice input",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/lender/policy/fuzzy_search",
+            "params": [
+              {
+                "name": "policy_number",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-ApiKey",
+              "value": "{{X-Steadily-ApiKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Fuzzy policy search by voice input"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,247 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner Account Draft Quote API",
+    "version": "1.0-cc63f79"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Draft Quote",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Quote List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/agency/draft_quote",
+            "params": [
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Return a history of quotes for an agency."
+        },
+        {
+          "info": {
+            "name": "Quote Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/agency/draft_quote",
+            "params": [
+              {
+                "name": "coverage_matching",
+                "value": "",
+                "type": "query",
+                "description": "Specify how coverages should be configured. Default to `nearest`, which caps coverage values to the closest min/max."
+              },
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "quote_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new quote from scratch by providing\n\n  - **Policy Type** — See [DP1 vs DP3](https://www.steadily.com/blog/dp1-vs-dp3-insurance-policies) and [Policy\nTypes](https://www.steadily.com/agent-hub/policy-types) for details.\n  - **Primary Insured** — Name, date of birth, and email\n  - **Policy Details** — Occupancy status\n  - **Property Addresses** — One or more addresses to cover\n\n  You can omit coverages from your create request and we'll configure everything to available defaults.\n  Since o"
+        },
+        {
+          "info": {
+            "name": "Quote Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/agency/draft_quote/:quote_id",
+            "params": [
+              {
+                "name": "quote_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve quote details"
+        },
+        {
+          "info": {
+            "name": "Quote Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/agency/draft_quote/:quote_id",
+            "params": [
+              {
+                "name": "quote_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update fields on an existing draft quote."
+        },
+        {
+          "info": {
+            "name": "Price Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/agency/draft_quote/:quote_id/price",
+            "params": [
+              {
+                "name": "quote_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include_payment_schedules_breakdown",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get pricing breakdown and details for a quote."
+        },
+        {
+          "info": {
+            "name": "Underwriting Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/agency/draft_quote/:quote_id/underwrite",
+            "params": [
+              {
+                "name": "quote_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "aud",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "policy_id",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check underwriting rules for this Quote."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

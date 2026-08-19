@@ -2,11 +2,9 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: openapi/steadily-partner-openapi-original.json
-note: >-
-  No official hosted/remote Steadily MCP server was found (checked the developer
-  portal at api.steadily.com, npm @modelcontextprotocol, and MCP registries). This
-  is a CANDIDATE tool list derived one-to-one from the Steadily Partner API
-  operations, to seed an MCP server should one be built.
+note: No official hosted/remote Steadily MCP server was found (checked the developer portal at api.steadily.com,
+  npm @modelcontextprotocol, and MCP registries). This is a CANDIDATE tool list derived one-to-one from
+  the Steadily Partner API operations, to seed an MCP server should one be built.
 server:
   name: steadily-partner
   transport: http
@@ -72,3 +70,9 @@ tools:
 - name: get_policy
   description: Retrieve a bound policy by id.
   source_operation: openapi/steadily-partner-openapi-original.json#get_policy
+deployment:
+  mode: none
+  verified: derived
+  tools: 20
+  checked: '2026-08-12'
+  source: catalog MCP census

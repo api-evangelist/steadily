@@ -1,0 +1,221 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner Account Reporting API",
+    "version": "1.0-cc63f79"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reporting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Partner Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/report/lead",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-SecretKey",
+              "value": "{{X-Steadily-SecretKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "List the leads you've referred, newest first.\n\nEach lead includes the contact, the properties quoted, and the Steadily agent who is assisting that lead.\n\nLead statuses indicate how that lead performed:\n- New - Newly created leads.\n- Converted - Leads that convert and buy a policy.\n- Unqualified - Leads that ultimately did not convert.\n- Awaiting quote - Leads that are currently being quoted, pending customer decision or underwriting review.\n\nAccount-level reporting also provides a contacted stat"
+        },
+        {
+          "info": {
+            "name": "Partner Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/report/account",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-SecretKey",
+              "value": "{{X-Steadily-SecretKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "List the accounts you've referred to Steadily, newest first.\n\nAn account represents the long-term profile for a policyholder. Each account may have many contacts and policies.\nResults are paginated; follow next_url for the next page."
+        },
+        {
+          "info": {
+            "name": "Partner Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/report/policy",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-SecretKey",
+              "value": "{{X-Steadily-SecretKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "List the policies bound for customers you've referred, newest first.\n\nEach policy includes its term, premium, coverages, properties, and documents.\nNote that the level of detail may vary depending on if it's a Steadily direct policy or a third-party policy bound through Steadily."
+        },
+        {
+          "info": {
+            "name": "Partner Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/report/summary",
+            "params": [
+              {
+                "name": "start_month",
+                "value": "",
+                "type": "query",
+                "description": "Window start month (inclusive), YYYY-MM"
+              },
+              {
+                "name": "end_month",
+                "value": "",
+                "type": "query",
+                "description": "Window end month (inclusive), YYYY-MM"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-Steadily-SecretKey",
+              "value": "{{X-Steadily-SecretKey}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Your monthly referral activity and earnings summary.\n\nUse start_month and end_month to set the reporting window. Defaults to the earliest activity when omitted.\nLifetime totals span all time, regardless of the window."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

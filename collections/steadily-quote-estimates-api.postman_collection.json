@@ -1,0 +1,361 @@
+{
+  "item": [
+    {
+      "id": "c7e9eaff-8ff3-4aa8-8e56-17c6a694dc4f",
+      "name": "Quote Estimates",
+      "description": {
+        "content": "\nThe Instant Estimate API is a one-step express API to quickly get a landlord insurance estimate you can display within your platform.\n\nTo get started, you only need to send the address and a unique property_id from your system.\nYou'll instantly get back a premium estimate and a link to a pre-filled application your customers can visit to finalize their quote.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a8daa9cb-c442-48c2-924b-7680f6dc5e9e",
+          "name": "Quote Estimate",
+          "request": {
+            "name": "Quote Estimate",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "quote",
+                "estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-ApiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"properties\": [\n    {\n      \"property_id\": \"<string>\",\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"county\": \"<string>\",\n        \"lat\": \"<number>\",\n        \"lng\": \"<number>\"\n      },\n      \"current_premium\": \"<integer>\",\n      \"property_details\": {\n        \"size_sqft\": \"<integer>\",\n        \"year_built\": \"<integer>\",\n        \"property_type\": {\n          \"title\": \"Type of property\",\n          \"example\": \"SINGLE_FAMILY\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"number_of_units\": \"<integer>\",\n        \"replacement_value\": \"<integer>\",\n        \"stories\": \"<integer>\",\n        \"land_value\": \"<integer>\",\n        \"occupancy_type\": \"<string>\",\n        \"rent\": \"<integer>\",\n        \"occupancy\": \"<integer>\",\n        \"bedrooms\": \"<integer>\",\n        \"bathrooms\": \"<number>\"\n      },\n      \"property_metadata\": {\n        \"extra\": \"<string>\"\n      }\n    },\n    {\n      \"property_id\": \"<string>\",\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"county\": \"<string>\",\n        \"lat\": \"<number>\",\n        \"lng\": \"<number>\"\n      },\n      \"current_premium\": \"<integer>\",\n      \"property_details\": {\n        \"size_sqft\": \"<integer>\",\n        \"year_built\": \"<integer>\",\n        \"property_type\": {\n          \"title\": \"Type of property\",\n          \"example\": \"SINGLE_FAMILY\",\n          \"nullable\": true,\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"number_of_units\": \"<integer>\",\n        \"replacement_value\": \"<integer>\",\n        \"stories\": \"<integer>\",\n        \"land_value\": \"<integer>\",\n        \"occupancy_type\": \"<string>\",\n        \"rent\": \"<integer>\",\n        \"occupancy\": \"<integer>\",\n        \"bedrooms\": \"<integer>\",\n        \"bathrooms\": \"<number>\"\n      },\n      \"property_metadata\": {\n        \"extra\": \"<string>\"\n      }\n    }\n  ],\n  \"utm_source\": \"<string>\",\n  \"utm_medium\": \"<string>\",\n  \"utm_campaign\": \"<string>\",\n  \"utm_content\": \"<string>\",\n  \"metadata\": {\n    \"extra\": \"<string>\"\n  },\n  \"primary_insured\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone_number\": \"<string>\",\n    \"date_of_birth\": \"<date>\",\n    \"company_name\": \"<string>\",\n    \"mailing_address\": {\n      \"street_address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip_code\": \"<string>\",\n      \"county\": \"<string>\",\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n    }\n  },\n  \"flow\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d8bda3ba-acc4-4cf9-b755-5adf42f4ece5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"property_id\": \"1a5f56\",\n      \"address\": {\n        \"street_address\": \"123 Main St\",\n        \"city\": \"Austin\",\n        \"state\": \"TX\",\n        \"zip_code\": \"78701\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"estimates\": [\n    {\n      \"property_id\": \"1a5f56\",\n      \"original_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"current_premium\": 1994,\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"number_of_units\": 1,\n          \"replacement_value\": 125000,\n          \"stories\": 2,\n          \"land_value\": 3591,\n          \"occupancy_type\": \"fix_and_flip\",\n          \"rent\": 2590,\n          \"occupancy\": 100,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5\n        },\n        \"property_metadata\": {\n          \"extra\": \"string\"\n        }\n      },\n      \"start_url\": \"string\",\n      \"error\": \"string\",\n      \"savings\": {\n        \"current_premium\": 910,\n        \"lowest\": 800,\n        \"savings\": 110\n      },\n      \"estimate\": {\n        \"lowest\": 800,\n        \"dp_1\": 1000,\n        \"dp_3\": 3000\n      },\n      \"estimate_metadata\": {\n        \"extra\": \"string\"\n      },\n      \"calculated_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"number_of_units\": 1,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"replacement_value\": 125000,\n          \"land_value\": 125000,\n          \"stories\": 2,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5,\n          \"construction_type\": \"string\",\n          \"roof_material_type\": \"string\",\n          \"roof_pitch\": \"string\"\n        }\n      },\n      \"minimum_earned_premium_days\": 90\n    },\n    {\n      \"property_id\": \"1a5f56\",\n      \"original_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"current_premium\": 1994,\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"number_of_units\": 1,\n          \"replacement_value\": 125000,\n          \"stories\": 2,\n          \"land_value\": 6832,\n          \"occupancy_type\": \"fix_and_flip\",\n          \"rent\": 2590,\n          \"occupancy\": 100,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5\n        },\n        \"property_metadata\": {\n          \"extra\": \"string\"\n        }\n      },\n      \"start_url\": \"string\",\n      \"error\": \"string\",\n      \"savings\": {\n        \"current_premium\": 910,\n        \"lowest\": 800,\n        \"savings\": 110\n      },\n      \"estimate\": {\n        \"lowest\": 800,\n        \"dp_1\": 1000,\n        \"dp_3\": 3000\n      },\n      \"estimate_metadata\": {\n        \"extra\": \"string\"\n      },\n      \"calculated_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"number_of_units\": 1,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"replacement_value\": 125000,\n          \"land_value\": 125000,\n          \"stories\": 2,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5,\n          \"construction_type\": \"string\",\n          \"roof_material_type\": \"string\",\n          \"roof_pitch\": \"string\"\n        }\n      },\n      \"minimum_earned_premium_days\": 90\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e0cc8d0-4c55-4d09-b2f6-b68d47c9f496",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"property_id\": \"1a5f56\",\n      \"address\": {\n        \"street_address\": \"123 Main St\",\n        \"city\": \"Austin\",\n        \"state\": \"TX\",\n        \"zip_code\": \"78701\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f68751f-0530-44a5-918f-bdd3455a88d6",
+          "name": "Instant Estimate",
+          "request": {
+            "name": "Instant Estimate",
+            "description": {
+              "content": "Instant estimate endpoint for high-volume requests.\n\nRequires all properties to have complete address and property details:\n- Address: street_address, city, state, zip_code, county, lat, lng\n- Property Details: property_type, size_sqft, year_built\n\nOptional primary_insured block prefills the downstream quote flow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "quote",
+                "instant-estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-Steadily-ApiKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"properties\": [\n    {\n      \"property_id\": \"<string>\",\n      \"address\": {\n        \"street_address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"county\": \"<string>\",\n        \"lat\": \"<number>\",\n        \"lng\": \"<number>\"\n      },\n      \"property_details\": {\n        \"property_type\": {\n          \"title\": \"Type of property\",\n          \"example\": \"SINGLE_FAMILY\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"size_sqft\": \"<integer>\",\n        \"year_built\": \"<integer>\",\n        \"number_of_units\": \"<integer>\",\n        \"replacement_value\": \"<integer>\",\n        \"stories\": \"<integer>\",\n        \"land_value\": \"<integer>\",\n        \"occupancy_type\": \"<string>\"\n      },\n      \"current_premium\": \"<integer>\",\n      \"property_metadata\": {\n        \"extra\": \"<string>\"\n      }\n    }\n  ],\n  \"utm_source\": \"<string>\",\n  \"utm_medium\": \"<string>\",\n  \"utm_campaign\": \"<string>\",\n  \"utm_content\": \"<string>\",\n  \"metadata\": {\n    \"extra\": \"<string>\"\n  },\n  \"primary_insured\": {\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone_number\": \"<string>\",\n    \"date_of_birth\": \"<date>\",\n    \"company_name\": \"<string>\",\n    \"mailing_address\": {\n      \"street_address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip_code\": \"<string>\",\n      \"county\": \"<string>\",\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n    }\n  },\n  \"flow\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c0396845-8917-4a06-b3cd-a8f8429d24db",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "instant-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"property_id\": \"1a5f56\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Alameda\",\n        \"lat\": 33.789177,\n        \"lng\": -117.793104\n      },\n      \"property_details\": {\n        \"property_type\": \"SINGLE_FAMILY\",\n        \"size_sqft\": 1800,\n        \"year_built\": 1980,\n        \"number_of_units\": 1,\n        \"replacement_value\": 125000,\n        \"stories\": 2,\n        \"land_value\": 6137,\n        \"occupancy_type\": \"fix_and_flip\"\n      },\n      \"current_premium\": 1994,\n      \"property_metadata\": {\n        \"extra\": \"string\"\n      }\n    }\n  ],\n  \"utm_source\": \"string\",\n  \"utm_medium\": \"string\",\n  \"utm_campaign\": \"string\",\n  \"utm_content\": \"string\",\n  \"metadata\": {\n    \"extra\": \"string\"\n  },\n  \"primary_insured\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Smith\",\n    \"email\": \"john.smith@example.com\",\n    \"phone_number\": \"2605551234\",\n    \"date_of_birth\": \"1985-06-15\",\n    \"company_name\": \"Smith Property Management LLC\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    }\n  },\n  \"flow\": \"default\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"estimates\": [\n    {\n      \"property_id\": \"1a5f56\",\n      \"original_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"current_premium\": 1994,\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"number_of_units\": 1,\n          \"replacement_value\": 125000,\n          \"stories\": 2,\n          \"land_value\": 3591,\n          \"occupancy_type\": \"fix_and_flip\",\n          \"rent\": 2590,\n          \"occupancy\": 100,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5\n        },\n        \"property_metadata\": {\n          \"extra\": \"string\"\n        }\n      },\n      \"start_url\": \"string\",\n      \"error\": \"string\",\n      \"savings\": {\n        \"current_premium\": 910,\n        \"lowest\": 800,\n        \"savings\": 110\n      },\n      \"estimate\": {\n        \"lowest\": 800,\n        \"dp_1\": 1000,\n        \"dp_3\": 3000\n      },\n      \"estimate_metadata\": {\n        \"extra\": \"string\"\n      },\n      \"calculated_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"number_of_units\": 1,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"replacement_value\": 125000,\n          \"land_value\": 125000,\n          \"stories\": 2,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5,\n          \"construction_type\": \"string\",\n          \"roof_material_type\": \"string\",\n          \"roof_pitch\": \"string\"\n        }\n      },\n      \"minimum_earned_premium_days\": 90\n    },\n    {\n      \"property_id\": \"1a5f56\",\n      \"original_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"current_premium\": 1994,\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"number_of_units\": 1,\n          \"replacement_value\": 125000,\n          \"stories\": 2,\n          \"land_value\": 6832,\n          \"occupancy_type\": \"fix_and_flip\",\n          \"rent\": 2590,\n          \"occupancy\": 100,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5\n        },\n        \"property_metadata\": {\n          \"extra\": \"string\"\n        }\n      },\n      \"start_url\": \"string\",\n      \"error\": \"string\",\n      \"savings\": {\n        \"current_premium\": 910,\n        \"lowest\": 800,\n        \"savings\": 110\n      },\n      \"estimate\": {\n        \"lowest\": 800,\n        \"dp_1\": 1000,\n        \"dp_3\": 3000\n      },\n      \"estimate_metadata\": {\n        \"extra\": \"string\"\n      },\n      \"calculated_property\": {\n        \"property_id\": \"1a5f56\",\n        \"address\": {\n          \"street_address\": \"4825 Mount Sinyala Crossover\",\n          \"city\": \"Fort Wayne\",\n          \"state\": \"IN\",\n          \"zip_code\": \"46808\",\n          \"county\": \"Alameda\",\n          \"lat\": 33.789177,\n          \"lng\": -117.793104\n        },\n        \"property_details\": {\n          \"size_sqft\": 1800,\n          \"year_built\": 1980,\n          \"number_of_units\": 1,\n          \"property_type\": \"SINGLE_FAMILY\",\n          \"replacement_value\": 125000,\n          \"land_value\": 125000,\n          \"stories\": 2,\n          \"bedrooms\": 3,\n          \"bathrooms\": 2.5,\n          \"construction_type\": \"string\",\n          \"roof_material_type\": \"string\",\n          \"roof_pitch\": \"string\"\n        }\n      },\n      \"minimum_earned_premium_days\": 90\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38854758-cf7b-418a-921e-66aa21afeccf",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "quote",
+                    "instant-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "X-Steadily-ApiKey",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"property_id\": \"1a5f56\",\n      \"address\": {\n        \"street_address\": \"4825 Mount Sinyala Crossover\",\n        \"city\": \"Fort Wayne\",\n        \"state\": \"IN\",\n        \"zip_code\": \"46808\",\n        \"county\": \"Alameda\",\n        \"lat\": 33.789177,\n        \"lng\": -117.793104\n      },\n      \"property_details\": {\n        \"property_type\": \"SINGLE_FAMILY\",\n        \"size_sqft\": 1800,\n        \"year_built\": 1980,\n        \"number_of_units\": 1,\n        \"replacement_value\": 125000,\n        \"stories\": 2,\n        \"land_value\": 6137,\n        \"occupancy_type\": \"fix_and_flip\"\n      },\n      \"current_premium\": 1994,\n      \"property_metadata\": {\n        \"extra\": \"string\"\n      }\n    }\n  ],\n  \"utm_source\": \"string\",\n  \"utm_medium\": \"string\",\n  \"utm_campaign\": \"string\",\n  \"utm_content\": \"string\",\n  \"metadata\": {\n    \"extra\": \"string\"\n  },\n  \"primary_insured\": {\n    \"first_name\": \"John\",\n    \"last_name\": \"Smith\",\n    \"email\": \"john.smith@example.com\",\n    \"phone_number\": \"2605551234\",\n    \"date_of_birth\": \"1985-06-15\",\n    \"company_name\": \"Smith Property Management LLC\",\n    \"mailing_address\": {\n      \"street_address\": \"4825 Mount Sinyala Crossover\",\n      \"city\": \"Fort Wayne\",\n      \"state\": \"IN\",\n      \"zip_code\": \"46808\",\n      \"county\": \"Alameda\",\n      \"lat\": 33.789177,\n      \"lng\": -117.793104\n    }\n  },\n  \"flow\": \"default\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9dd3727f-546a-4f16-9cb6-1974b0e5176e",
+    "name": "Partner Account Quote Estimates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nGet instant insurance quote estimates and manage referrals through our Partner API.\nTo request an API key contact partnerships-team@steadily.com\n",
+      "type": "text/plain"
+    }
+  }
+}
