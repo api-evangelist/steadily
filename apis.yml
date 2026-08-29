@@ -281,6 +281,9 @@ apis:
   - type: Documentation
     url: https://api.steadily.com/quote-rater/redoc
 common:
+- type: CapabilityMap
+  url: capabilities/steadily-capability-edges.yml
+  name: Steadily Business Capability Map
 - type: Overlay
   url: overlays/steadily-estimate-api-overlay.yaml
 - type: Authentication

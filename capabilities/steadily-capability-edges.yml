@@ -1,0 +1,65 @@
+slug: steadily
+provider: Steadily
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Insurance
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Draft Quote
+  spec_file: steadily-draft-quote-api-openapi.yml
+  capability_id: BC-2110.60
+  capability_id_l1: BC-2110
+  capability_name: Quote & Submission Management
+  confidence: 0.85
+  evidence: POST /v1/agency/draft_quote quote_create; GET /v1/agency/draft_quote/{quote_id}/price price_quote;
+    GET .../underwrite underwriting_info
+  reason: Agency-facing creation, pricing and underwriting review of insurance quotes with coverage request
+    schemas — quote and submission management in the distribution flow into underwriting.
+- tag: Quote Estimates
+  spec_file: steadily-quote-estimates-api-openapi.yml
+  capability_id: BC-2110.60
+  capability_id_l1: BC-2110
+  capability_name: Quote & Submission Management
+  confidence: 0.85
+  evidence: POST /v1/quote/estimate quote_estimate; POST /v1/quote/instant-estimate instant_estimate;
+    schemas EstimateRequest, PropertyEstimate
+  reason: Generates instant insurance premium estimates for rental properties from partner-supplied property
+    data — quote generation in the distribution/submission flow.
+- tag: Quote Offer
+  spec_file: steadily-quote-offer-api-openapi.yml
+  capability_id: BC-2110.60
+  capability_id_l1: BC-2110
+  capability_name: Quote & Submission Management
+  confidence: 0.85
+  evidence: POST /v1/agency/quote_offer offer_quote; GET /v1/agency/quote_offer/{offer_id} get_offer;
+    schemas OfferResponse, QuoteRequest
+  reason: Creation and retrieval of firm quote offers with coverage selections and payment schedule —
+    quote generation and quote-to-bind conversion surface.
+- tag: Policy
+  spec_file: steadily-policy-api-openapi.yml
+  capability_id: BC-2140
+  capability_id_l1: BC-2140
+  capability_name: Policy Administration Management
+  confidence: 0.8
+  evidence: GET /v1/agency/policy/{policy_id} get_policy; schemas PolicyDetails, ralphie__models__policy__PolicyStatus,
+    CoverageType, AdditionalInsured
+  reason: Retrieval of issued insurance policy contract detail, status and coverage — in-force policy
+    administration; no specific lifecycle event named so L2 withheld.
+- tag: Lead Referrals
+  spec_file: steadily-lead-referrals-api-openapi.yml
+  capability_id: BC-2110.60
+  capability_id_l1: BC-2110
+  capability_name: Quote & Submission Management
+  confidence: 0.7
+  evidence: POST /v1/quote/submit refer_lead; GET /v1/quote/estimate/{entity_id} get_lead; schema SubmitRequest
+  reason: Partners refer insurance leads and submit them for quoting; the submission intake path sits
+    under quote and submission management for the distribution channel. Slight ambiguity between lead
+    handling and generic pipeline management.
