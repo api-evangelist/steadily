@@ -10,6 +10,18 @@ description: >-
   create, price, underwrite, and offer quotes directly from their rater. Steadily was
   founded by a landlord who could not find decent insurance for his own rental property.
 url: https://raw.githubusercontent.com/api-evangelist/steadily/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
