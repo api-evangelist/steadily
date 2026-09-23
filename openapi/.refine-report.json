@@ -1,14 +1,7 @@
 {
   "provider": "steadily",
   "sources": [
-    "steadily-account-api-openapi.yml",
-    "steadily-draft-quote-api-openapi.yml",
-    "steadily-lead-referrals-api-openapi.yml",
-    "steadily-lender-api-openapi.yml",
-    "steadily-policy-api-openapi.yml",
-    "steadily-quote-estimates-api-openapi.yml",
-    "steadily-quote-offer-api-openapi.yml",
-    "steadily-reporting-api-openapi.yml"
+    "_original/steadily-partner-openapi-original.json"
   ],
   "outputs": [
     "steadily-account-api-openapi.yml",
@@ -23,6 +16,22 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "2 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "steadily-partner-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/steadily-rater-quotes-openapi-original.json: archived document superseded by a larger archived document",
+    "_original/steadily-estimate-api-openapi-original.json: archived document superseded by a larger archived document",
+    "steadily-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "steadily-draft-quote-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "steadily-lead-referrals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "steadily-lender-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "steadily-policy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "steadily-quote-estimates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "steadily-quote-offer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "steadily-reporting-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
