@@ -51,7 +51,7 @@ tags:
 - Insurance
 - Landlord Insurance
 - Insurtech
-- Real-Estate
+- Real Estate
 - Rental Property
 tags_raw:
 - Company
@@ -62,6 +62,7 @@ tags_raw:
 - Real Estate
 - Rental Property
 - API
+- Real-Estate
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

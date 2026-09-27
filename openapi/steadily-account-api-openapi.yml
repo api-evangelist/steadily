@@ -50,7 +50,7 @@ paths:
         The quote will be attributed to that agent as the producing agent and accessible to other agents under the same agency.
 
         However, the agent must be appointed with Steadily in order for them to log in to our UI when bridging over.'
-      operationId: Agent Bearer Token
+      operationId: AgentBearerToken
       requestBody:
         content:
           application/json:
@@ -75,6 +75,8 @@ paths:
       security:
       - APIKeyQuery: []
       - APIKeyHeader: []
+      x-operation-id-source: normalized
+      x-operation-id-original: Agent Bearer Token
 components:
   schemas:
     AccountAgencyTokenRequest:
@@ -85,6 +87,32 @@ components:
       required:
       - agent
       title: AccountAgencyTokenRequest
+    AccountAgencyTokenResponse:
+      properties:
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - token
+      title: AccountAgencyTokenResponse
+    AccountInfoResponse:
+      properties:
+        referral_code:
+          type: string
+          title: Referral Code
+          nullable: true
+      type: object
+      title: AccountInfoResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     AgentInformation:
       properties:
         first_name:
@@ -117,15 +145,6 @@ components:
       - licensed_states
       - email
       title: AgentInformation
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     AgentStateInformation:
       properties:
         state:
@@ -139,23 +158,6 @@ components:
       required:
       - state
       title: AgentStateInformation
-    AccountAgencyTokenResponse:
-      properties:
-        token:
-          type: string
-          title: Token
-      type: object
-      required:
-      - token
-      title: AccountAgencyTokenResponse
-    AccountInfoResponse:
-      properties:
-        referral_code:
-          type: string
-          title: Referral Code
-          nullable: true
-      type: object
-      title: AccountInfoResponse
     ValidationError:
       properties:
         loc:
