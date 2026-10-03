@@ -79,14 +79,6 @@ paths:
       x-operation-id-original: Agent Bearer Token
 components:
   schemas:
-    AccountAgencyTokenRequest:
-      properties:
-        agent:
-          $ref: '#/components/schemas/AgentInformation'
-      type: object
-      required:
-      - agent
-      title: AccountAgencyTokenRequest
     AccountAgencyTokenResponse:
       properties:
         token:
@@ -104,15 +96,19 @@ components:
           nullable: true
       type: object
       title: AccountInfoResponse
-    HTTPValidationError:
+    AgentStateInformation:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        state:
+          type: string
+          title: State
+        state_producer_number:
+          type: string
+          title: State Producer Number
+          nullable: true
       type: object
-      title: HTTPValidationError
+      required:
+      - state
+      title: AgentStateInformation
     AgentInformation:
       properties:
         first_name:
@@ -145,19 +141,14 @@ components:
       - licensed_states
       - email
       title: AgentInformation
-    AgentStateInformation:
+    AccountAgencyTokenRequest:
       properties:
-        state:
-          type: string
-          title: State
-        state_producer_number:
-          type: string
-          title: State Producer Number
-          nullable: true
+        agent:
+          $ref: '#/components/schemas/AgentInformation'
       type: object
       required:
-      - state
-      title: AgentStateInformation
+      - agent
+      title: AccountAgencyTokenRequest
     ValidationError:
       properties:
         loc:
@@ -179,6 +170,15 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKeyQuery:
       type: apiKey

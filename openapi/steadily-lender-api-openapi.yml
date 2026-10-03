@@ -57,6 +57,19 @@ components:
       required:
       - policies
       title: LenderPolicySearchResponse
+    LenderPropertyAddress:
+      properties:
+        full_address:
+          type: string
+          title: Full Address
+          nullable: true
+        state:
+          type: string
+          title: State
+      type: object
+      required:
+      - state
+      title: LenderPropertyAddress
     LenderPolicyResult:
       properties:
         policy_id:
@@ -116,15 +129,6 @@ components:
       - policy_number
       - properties
       title: LenderPolicyResult
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -146,19 +150,15 @@ components:
       - msg
       - type
       title: ValidationError
-    LenderPropertyAddress:
+    HTTPValidationError:
       properties:
-        full_address:
-          type: string
-          title: Full Address
-          nullable: true
-        state:
-          type: string
-          title: State
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - state
-      title: LenderPropertyAddress
+      title: HTTPValidationError
   securitySchemes:
     APIKeyQuery:
       type: apiKey
