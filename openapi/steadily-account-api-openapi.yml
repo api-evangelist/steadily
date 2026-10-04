@@ -79,15 +79,6 @@ paths:
       x-operation-id-original: Agent Bearer Token
 components:
   schemas:
-    AccountAgencyTokenResponse:
-      properties:
-        token:
-          type: string
-          title: Token
-      type: object
-      required:
-      - token
-      title: AccountAgencyTokenResponse
     AccountInfoResponse:
       properties:
         referral_code:
@@ -109,6 +100,53 @@ components:
       required:
       - state
       title: AgentStateInformation
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AccountAgencyTokenResponse:
+      properties:
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - token
+      title: AccountAgencyTokenResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AccountAgencyTokenRequest:
+      properties:
+        agent:
+          $ref: '#/components/schemas/AgentInformation'
+      type: object
+      required:
+      - agent
+      title: AccountAgencyTokenRequest
     AgentInformation:
       properties:
         first_name:
@@ -141,44 +179,6 @@ components:
       - licensed_states
       - email
       title: AgentInformation
-    AccountAgencyTokenRequest:
-      properties:
-        agent:
-          $ref: '#/components/schemas/AgentInformation'
-      type: object
-      required:
-      - agent
-      title: AccountAgencyTokenRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
   securitySchemes:
     APIKeyQuery:
       type: apiKey
