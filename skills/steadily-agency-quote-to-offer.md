@@ -2,7 +2,7 @@
 name: Steadily agency quote to offer
 description: As an appointed independent agency, create a draft quote in your rater, price and underwrite it, then generate a firm offer through the Steadily Rater Quotes API.
 api: openapi/steadily-rater-quotes-openapi-original.json
-operations: [who_am_i, Agent Bearer Token, quote_create, quote_update, price_quote, underwriting_info, offer_quote, get_offer, get_policy]
+operations: [who_am_i, AgentBearerToken, quote_create, quote_update, price_quote, underwriting_info, offer_quote, get_offer, get_policy]
 ---
 
 # Steadily — Agency draft quote to firm offer
