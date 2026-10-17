@@ -369,53 +369,26 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ralphie__models__report__PropertyDetails:
+    PolicyPaymentSchedule:
+      type: string
+      enum:
+      - annual
+      - installments
+      - escrow
+      - premium_financed
+      - transaction
+      - advance
+      - advance_and_transactions
+      title: PolicyPaymentSchedule
+      description: An enumeration.
+    Account:
       properties:
-        year_built:
-          type: integer
-          title: Year Built
-        total_sq_feet:
-          type: integer
-          title: Total Sq Feet
-        property_type:
-          type: string
-          title: Property Type
-        construction_type:
-          type: string
-          title: Construction Type
-        roof_type:
-          type: string
-          title: Roof Type
-        heating_sources:
-          items:
-            type: string
-          type: array
-          title: Heating Sources
-        rental_duration:
-          type: string
-          title: Rental Duration
-        renovation_status:
-          type: string
-          title: Renovation Status
-        intermittent_rental:
-          type: string
-          title: Intermittent Rental
-      type: object
-      title: PropertyDetails
-    Lead:
-      properties:
-        lead_id:
-          type: string
-          title: Lead Id
-        first_name:
-          type: string
-          title: First Name
-        last_name:
-          type: string
-          title: Last Name
         account_id:
           type: string
           title: Account Id
+        account_name:
+          type: string
+          title: Account Name
         external_record_id:
           type: string
           title: External Record Id
@@ -430,81 +403,75 @@ components:
         referral_code:
           type: string
           title: Referral Code
-        status:
-          allOf:
-          - $ref: '#/components/schemas/LeadStatus'
-          description: Current status of the referred lead
-        record_type:
-          $ref: '#/components/schemas/LeadRecordType'
-        contact:
-          $ref: '#/components/schemas/ralphie__models__report__Contact'
-        properties:
+        contacts:
           items:
-            $ref: '#/components/schemas/LeadProperty'
+            $ref: '#/components/schemas/ralphie__models__report__Contact'
           type: array
-          title: Properties
+          title: Contacts
         agent:
           $ref: '#/components/schemas/Agent'
+        contacted_status:
+          allOf:
+          - $ref: '#/components/schemas/ContactedStatus'
+          description: Whether one of the account's properties has been successfully contacted
+          default: pending_contact
       type: object
       required:
-      - lead_id
+      - account_id
       - created_at_timestamp
       - updated_at_timestamp
-      - status
-      - record_type
-      - contact
-      - properties
-      title: Lead
-    ralphie__models__report__Contact:
+      - contacts
+      title: Account
+    PolicyStatusOptions:
+      type: string
+      enum:
+      - issued
+      - quoted
+      - cancelled
+      title: PolicyStatusOptions
+    LeadStatusOptions:
+      type: string
+      enum:
+      - converted
+      - unqualified
+      - awaiting_quote
+      - new
+      title: LeadStatusOptions
+    LeadListPage:
       properties:
-        first_name:
-          type: string
-          title: First Name
-        last_name:
-          type: string
-          title: Last Name
-        suffix:
-          type: string
-          title: Suffix
-          description: Name suffix such as Jr or II
-        date_of_birth:
-          type: string
-          format: date
-          title: Date Of Birth
-        phone_number:
-          type: string
-          title: Phone Number
-        email:
-          type: string
-          format: email
-          title: Email
-        mailing_address:
-          $ref: '#/components/schemas/ralphie__models__report__Address'
-        self_reported_claims:
+        leads:
           items:
-            $ref: '#/components/schemas/OptionalSelfReportedClaims'
+            $ref: '#/components/schemas/Lead'
           type: array
-          title: Self Reported Claims
-      type: object
-      title: Contact
-    PartnerProfile:
-      properties:
-        account_name:
+          title: Leads
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+        next_url:
           type: string
-          title: Account Name
-          description: Your partner account name
-        referral_code:
-          type: string
-          title: Referral Code
-          description: The referral code these results are scoped to
-        logo_url:
-          type: string
-          title: Logo Url
-          description: URL to your partner logo, when configured
+          title: Next Url
       type: object
       required:
-      - account_name
-      title: PartnerProfile
+      - leads
+      - limit
+      title: LeadListPage
+    ralphie__models__report__PolicyStatus:
+      type: string
+      enum:
+      - issued
+      - quoted
+      - cancelled
+      title: PolicyStatus
+      description: An enumeration.
+    ContactedStatus:
+      type: string
+      enum:
+      - successful_contact
+      - pending_contact
+      title: ContactedStatus
+      description: An enumeration.
     Policy:
       properties:
         account_id:
@@ -567,56 +534,184 @@ components:
       - policy_coverages
       - policy_documents
       title: Policy
-    ValidationError:
+    PolicyDocument:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        document_id:
           type: string
-          title: Message
-        type:
+          title: Document Id
+        display_name:
           type: string
-          title: Error Type
+          title: Display Name
+        file_name:
+          type: string
+          title: File Name
+        url:
+          type: string
+          title: Url
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ReportSummary:
+      - document_id
+      - display_name
+      - file_name
+      - url
+      title: PolicyDocument
+    Agent:
       properties:
-        partner:
-          $ref: '#/components/schemas/PartnerProfile'
-        window_start_month:
+        email:
           type: string
-          title: Window Start Month
-          description: First month of the resolved window, YYYY-MM
-        window_end_month:
+          title: Email
+      type: object
+      title: Agent
+    PolicyType:
+      type: string
+      enum:
+      - DP3
+      - DP1
+      title: PolicyType
+      description: An enumeration.
+    Lead:
+      properties:
+        lead_id:
           type: string
-          title: Window End Month
-          description: Last month of the resolved window, YYYY-MM
-        lifetime:
+          title: Lead Id
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        account_id:
+          type: string
+          title: Account Id
+        external_record_id:
+          type: string
+          title: External Record Id
+        created_at_timestamp:
+          type: string
+          format: date-time
+          title: Created At Timestamp
+        updated_at_timestamp:
+          type: string
+          format: date-time
+          title: Updated At Timestamp
+        referral_code:
+          type: string
+          title: Referral Code
+        status:
           allOf:
-          - $ref: '#/components/schemas/LifetimeSummary'
-          title: Lifetime
-          description: Cumulative totals across all time, independent of the window
-        monthly:
+          - $ref: '#/components/schemas/LeadStatus'
+          description: Current status of the referred lead
+        record_type:
+          $ref: '#/components/schemas/LeadRecordType'
+        contact:
+          $ref: '#/components/schemas/ralphie__models__report__Contact'
+        properties:
           items:
-            $ref: '#/components/schemas/MonthlySummary'
+            $ref: '#/components/schemas/LeadProperty'
           type: array
-          title: Monthly
-          description: Per-month breakdown within the window, oldest to newest
+          title: Properties
+        agent:
+          $ref: '#/components/schemas/Agent'
       type: object
       required:
-      - partner
-      - lifetime
-      - monthly
-      title: ReportSummary
+      - lead_id
+      - created_at_timestamp
+      - updated_at_timestamp
+      - status
+      - record_type
+      - contact
+      - properties
+      title: Lead
+    OptionalSelfReportedClaims:
+      properties:
+        date_of_loss:
+          type: string
+          format: date
+          title: Date of Loss
+          description: Approximate date of the loss
+        loss_reason:
+          allOf:
+          - $ref: '#/components/schemas/LossReason'
+          title: Loss Reason
+          example: weather
+        loss_amount_dollars:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Loss Amount in Dollars
+        caused_by_catastrophe:
+          allOf:
+          - $ref: '#/components/schemas/YesNo'
+          title: Loss related to Catastrophe
+      type: object
+      title: OptionalSelfReportedClaims
+      description: Details of any self-reported claims
+    LossReason:
+      type: string
+      enum:
+      - weather
+      - fire
+      - water_appliance
+      - water
+      - theft
+      - earthquake
+      - liability
+      - medical
+      - other
+      title: LossReason
+      description: An enumeration.
+    AccountListPage:
+      properties:
+        accounts:
+          items:
+            $ref: '#/components/schemas/Account'
+          type: array
+          title: Accounts
+        limit:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Limit
+        next_url:
+          type: string
+          title: Next Url
+      type: object
+      required:
+      - accounts
+      - limit
+      title: AccountListPage
+    ralphie__models__report__PropertyDetails:
+      properties:
+        year_built:
+          type: integer
+          title: Year Built
+        total_sq_feet:
+          type: integer
+          title: Total Sq Feet
+        property_type:
+          type: string
+          title: Property Type
+        construction_type:
+          type: string
+          title: Construction Type
+        roof_type:
+          type: string
+          title: Roof Type
+        heating_sources:
+          items:
+            type: string
+          type: array
+          title: Heating Sources
+        rental_duration:
+          type: string
+          title: Rental Duration
+        renovation_status:
+          type: string
+          title: Renovation Status
+        intermittent_rental:
+          type: string
+          title: Intermittent Rental
+      type: object
+      title: PropertyDetails
     ReferralCounts:
       properties:
         accounts_referred:
@@ -641,113 +736,47 @@ components:
       - rental_contacted
       - flip_contacted
       title: ReferralCounts
-    LossReason:
-      type: string
-      enum:
-      - weather
-      - fire
-      - water_appliance
-      - water
-      - theft
-      - earthquake
-      - liability
-      - medical
-      - other
-      title: LossReason
-      description: An enumeration.
-    LifetimeSummary:
+    ralphie__models__report__Contact:
       properties:
-        counts:
-          $ref: '#/components/schemas/ReferralCounts'
-        transaction_count:
-          type: integer
-          title: Transaction Count
-          description: Number of transactions across all time
-        referral_fees:
+        first_name:
           type: string
-          title: Referral Fees
-          description: Referral fees accrued across all time, in dollars
-        payments:
+          title: First Name
+        last_name:
           type: string
-          title: Payments
-          description: Payments issued to you across all time, in dollars
-        floor_month:
+          title: Last Name
+        suffix:
           type: string
-          title: Floor Month
-          description: Earliest month with activity, YYYY-MM
-      type: object
-      required:
-      - counts
-      - transaction_count
-      - referral_fees
-      - payments
-      title: LifetimeSummary
-    ralphie__models__report__PolicyStatus:
-      type: string
-      enum:
-      - issued
-      - quoted
-      - cancelled
-      title: PolicyStatus
-      description: An enumeration.
-    Agent:
-      properties:
-        email:
-          type: string
-          title: Email
-      type: object
-      title: Agent
-    PolicyStatusOptions:
-      type: string
-      enum:
-      - issued
-      - quoted
-      - cancelled
-      title: PolicyStatusOptions
-    OptionalSelfReportedClaims:
-      properties:
-        date_of_loss:
+          title: Suffix
+          description: Name suffix such as Jr or II
+        date_of_birth:
           type: string
           format: date
-          title: Date of Loss
-          description: Approximate date of the loss
-        loss_reason:
-          allOf:
-          - $ref: '#/components/schemas/LossReason'
-          title: Loss Reason
-          example: weather
-        loss_amount_dollars:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: Loss Amount in Dollars
-        caused_by_catastrophe:
-          allOf:
-          - $ref: '#/components/schemas/YesNo'
-          title: Loss related to Catastrophe
+          title: Date Of Birth
+        phone_number:
+          type: string
+          title: Phone Number
+        email:
+          type: string
+          format: email
+          title: Email
+        mailing_address:
+          $ref: '#/components/schemas/ralphie__models__report__Address'
+        self_reported_claims:
+          items:
+            $ref: '#/components/schemas/OptionalSelfReportedClaims'
+          type: array
+          title: Self Reported Claims
       type: object
-      title: OptionalSelfReportedClaims
-      description: Details of any self-reported claims
-    PolicyDocument:
+      title: Contact
+    HTTPValidationError:
       properties:
-        document_id:
-          type: string
-          title: Document Id
-        display_name:
-          type: string
-          title: Display Name
-        file_name:
-          type: string
-          title: File Name
-        url:
-          type: string
-          title: Url
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - document_id
-      - display_name
-      - file_name
-      - url
-      title: PolicyDocument
+      title: HTTPValidationError
     MonthlySummary:
       properties:
         month:
@@ -794,6 +823,106 @@ components:
       - transaction_count
       - transactions
       title: MonthlySummary
+    ReportSummary:
+      properties:
+        partner:
+          $ref: '#/components/schemas/PartnerProfile'
+        window_start_month:
+          type: string
+          title: Window Start Month
+          description: First month of the resolved window, YYYY-MM
+        window_end_month:
+          type: string
+          title: Window End Month
+          description: Last month of the resolved window, YYYY-MM
+        lifetime:
+          allOf:
+          - $ref: '#/components/schemas/LifetimeSummary'
+          title: Lifetime
+          description: Cumulative totals across all time, independent of the window
+        monthly:
+          items:
+            $ref: '#/components/schemas/MonthlySummary'
+          type: array
+          title: Monthly
+          description: Per-month breakdown within the window, oldest to newest
+      type: object
+      required:
+      - partner
+      - lifetime
+      - monthly
+      title: ReportSummary
+    YesNo:
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      title: YesNo
+      description: An enumeration.
+    PolicyCoverage:
+      properties:
+        name:
+          type: string
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/PolicyCoverageConfig'
+          type: array
+          title: Config
+      type: object
+      required:
+      - name
+      - config
+      title: PolicyCoverage
+    LeadRecordType:
+      type: string
+      enum:
+      - landlord
+      - renter
+      - homeowner
+      title: LeadRecordType
+      description: An enumeration.
+    LeadStatus:
+      type: string
+      enum:
+      - converted
+      - unqualified
+      - awaiting_quote
+      - new
+      title: LeadStatus
+      description: An enumeration.
+    PropertyCoverageConfig:
+      properties:
+        type:
+          type: string
+          title: Type
+        label:
+          type: string
+          title: Label
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - type
+      - label
+      - value
+      title: PropertyCoverageConfig
+    PropertyCoverage:
+      properties:
+        name:
+          type: string
+          title: Name
+        config:
+          items:
+            $ref: '#/components/schemas/PropertyCoverageConfig'
+          type: array
+          title: Config
+      type: object
+      required:
+      - name
+      - config
+      title: PropertyCoverage
     ReferralTransaction:
       properties:
         transaction_id:
@@ -822,13 +951,85 @@ components:
       - transaction_at
       - transaction_amount
       title: ReferralTransaction
-    LeadListPage:
+    ReportOrderByOptions:
+      type: string
+      enum:
+      - -created_timestamp
+      - created_timestamp
+      - -updated_timestamp
+      - updated_timestamp
+      title: ReportOrderByOptions
+    ValidationError:
       properties:
-        leads:
+        loc:
           items:
-            $ref: '#/components/schemas/Lead'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Leads
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ralphie__models__report__Address:
+      properties:
+        address_1:
+          type: string
+          title: Address 1
+        city:
+          type: string
+          title: City
+        state:
+          type: string
+          title: State
+        zip:
+          type: string
+          title: Zip
+      type: object
+      title: Address
+    LifetimeSummary:
+      properties:
+        counts:
+          $ref: '#/components/schemas/ReferralCounts'
+        transaction_count:
+          type: integer
+          title: Transaction Count
+          description: Number of transactions across all time
+        referral_fees:
+          type: string
+          title: Referral Fees
+          description: Referral fees accrued across all time, in dollars
+        payments:
+          type: string
+          title: Payments
+          description: Payments issued to you across all time, in dollars
+        floor_month:
+          type: string
+          title: Floor Month
+          description: Earliest month with activity, YYYY-MM
+      type: object
+      required:
+      - counts
+      - transaction_count
+      - referral_fees
+      - payments
+      title: LifetimeSummary
+    PolicyListPage:
+      properties:
+        policies:
+          items:
+            $ref: '#/components/schemas/Policy'
+          type: array
+          title: Policies
         limit:
           type: integer
           maximum: 100.0
@@ -839,24 +1040,44 @@ components:
           title: Next Url
       type: object
       required:
-      - leads
+      - policies
       - limit
-      title: LeadListPage
-    LeadRecordType:
-      type: string
-      enum:
-      - landlord
-      - renter
-      - homeowner
-      title: LeadRecordType
-      description: An enumeration.
-    YesNo:
-      type: string
-      enum:
-      - 'yes'
-      - 'no'
-      title: YesNo
-      description: An enumeration.
+      title: PolicyListPage
+    PolicyCoverageConfig:
+      properties:
+        type:
+          type: string
+          title: Type
+        label:
+          type: string
+          title: Label
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - type
+      - label
+      - value
+      title: PolicyCoverageConfig
+    PartnerProfile:
+      properties:
+        account_name:
+          type: string
+          title: Account Name
+          description: Your partner account name
+        referral_code:
+          type: string
+          title: Referral Code
+          description: The referral code these results are scoped to
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL to your partner logo, when configured
+      type: object
+      required:
+      - account_name
+      title: PartnerProfile
     LeadProperty:
       properties:
         lead_property_id:
@@ -878,139 +1099,6 @@ components:
       - address
       - property_details
       title: LeadProperty
-    ReportOrderByOptions:
-      type: string
-      enum:
-      - -created_timestamp
-      - created_timestamp
-      - -updated_timestamp
-      - updated_timestamp
-      title: ReportOrderByOptions
-    PropertyCoverageConfig:
-      properties:
-        type:
-          type: string
-          title: Type
-        label:
-          type: string
-          title: Label
-        value:
-          type: string
-          title: Value
-      type: object
-      required:
-      - type
-      - label
-      - value
-      title: PropertyCoverageConfig
-    ralphie__models__report__Address:
-      properties:
-        address_1:
-          type: string
-          title: Address 1
-        city:
-          type: string
-          title: City
-        state:
-          type: string
-          title: State
-        zip:
-          type: string
-          title: Zip
-      type: object
-      title: Address
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    PropertyCoverage:
-      properties:
-        name:
-          type: string
-          title: Name
-        config:
-          items:
-            $ref: '#/components/schemas/PropertyCoverageConfig'
-          type: array
-          title: Config
-      type: object
-      required:
-      - name
-      - config
-      title: PropertyCoverage
-    LeadStatus:
-      type: string
-      enum:
-      - converted
-      - unqualified
-      - awaiting_quote
-      - new
-      title: LeadStatus
-      description: An enumeration.
-    PolicyType:
-      type: string
-      enum:
-      - DP3
-      - DP1
-      title: PolicyType
-      description: An enumeration.
-    PolicyListPage:
-      properties:
-        policies:
-          items:
-            $ref: '#/components/schemas/Policy'
-          type: array
-          title: Policies
-        limit:
-          type: integer
-          maximum: 100.0
-          minimum: 1.0
-          title: Limit
-        next_url:
-          type: string
-          title: Next Url
-      type: object
-      required:
-      - policies
-      - limit
-      title: PolicyListPage
-    AccountListPage:
-      properties:
-        accounts:
-          items:
-            $ref: '#/components/schemas/Account'
-          type: array
-          title: Accounts
-        limit:
-          type: integer
-          maximum: 100.0
-          minimum: 1.0
-          title: Limit
-        next_url:
-          type: string
-          title: Next Url
-      type: object
-      required:
-      - accounts
-      - limit
-      title: AccountListPage
-    PolicyPaymentSchedule:
-      type: string
-      enum:
-      - annual
-      - installments
-      - escrow
-      - premium_financed
-      - transaction
-      - advance
-      - advance_and_transactions
-      title: PolicyPaymentSchedule
-      description: An enumeration.
     PolicyLocation:
       properties:
         policy_location_id:
@@ -1035,94 +1123,6 @@ components:
       - address
       - property_coverages
       title: PolicyLocation
-    PolicyCoverage:
-      properties:
-        name:
-          type: string
-          title: Name
-        config:
-          items:
-            $ref: '#/components/schemas/PolicyCoverageConfig'
-          type: array
-          title: Config
-      type: object
-      required:
-      - name
-      - config
-      title: PolicyCoverage
-    LeadStatusOptions:
-      type: string
-      enum:
-      - converted
-      - unqualified
-      - awaiting_quote
-      - new
-      title: LeadStatusOptions
-    Account:
-      properties:
-        account_id:
-          type: string
-          title: Account Id
-        account_name:
-          type: string
-          title: Account Name
-        external_record_id:
-          type: string
-          title: External Record Id
-        created_at_timestamp:
-          type: string
-          format: date-time
-          title: Created At Timestamp
-        updated_at_timestamp:
-          type: string
-          format: date-time
-          title: Updated At Timestamp
-        referral_code:
-          type: string
-          title: Referral Code
-        contacts:
-          items:
-            $ref: '#/components/schemas/ralphie__models__report__Contact'
-          type: array
-          title: Contacts
-        agent:
-          $ref: '#/components/schemas/Agent'
-        contacted_status:
-          allOf:
-          - $ref: '#/components/schemas/ContactedStatus'
-          description: Whether one of the account's properties has been successfully contacted
-          default: pending_contact
-      type: object
-      required:
-      - account_id
-      - created_at_timestamp
-      - updated_at_timestamp
-      - contacts
-      title: Account
-    ContactedStatus:
-      type: string
-      enum:
-      - successful_contact
-      - pending_contact
-      title: ContactedStatus
-      description: An enumeration.
-    PolicyCoverageConfig:
-      properties:
-        type:
-          type: string
-          title: Type
-        label:
-          type: string
-          title: Label
-        value:
-          type: string
-          title: Value
-      type: object
-      required:
-      - type
-      - label
-      - value
-      title: PolicyCoverageConfig
   securitySchemes:
     APIKeyQuery:
       type: apiKey

@@ -79,27 +79,6 @@ paths:
       x-operation-id-original: Agent Bearer Token
 components:
   schemas:
-    AccountInfoResponse:
-      properties:
-        referral_code:
-          type: string
-          title: Referral Code
-          nullable: true
-      type: object
-      title: AccountInfoResponse
-    AgentStateInformation:
-      properties:
-        state:
-          type: string
-          title: State
-        state_producer_number:
-          type: string
-          title: State Producer Number
-          nullable: true
-      type: object
-      required:
-      - state
-      title: AgentStateInformation
     ValidationError:
       properties:
         loc:
@@ -121,6 +100,14 @@ components:
       - msg
       - type
       title: ValidationError
+    AccountInfoResponse:
+      properties:
+        referral_code:
+          type: string
+          title: Referral Code
+          nullable: true
+      type: object
+      title: AccountInfoResponse
     AccountAgencyTokenResponse:
       properties:
         token:
@@ -130,23 +117,19 @@ components:
       required:
       - token
       title: AccountAgencyTokenResponse
-    HTTPValidationError:
+    AgentStateInformation:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AccountAgencyTokenRequest:
-      properties:
-        agent:
-          $ref: '#/components/schemas/AgentInformation'
+        state:
+          type: string
+          title: State
+        state_producer_number:
+          type: string
+          title: State Producer Number
+          nullable: true
       type: object
       required:
-      - agent
-      title: AccountAgencyTokenRequest
+      - state
+      title: AgentStateInformation
     AgentInformation:
       properties:
         first_name:
@@ -179,6 +162,23 @@ components:
       - licensed_states
       - email
       title: AgentInformation
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AccountAgencyTokenRequest:
+      properties:
+        agent:
+          $ref: '#/components/schemas/AgentInformation'
+      type: object
+      required:
+      - agent
+      title: AccountAgencyTokenRequest
   securitySchemes:
     APIKeyQuery:
       type: apiKey

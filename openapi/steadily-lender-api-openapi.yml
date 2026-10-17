@@ -46,60 +46,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    LenderPolicySearchResponse:
-      properties:
-        policies:
-          items:
-            $ref: '#/components/schemas/LenderPolicyResult'
-          type: array
-          title: Policies
-      type: object
-      required:
-      - policies
-      title: LenderPolicySearchResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    LenderPropertyAddress:
-      properties:
-        full_address:
-          type: string
-          title: Full Address
-          nullable: true
-        state:
-          type: string
-          title: State
-      type: object
-      required:
-      - state
-      title: LenderPropertyAddress
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     LenderPolicyResult:
       properties:
         policy_id:
@@ -159,6 +105,60 @@ components:
       - policy_number
       - properties
       title: LenderPolicyResult
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LenderPolicySearchResponse:
+      properties:
+        policies:
+          items:
+            $ref: '#/components/schemas/LenderPolicyResult'
+          type: array
+          title: Policies
+      type: object
+      required:
+      - policies
+      title: LenderPolicySearchResponse
+    LenderPropertyAddress:
+      properties:
+        full_address:
+          type: string
+          title: Full Address
+          nullable: true
+        state:
+          type: string
+          title: State
+      type: object
+      required:
+      - state
+      title: LenderPropertyAddress
   securitySchemes:
     APIKeyQuery:
       type: apiKey
